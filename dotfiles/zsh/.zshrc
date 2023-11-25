@@ -20,7 +20,7 @@ fi
 # ZSH_THEME="robbyrussell"
 # ZSH_THEME="jonathan"
 # ZSH_THEME="simple"
-#ZSH_THEME="agnoster"
+# ZSH_THEME="agnoster"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -82,6 +82,7 @@ fi
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+
 plugins=(
     zsh-autosuggestions
     zsh-vi-mode
@@ -105,9 +106,6 @@ source $ZSH/oh-my-zsh.sh
 #   export EDITOR='mvim'
 # fi
 
-
-
-
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -127,7 +125,7 @@ alias texcompile="latexmk -lualatex"
 
 alias thes="dict -d moby-thesaurus"
 
-alias rm='echo "Consider using trash-put (ttt) instead. If you want rm, type /rm."; false'
+alias rm='echo "Consider using trash-put (ttt) instead. If you want rm, type \rm."; false'
 alias ttt="trash-put"
 
 function lazygit() {
@@ -137,12 +135,6 @@ function lazygit() {
 }
 
 # Elapsed and execution time display for commands in ZSH
-function gitacp() {
-    git add .
-    git commit -m "$1"
-    git push
-}
-
 function preexec() {
   timer=$(($(date +%s%0N)/1000000))
 }
