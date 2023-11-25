@@ -128,6 +128,8 @@ alias thes="dict -d moby-thesaurus"
 alias rm='echo "Consider using trash-put (ttt) instead. If you want rm, type \rm."; false'
 alias ttt="trash-put"
 
+alias tail="colortail"
+
 function lazygit() {
     git add .
     git commit -am "$1"
