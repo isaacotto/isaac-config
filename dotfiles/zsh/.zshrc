@@ -148,3 +148,4 @@ function precmd() {
     unset timer
   fi
 }
+PATH="$HOME/.local/bin:$PATH"
