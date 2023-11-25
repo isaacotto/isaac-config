@@ -82,8 +82,10 @@ fi
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(zsh-autosuggestions)
-plugins=(zsh-vi-mode)
+plugins=(
+    zsh-autosuggestions
+    zsh-vi-mode
+)
 
 # PLUGINS MUST BE SOURCED BEFORE OH-MY-ZSH.SH IS SOURCED
 
