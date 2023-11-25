@@ -1,0 +1,229 @@
+#!/usr/bin/python3
+
+###############################################################
+##                                                           ##
+##   Dell, Fujitsu, HP, and Lenovo convertible tablet PC's   ##
+##                 automatic rotation support                ##
+##                                                           ##
+##    Created by Barynin Konstantin ( red_lion@inbox.ru )    ##
+##                  Co-author: Buran Ayuthia                 ##
+##                     Contributor: Favux                    ##
+###############################################################
+
+import _thread
+import sys
+import os
+import pwd
+import platform
+from subprocess import getstatusoutput
+
+from gui_gtk import *
+from listener import *
+from debug import *
+from hinge import *
+
+import notify2
+
+# to support App Indicator for Ubuntu Raring (13.04) Unity and later
+find_distro = "cat /etc/issue"
+distro_raw = getstatusoutput(find_distro)
+distro = (distro_raw[1].split(' '))[0]
+if distro == "Ubuntu":
+    version = (distro_raw[1].split(' '))[1]
+    in_unity = getstatusoutput("echo $XDG_CURRENT_DESKTOP")[1]
+    if in_unity == "Unity":
+        try:
+            import appindicator # should only be available in Unity (and KDE?)
+            have_appindicator = True
+        except:
+            print("If you are using Unity but don't see the App Indicator icon in the System Tray install the 'python-appindicator' package.")
+            have_appindicator = False
+    else:
+        have_appindicator = False
+else:
+    have_appindicator = False
+
+prog_ver="1.7"
+
+class engine:
+    def __init__(self):
+        if have_appindicator:
+            self.tray = ind_gui(self) # for Ubuntu Unity 13.04 and later
+        else:
+            self.tray = tray_gui(self)
+        self.win = magick_gui()
+        debug_on = False
+        if len(sys.argv) > 1:
+            if sys.argv[1] == "debug":
+                debug_on = True
+        self.debug = debug(debug_on, self.win)
+        self.notifier = listener(debug_on, self.win)
+        h = hinge(self.win)
+        self.switch = h.get_switch()
+
+        # notify init
+        notify_timeout = int(self.win.adv_table.get_isnotify_timeout())
+        notify2.init('magick-rotation notification')
+        self.notify_tablet = notify2.Notification("Tablet state", "Rotate to tablet")
+        self.notify_tablet.set_timeout(notify_timeout)
+        self.notify_normal = notify2.Notification("Tablet state", "Rotate to normal")
+        self.notify_normal.set_timeout(notify_timeout)
+        self.touch_on = notify2.Notification("Touch status", "On")
+        self.touch_on.set_timeout(notify_timeout)
+        self.touch_off = notify2.Notification("Touch status", "Off")
+        self.touch_off.set_timeout(notify_timeout)
+        self.notify_error = notify2.Notification("Tablet state", "Error get hp_wmi data")
+        self.notify_error.set_timeout(notify_timeout)
+
+        # Turn on touch
+        self.touch_toggle = 0
+        self.toggle_touch()
+
+    def display_config_window(self, widget=None):
+        self.win.show_all()
+
+    def run(self):
+        if self.switch:
+            _thread.start_new_thread(self.switch.run, (self.notifier,))
+        _thread.start_new_thread(self.notifier.state_notifier, (self.state_change,))
+        gtk.main()
+
+    def toggle_rotate(self, option=None, data=None):
+        self.notifier.toggle_polling()
+        self.tray.update_poll_status(self.notifier.get_polling_status())
+
+#    def toggle_touch(self): # gtk.StatusIcon left click
+    def toggle_touch(self, option=None, data=None): # adds toggle_touch for gui_gtk.py popup menu
+        isnotify = self.win.adv_table.get_isnotify_button()
+        self.touch_toggle =  not self.touch_toggle
+        device = touch()
+        device.toggle_touch(self.touch_toggle)
+#        if ((isnotify) & (notify2_support)): 
+#            if self.touch_toggle:
+#                self.touch_on.show()
+#            else:
+#                self.touch_off.show()
+        # Magick extension won't load icon to status tray during startup due to glib/GDBus error
+        # "UnknownMethod: No such interface `org.freedesktop.Notifications'" with touch status
+        # notification.  Post startup icon loads by restarting gnome-shell (alt+F2, enter 'r')
+        # and touch notification works fine.  This may be Ubuntu specific because they deprecated
+        # Gnome's notification-daemon for Notify OSD.  Disable touch notification in Ubuntu
+        # gnome-shell until startup issue resolved.
+        info = notify2.get_server_info()
+        if not (distro == "Ubuntu") and ("gnome-shell" in str(info)):
+            if isnotify: 
+                if self.touch_toggle:
+                    self.touch_on.show()
+                else:
+                    self.touch_off.show()
+        if have_appindicator:  # adds touch icons to class ind_gui's update_poll_status
+            self.tray.update_poll_status(self.notifier.get_polling_status())
+
+    def get_touch_status(self):
+        return self.touch_toggle
+
+    def process_rotation(self, direction):
+        # TODO I monkey-patched things here 
+        direction = int(direction > 0)
+        device = rotate()
+        rot_dir = ["normal", "left", "right", "inverted"]
+
+        # Process any application before rotating
+        if direction == 0:
+            before_script = self.win.adv_table.get_before_normal()
+            if before_script:
+                self.debug.debug("calling %s" % before_script)
+                os.system(before_script + "&")
+            self.debug.debug("calling rotation a: ")
+            self.debug.debug(rot_dir[direction])
+            device.rotate_devices(rot_dir[direction])
+            after_script = self.win.adv_table.get_after_normal()
+            if after_script:
+                self.debug.debug("calling %s" % after_script)
+                os.system(after_script + "&")
+        else:
+            before_script = self.win.adv_table.get_before_tablet()
+            if before_script:
+                self.debug.debug("calling %s" % before_script)
+                os.system(before_script + "&")
+            self.debug.debug("calling rotation b: ")
+            self.debug.debug(rot_dir[direction])
+            device.rotate_devices(rot_dir[direction])
+            after_script = self.win.adv_table.get_after_tablet()
+            if after_script:
+                self.debug.debug("calling %s" % after_script)
+                os.system(after_script + "&")
+
+    def state_change(self, direction):
+        isnotify = self.win.adv_table.get_isnotify_button()
+        self.process_rotation(direction)
+        if (direction == 0):
+            self.debug.debug("Change to normal state")
+            # self.tray.set_tooltip("Normal mode")
+            if isnotify: 
+                self.notify_normal.show()
+        else:
+            self.debug.debug("Change to Tablet mode")
+            # self.tray.set_tooltip("Tablet mode")
+            if isnotify: 
+                self.notify_tablet.show()
+
+    # force_rotate and popup menu item code submitted by gco
+    # http://ubuntuforums.org/showthread.php?t=996830&page=62&p=12466672#post12466672
+    # modified a bit to drop decorator
+    def force_rotate(self, direction):
+        device = rotate()
+        device.rotate(None)
+
+    def quit(self, widget=None):
+        version = platform.machine()
+        check_machine = "checkmagick32"
+        if version == "x86_64":
+            check_machine = "checkmagick64"
+        kill_check = "killall " + check_machine
+        self.debug.debug(kill_check)
+        cur_state = getstatusoutput(kill_check)[0] / 256
+
+        gtk.main_quit()
+        self.notifier.stop_processing()
+
+if __name__ == "__main__":
+    # Minimal install check:  start blocked unless checkmagick compiled and 62-magick.rules
+    # installed either by Installer or manually, see INSTALLER.txt.  Please ensure you have
+    # also created the magick group and added your username to it.
+    path = "."
+    if sys.argv:
+        path = os.path.dirname(sys.argv[0])
+        if not path:
+            path = "."
+
+    version = platform.machine()
+    if version == "x86_64":
+        checkmagick_version = "checkmagick64"
+    else:
+        checkmagick_version = "checkmagick32"
+
+    if os.path.exists("/dev/input/magick-rotation"):
+        if os.path.exists("/usr/bin/" + checkmagick_version):
+            magick = engine()
+            magick.run()
+        elif os.path.exists(path + "/" + checkmagick_version):
+            magick = engine()
+            magick.run()
+        else:
+            print("Please compile checkmagick.")
+            print("See INSTALLER.txt in the unpacked magick-rotation folder.")
+    else:
+        print("Please install 62-magick.rules in /etc/udev/rules.d.")
+        print("See INSTALLER.txt in the unpacked magick-rotation folder.")
+
+#    magick = engine()
+#    magick.run()
+
+##############################################################
+##  This program is free software; you can redistribute it  ##
+##  and/or modify it under the terms of the GNU General     ##
+##  Public license as published by the Free Software        ##
+##  Foundation; either version 2 of the License, or (at     ## 
+##  your option) any later version.                         ##
+##############################################################

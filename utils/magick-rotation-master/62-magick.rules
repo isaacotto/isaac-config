@@ -1,0 +1,17 @@
+# Magick Rotation's udev rules for tablet PC's using an OEM-WMI or OEM-ACPI
+#
+# These rules were compiled for the Ubuntu/Debian GNU/Linux distribution, but others may,
+# and indeed are encouraged to, use them also.
+#
+# Should you do so, PLEASE CO-ORDINATE ANY CHANGES OR ADDITIONS to 62-magick.rules with
+# Jayhawk so that we can present users with a standard set of device nodes which they
+# can rely on.
+
+KERNEL!="event[0-9]*", GOTO="magick-rotation"
+
+SUBSYSTEM=="input", ATTRS{name}=="HP WMI hotkeys", MODE="640", GROUP="magick", SYMLINK="input/magick-rotation"
+SUBSYSTEM=="input", ATTRS{name}=="Dell WMI hotkeys", MODE="640", GROUP="magick", SYMLINK="input/magick-rotation"
+SUBSYSTEM=="input", ATTRS{name}=="ThinkPad Extra Buttons", MODE="640", GROUP="magick", SYMLINK="input/magick-rotation"
+SUBSYSTEM=="input", ATTRS{name}=="Fujitsu FUJ02B[DF]", MODE="640", GROUP="magick", SYMLINK="input/magick-rotation"
+
+LABEL="magick-rotation"

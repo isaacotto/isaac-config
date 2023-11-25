@@ -1,0 +1,7 @@
+{
+    "shell-version": ["3.8", "3.8.4", "3.10"],
+    "uuid": "magick-rotation-extension",
+    "url":  "https://launchpad.net/magick-rotation",
+    "name": "Magick Rotation Icon", 
+    "description": "Adds the Magick Rotation Icon to the System Status Area."
+}
