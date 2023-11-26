@@ -243,6 +243,7 @@ autocmd FileType tex,latex inoremap ,i \textit{}<Esc>i
 autocmd FileType tex,latex inoremap ,sc \textsc{}<Esc>i
 autocmd FileType tex,latex inoremap ,tt \texttt{}<Esc>i
 autocmd FileType tex,latex inoremap ,m $$<Esc>i
+autocmd FileType tex,latex inoremap ,e \emph{}<Esc>i
 
 autocmd FileType tex,latex inoremap ,bp \documentclass{article}<CR><CR>\usepackage[margin=1in]{geometry}<CR><CR>\title{Title}<CR>\author{Isaac Otto}<CR>\date{\today}<CR><CR>\begin{document}<CR>\maketitle<CR><CR><CR><CR>\end{document}<Esc>2ki
 
