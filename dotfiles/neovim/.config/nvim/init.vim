@@ -129,6 +129,10 @@ inoremap <4-MiddleMouse> <nop>
     cnoremap jk <ESC>
     cnoremap kj <ESC>
 
+" Ctrl + BS in insert mode deletes entire word
+noremap! <C-BS> <C-w>
+noremap! <C-h> <C-w>
+
 """""""""""""""
 """PLUGINS"""""
 """""""""""""""
@@ -232,6 +236,16 @@ let g:vimtex_view_forward_search_on_start = 0
 " Most VimTeX mappings rely on localleader and this can be changed with the
 " following line. The default is usually fine and is the symbol "\".
 let maplocalleader = ","
+
+" Other LaTeX keybindings:
+autocmd FileType tex,latex inoremap ,b \textbf{}<Esc>i 
+autocmd FileType tex,latex inoremap ,i \textit{}<Esc>i
+autocmd FileType tex,latex inoremap ,sc \textsc{}<Esc>i
+autocmd FileType tex,latex inoremap ,tt \texttt{}<Esc>i
+autocmd FileType tex,latex inoremap ,m $$<Esc>i
+
+autocmd FileType tex,latex inoremap ,bp \documentclass{article}<CR><CR>\usepackage[margin=1in]{geometry}<CR><CR>\title{Title}<CR>\author{Isaac Otto}<CR>\date{\today}<CR><CR>\begin{document}<CR>\maketitle<CR><CR><CR><CR>\end{document}<Esc>2ki
+
 
 " turn off the dumb vimtex concealing function!!
 let g:vimtex_syntax_conceal_disable = 1
