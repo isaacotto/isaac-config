@@ -194,6 +194,8 @@ Plug 'honza/vim-snippets'
 " Use release branch 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+Plug 'vimwiki/vimwiki'
+
 call plug#end()
 """""""""""""""
 """END PLUGINS"
