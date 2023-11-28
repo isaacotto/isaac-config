@@ -152,3 +152,8 @@ function precmd() {
   fi
 }
 PATH="$HOME/.local/bin:$PATH"
+
+# Nodejs
+VERSION=v10.15.0
+DISTRO=linux-x64
+export PATH=/usr/local/lib/nodejs/node-v20.9.0-linux-x64/bin:$PATH

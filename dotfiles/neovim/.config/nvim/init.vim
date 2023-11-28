@@ -87,7 +87,6 @@ set splitbelow splitright
 "map ; :
 "noremap ;; ;
 
-
 " ESC clears search field as well.
 " <silent> so that it doesn't display message.
 map <silent> <esc> :noh <CR>
@@ -200,11 +199,59 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'vimwiki/vimwiki'
 
+" Startify (start-up screen)
+Plug 'mhinz/vim-startify'
+
+"	let g:startify_lists = [
+"	  \ { 'type': 'files',     'header': ['   MRU']            },
+"	  \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+"	  \ { 'type': 'sessions',  'header': ['   Sessions']       },
+"	  \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+"	  \ { 'type': 'commands',  'header': ['   Commands']       },
+"	  \ ]
+
+	let g:startify_lists = []
+	  
+	let g:startify_padding_left = 30
+	    let g:startify_custom_header = [
+	\ '      ╔═════════════════════════════════════════════════════════════════════╗ ',
+	\ '      ║                                                                     ║ ',
+	\ '      ║   ██████  ████████ ████████  ██████        ██    ██ ██ ███    ███   ║ ',
+	\ '      ║  ██    ██    ██       ██    ██    ██       ██    ██ ██ ████  ████   ║ ',
+	\ '      ║  ██    ██    ██       ██    ██    ██ █████ ██    ██ ██ ██ ████ ██   ║ ',
+	\ '      ║  ██    ██    ██       ██    ██    ██        ██  ██  ██ ██  ██  ██   ║ ',
+	\ '      ║   ██████     ██       ██     ██████          ████   ██ ██      ██   ║ ',
+	\ '      ║                                         (for Linux™)                ║ ',
+	\ '      ╚═════════════════════════════════════════════════════════════════════╝ ',
+	\]
+	
+	let g:startify_bookmarks = []
+	let g:startify_commands = []
+	let g:startify_files_number = 5
+	let g:startify_session_before_save = []
+
+" SOME MORE COLOR SCHEMES
+Plug 'ellisonleao/gruvbox.nvim'
+Plug 'folke/tokyonight.nvim'
+Plug 'bluz71/vim-nightfly-colors'
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+Plug 'rebelot/kanagawa.nvim'
+Plug 'NLKNguyen/papercolor-theme'
+
 call plug#end()
 """""""""""""""
 """END PLUGINS"
 """""""""""""""
-
+" For some reason this REALLY wants to go here.
+" Now, no matter what color scheme is used, it will
+" make the header color #131 (indian red)
+augroup custom_highlight
+  autocmd!
+  au ColorScheme * highlight StartifyHeader ctermfg=131
+  au ColorScheme * highlight StartifyBracket ctermfg=131
+  au ColorScheme * highlight StartifyNumber ctermfg=145
+  au ColorScheme * highlight StartifySpecial ctermfg=145
+augroup END
 
 """""""""""""""
 """VIMTEX.CONF" (Settings for VimTex plugin)
@@ -265,7 +312,8 @@ let g:vimtex_syntax_conceal_disable = 1
 
 " COLOR SCHEME STUFF SEEMS TO ENJOY BEING AT THE END
 set background=dark
-colorscheme habamax
+"colorscheme habamax
+colorscheme PaperColor
 
 " SETS BRACE MATCHING COLORS -- should be called after color scheme
 hi MatchParen cterm=none ctermbg=green ctermfg=blue
