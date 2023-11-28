@@ -210,9 +210,11 @@ Plug 'mhinz/vim-startify'
 "	  \ { 'type': 'commands',  'header': ['   Commands']       },
 "	  \ ]
 
-	let g:startify_lists = []
+	let g:startify_lists = [
+            \ { 'type': 'sessions',  'header': ['   Sessions']       }, 
+            \ ]
 	  
-	let g:startify_padding_left = 30
+	let g:startify_padding_left = 33
 	    let g:startify_custom_header = [
 	\ '      ╔═════════════════════════════════════════════════════════════════════╗ ',
 	\ '      ║                                                                     ║ ',
@@ -251,6 +253,7 @@ augroup custom_highlight
   au ColorScheme * highlight StartifyBracket ctermfg=131
   au ColorScheme * highlight StartifyNumber ctermfg=145
   au ColorScheme * highlight StartifySpecial ctermfg=145
+  au ColorScheme * highlight StartifyFooter ctermfg=131 ctermbg=145
 augroup END
 
 """""""""""""""
