@@ -87,7 +87,6 @@ set splitbelow splitright
 "map ; :
 "noremap ;; ;
 
-
 " ESC clears search field as well.
 " <silent> so that it doesn't display message.
 map <silent> <esc> :noh <CR>
@@ -199,6 +198,37 @@ Plug 'honza/vim-snippets'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'vimwiki/vimwiki'
+
+" Startify (start-up screen)
+Plug 'mhinz/vim-startify'
+
+"	let g:startify_lists = [
+"	  \ { 'type': 'files',     'header': ['   MRU']            },
+"	  \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+"	  \ { 'type': 'sessions',  'header': ['   Sessions']       },
+"	  \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+"	  \ { 'type': 'commands',  'header': ['   Commands']       },
+"	  \ ]
+
+	let g:startify_lists = []
+	  
+	let g:startify_padding_left = 30
+	    let g:startify_custom_header = [
+	\ '      ╔═════════════════════════════════════════════════════════════════════╗ ',
+	\ '      ║                                                                     ║ ',
+	\ '      ║   ██████  ████████ ████████  ██████        ██    ██ ██ ███    ███   ║ ',
+	\ '      ║  ██    ██    ██       ██    ██    ██       ██    ██ ██ ████  ████   ║ ',
+	\ '      ║  ██    ██    ██       ██    ██    ██ █████ ██    ██ ██ ██ ████ ██   ║ ',
+	\ '      ║  ██    ██    ██       ██    ██    ██        ██  ██  ██ ██  ██  ██   ║ ',
+	\ '      ║   ██████     ██       ██     ██████          ████   ██ ██      ██   ║ ',
+	\ '      ║                                                                     ║ ',
+	\ '      ╚═════════════════════════════════════════════════════════════════════╝ ',
+	\]
+	
+	let g:startify_bookmarks = []
+	let g:startify_commands = []
+	let g:startify_files_number = 5
+	let g:startify_session_before_save = []
 
 call plug#end()
 """""""""""""""
