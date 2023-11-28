@@ -316,7 +316,7 @@ let g:vimtex_syntax_conceal_disable = 1
 " COLOR SCHEME STUFF SEEMS TO ENJOY BEING AT THE END
 set background=dark
 "colorscheme habamax
-colorscheme PaperColor
+colorscheme kanagawa-dragon
 
 " SETS BRACE MATCHING COLORS -- should be called after color scheme
 hi MatchParen cterm=none ctermbg=green ctermfg=blue
