@@ -86,6 +86,7 @@ fi
 plugins=(
     zsh-autosuggestions
     zsh-vi-mode
+    zsh-syntax-highlighting
 )
 
 # PLUGINS MUST BE SOURCED BEFORE OH-MY-ZSH.SH IS SOURCED
