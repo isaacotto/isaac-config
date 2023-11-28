@@ -209,25 +209,30 @@ Plug 'mhinz/vim-startify'
 "	  \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
 "	  \ { 'type': 'commands',  'header': ['   Commands']       },
 "	  \ ]
+"
+    let g:startify_bookmarks= [
+                \ {'v': '~/.config/nvim/init.vim'},
+                \ ]
 
 	let g:startify_lists = [
-            \ { 'type': 'sessions',  'header': ['   Sessions']       }, 
+            \ { 'type': 'sessions',  'header': ['   Sessions']       },
+            \ { 'type': 'bookmarks',},
             \ ]
-	  
-	let g:startify_padding_left = 33
+
+
+	let g:startify_padding_left = 25
 	    let g:startify_custom_header = [
-	\ '      ╔═════════════════════════════════════════════════════════════════════╗ ',
-	\ '      ║                                                                     ║ ',
-	\ '      ║   ██████  ████████ ████████  ██████        ██    ██ ██ ███    ███   ║ ',
-	\ '      ║  ██    ██    ██       ██    ██    ██       ██    ██ ██ ████  ████   ║ ',
-	\ '      ║  ██    ██    ██       ██    ██    ██ █████ ██    ██ ██ ██ ████ ██   ║ ',
-	\ '      ║  ██    ██    ██       ██    ██    ██        ██  ██  ██ ██  ██  ██   ║ ',
-	\ '      ║   ██████     ██       ██     ██████          ████   ██ ██      ██   ║ ',
-	\ '      ║                                         (for Linux™)                ║ ',
-	\ '      ╚═════════════════════════════════════════════════════════════════════╝ ',
+	\ '     ╔═════════════════════════════════════════════════════════════════════╗ ',
+	\ '     ║                                                                     ║ ',
+	\ '     ║   ██████  ████████ ████████  ██████        ██    ██ ██ ███    ███   ║ ',
+	\ '     ║  ██    ██    ██       ██    ██    ██       ██    ██ ██ ████  ████   ║ ',
+	\ '     ║  ██    ██    ██       ██    ██    ██ █████ ██    ██ ██ ██ ████ ██   ║ ',
+	\ '     ║  ██    ██    ██       ██    ██    ██        ██  ██  ██ ██  ██  ██   ║ ',
+	\ '     ║   ██████     ██       ██     ██████          ████   ██ ██      ██   ║ ',
+	\ '     ║                                         (for Linux™)                ║ ',
+	\ '     ╚═════════════════════════════════════════════════════════════════════╝ ',
 	\]
 	
-	let g:startify_bookmarks = []
 	let g:startify_commands = []
 	let g:startify_files_number = 5
 	let g:startify_session_before_save = []
@@ -315,8 +320,9 @@ let g:vimtex_syntax_conceal_disable = 1
 
 " COLOR SCHEME STUFF SEEMS TO ENJOY BEING AT THE END
 set background=dark
-"colorscheme habamax
-colorscheme kanagawa-dragon
+colorscheme habamax
+"colorscheme kanagawa-dragon
+"colorscheme default
 
 " SETS BRACE MATCHING COLORS -- should be called after color scheme
 hi MatchParen cterm=none ctermbg=green ctermfg=blue
