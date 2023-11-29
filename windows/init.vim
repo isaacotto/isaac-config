@@ -20,10 +20,6 @@
 """BASIC CONFIGURATIONS""""""""
 """""""""""""""""""""""""""""""
 
-"should allow saving with root privileges using :W
-"you will probably have to edit sudo.conf to point it to the ssh-askpass utility
-"com -bar W exe 'w !sudo tee >/dev/null %:p:S' | set1 nomod
-
 "set termguicolors
 "highlight Normal ctermbg=none guibg=none
 "highlight NonText ctermbg=none guibg=none
@@ -85,6 +81,12 @@ set splitbelow splitright
 """KEY BINDINGS""
 """""""""""""""""
 
+" Remap colon to semicolon to avoid "shift" when
+" entering commands. Then double press semicolon
+" to get semicolon.
+"map ; :
+"noremap ;; ;
+
 " ESC clears search field as well.
 map <esc> :noh <CR>
 
@@ -120,10 +122,14 @@ xnoremap <4-MiddleMouse> <nop>
 inoremap <4-MiddleMouse> <nop>
 
 "map jk and kj to escape using easyescape
-"    let g:easyescape_chars = { "j": 1, "k": 1 }
-"  let g:easyescape_timeout = 100
-"   cnoremap jk <ESC>
-"   cnoremap kj <ESC>
+   let g:easyescape_chars = { "j": 1, "k": 1 }
+   let g:easyescape_timeout = 2000
+   cnoremap jk <ESC>
+   cnoremap kj <ESC>
+   
+" Ctrl + BS in insert mode deletes entire word
+	noremap! <C-BS> <C-w>
+	noremap! <C-h> <C-w>
 
 """""""""""""""
 """PLUGINS"""""
@@ -140,30 +146,6 @@ call plug#begin()
     " You can specify a custom plugin directory by passing it as the argument
     "   - e.g. `call plug#begin('~/.vim/plugged')`
     "   - Avoid using standard Vim directory names like 'plugin'
-
-    " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
-    " Plug 'junegunn/vim-easy-align'
-
-    " Any valid git URL is allowed
-    " Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-
-    " Multiple Plug commands can be written in a single line using | separators
-    " Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-
-    " Using a non-default branch
-    " Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-
-    " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-    " Plug 'fatih/vim-go', { 'tag': '*' }
-
-    " Plugin options
-    " Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
-
-    " Plugin outside ~/.vim/plugged with post-update hook
-    " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-
-    " Unmanaged plugin (manually installed and updated)
-    " Plug '~/my-prototype-plugin'
 
 """"""""""""""""""""""""""""""""
 """"""""""""MY PLUGINS""""""""""
@@ -186,8 +168,65 @@ Plug 'zhou13/vim-easyescape'
     let g:UltiSnipsExpandTrigger = '<tab>'
     let g:UltiSnipsJumpForwardTrigger = '<tab>'
     let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+	
+" Use release branch
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Vimwiki
+Plug 'vimwiki/vimwiki'
+
+" Startify (start-up screen)
+Plug 'mhinz/vim-startify'
+
+"	let g:startify_lists = [
+"	  \ { 'type': 'files',     'header': ['   MRU']            },
+"	  \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+"	  \ { 'type': 'sessions',  'header': ['   Sessions']       },
+"	  \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+"	  \ { 'type': 'commands',  'header': ['   Commands']       },
+"	  \ ]
+
+	let g:startify_lists = []
+	  
+	let g:startify_padding_left = 30
+	    let g:startify_custom_header = [
+	\ '      ╔═════════════════════════════════════════════════════════════════════╗ ',
+	\ '      ║                                                                     ║ ',
+	\ '      ║   ██████  ████████ ████████  ██████        ██    ██ ██ ███    ███   ║ ',
+	\ '      ║  ██    ██    ██       ██    ██    ██       ██    ██ ██ ████  ████   ║ ',
+	\ '      ║  ██    ██    ██       ██    ██    ██ █████ ██    ██ ██ ██ ████ ██   ║ ',
+	\ '      ║  ██    ██    ██       ██    ██    ██        ██  ██  ██ ██  ██  ██   ║ ',
+	\ '      ║   ██████     ██       ██     ██████          ████   ██ ██      ██   ║ ',
+	\ '      ║                                         (for Windows™)              ║ ',
+	\ '      ╚═════════════════════════════════════════════════════════════════════╝ ',
+	\]
+	
+	let g:startify_bookmarks = []
+	let g:startify_commands = []
+	let g:startify_files_number = 5
+	let g:startify_session_before_save = []
+
+" SOME MORE COLOR SCHEMES
+Plug 'ellisonleao/gruvbox.nvim'
+Plug 'folke/tokyonight.nvim'
+Plug 'bluz71/vim-nightfly-colors'
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+Plug 'rebelot/kanagawa.nvim'
+Plug 'NLKNguyen/papercolor-theme'
 
 call plug#end()
+
+" For some reason this REALLY wants to go here.
+" Now, no matter what color scheme is used, it will
+" make the header color #131 (indian red)
+augroup custom_highlight
+  autocmd!
+  au ColorScheme * highlight StartifyHeader ctermfg=131
+  au ColorScheme * highlight StartifyBracket ctermfg=131
+  au ColorScheme * highlight StartifyNumber ctermfg=145
+  au ColorScheme * highlight StartifySpecial ctermfg=145
+augroup END
+
 """""""""""""""
 """END PLUGINS"
 """""""""""""""
@@ -226,6 +265,17 @@ call plug#end()
 " following line. The default is usually fine and is the symbol "\".
 let maplocalleader = ","
 
+" Other LaTeX keybindings:
+autocmd FileType tex,latex inoremap ,b \textbf{}<Esc>i 
+autocmd FileType tex,latex inoremap ,i \textit{}<Esc>i
+autocmd FileType tex,latex inoremap ,sc \textsc{}<Esc>i
+autocmd FileType tex,latex inoremap ,tt \texttt{}<Esc>i
+autocmd FileType tex,latex inoremap ,m $$<Esc>i
+autocmd FileType tex,latex inoremap ,e \emph{}<Esc>i
+
+autocmd FileType tex,latex inoremap ,bp \documentclass{article}<CR><CR>\usepackage[margin=1in]{geometry}<CR><CR>\title{Title}<CR>\author{Isaac Otto}<CR>\date{\today}<CR><CR>\begin{document}<CR>\maketitle<CR><CR><CR><CR>\end{document}<Esc>2ki
+
+
 " turn off the dumb vimtex concealing function!!
 let g:vimtex_syntax_conceal_disable = 1
 
@@ -243,7 +293,8 @@ let g:vimtex_syntax_conceal_disable = 1
 
 " COLOR SCHEME STUFF SEEMS TO ENJOY BEING AT THE END
 set background=dark
-colorscheme habamax
+"colorscheme habamax
+colorscheme PaperColor
 
 " SETS BRACE MATCHING COLORS -- should be called after color scheme
 hi MatchParen cterm=none ctermbg=green ctermfg=blue
@@ -255,4 +306,5 @@ hi CursorLine term=bold cterm=bold guibg=Grey40
 " allows transparent background for vim
 " must go underneath color scheme!
 hi Normal guibg=NONE ctermbg=NONE
+
 
