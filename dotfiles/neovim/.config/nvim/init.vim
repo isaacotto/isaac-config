@@ -89,7 +89,9 @@ set splitbelow splitright
 
 " ESC clears search field as well.
 " <silent> so that it doesn't display message.
-map <silent> <esc> :noh <CR>
+" I think the <C-U> removes any selected range
+" to avoid error 481.
+map <silent> <esc> :<C-U>noh<CR>
 
 " Map NERDTreeToggle to F6
 nmap <F6> :NERDTreeToggle<CR>
