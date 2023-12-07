@@ -6,6 +6,8 @@ export PATH=$HOME/bin:/usr/local/texlive/2023/bin/x86_64-linux:/usr/local/sbin:/
 export ZSH="$HOME/.oh-my-zsh"
 
 # Different theme for SSH connections.
+# Top line is in case of SSH connection,
+# "else" is default.
 if [[ -n $SSH_CONNECTION ]]; then
     ZSH_THEME="agnoster"
 else

@@ -247,6 +247,7 @@ Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'rebelot/kanagawa.nvim'
 Plug 'NLKNguyen/papercolor-theme'
 
+Plug 'tpope/vim-commentary'
 call plug#end()
 """""""""""""""
 """END PLUGINS"
