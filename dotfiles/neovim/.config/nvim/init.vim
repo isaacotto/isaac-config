@@ -26,6 +26,7 @@ com -bar W exe 'w !sudo tee >/dev/null %:p:S' | set1 nomod
 
 "set noswf
 set nocompatible            " disable compatibility to old-time vi
+set foldmethod=syntax
 "set showmatch              " show matching 
 set ignorecase              " case insensitive 
 "set mouse=v                " middle-click paste with 
@@ -313,6 +314,25 @@ let g:vimtex_syntax_conceal_disable = 1
 """END VIMTEX"
 """"""""""""""
 
+""""""""""""""""""""""""""""""""""""""""
+""VIMWIKI SETTINGS""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""
+command! Diary VimwikiDiaryIndex
+augroup vimwikigroup
+    autocmd!
+    " automatically update links on read diary
+    autocmd BufRead,BufNewFile diary.wiki VimwikiDiaryGenerateLinks
+augroup end
+
+" sets vimwiki folding behavior (can be '' to disable
+" 'expr' 'syntax' or 'list')
+let g:vimwiki_folding='syntax'
+
+" sets fold level for entirety of vim
+" this should leave the topmost level 
+" open but anything underneat is fol-
+" ded by default.
+set foldlevel=1
 
 """"""""""""""""""""""""""""""""""""""""
 ""SETTINGS THAT LIKE TO BE CALLED LATE""
@@ -337,4 +357,6 @@ hi CursorLine term=bold cterm=bold guibg=Grey40
 " allows transparent background for vim
 " must go underneath color scheme!
 hi Normal guibg=NONE ctermbg=NONE
+
+""""""""""""""""""""""""""""""""""""""""""
 
