@@ -326,6 +326,17 @@ autocmd FileType tex,latex inoremap ,bp \documentclass{article}<CR><CR>\usepacka
 " turn off the dumb vimtex concealing function!!
 let g:vimtex_syntax_conceal_disable = 1
 
+" To change the size of the error window when compiling,
+" find /ftplugin/qf.vim file somewhere in the plugins folder
+" then add the following, where the "5" refers to the height
+" in lines of the window. I just dropped it at the end of the
+" file:
+" 
+" augroup quickfix_autocmds
+"  autocmd!
+"  autocmd BufReadPost quickfix 5wincmd _
+" augroup END
+
 """"""""""""""
 """END VIMTEX"
 """"""""""""""
