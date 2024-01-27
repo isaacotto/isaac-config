@@ -96,38 +96,50 @@ set splitbelow splitright
 " <silent> so that it doesn't display message.
 " I think the <C-U> removes any selected range
 " to avoid error 481.
-map <silent> <esc> :<C-U>noh<CR>
+    map <silent> <esc> :<C-U>noh<CR>
 
 " Map NERDTreeToggle to F6
-nmap <F6> :NERDTreeToggle<CR>
+    nmap <F6> :NERDTreeToggle<CR>
 
 " Use ctrl-[hjkl] to select the active split!
-nmap <silent> <c-k> :wincmd k<CR>
-nmap <silent> <c-j> :wincmd j<CR>
-nmap <silent> <c-h> :wincmd h<CR>
-nmap <silent> <c-l> :wincmd l<CR>
+    nmap <silent> <c-k> :wincmd k<CR>
+    nmap <silent> <c-j> :wincmd j<CR>
+    nmap <silent> <c-h> :wincmd h<CR>
+    nmap <silent> <c-l> :wincmd l<CR>
+
+" Tick boxes or check marks, etc.
+    inoremap ,box [ ]<esc>i
+    inoremap ,ch <esc>ci[<C-k>OK<esc>
+    inoremap ,part <esc>ci[<C-k>0m<esc>
+    inoremap ,fail <esc>ci[<C-k>*X<esc>
+
+    " In normal mode, <,box> will send the box to the end of the line.
+    nnoremap ,box $a<Space>[ ]<esc>i
+    nnoremap ,ch i<esc>ci[<C-k>OK<esc>
+    nnoremap ,part i<esc>ci[<C-k>0m<esc>
+    nnoremap ,fail i<esc>ci[<C-k>*X<esc>
 
 " Remaps arrow keys to move up or down by DISPLAY lines (like gj/gk)
-nnoremap <Up>   gk
-nnoremap <Down> gj
-xnoremap <Up>   gk
-xnoremap <Down> gj
-inoremap <Up>   <C-O>gk
-inoremap <Down> <C-O>gj
+    nnoremap <Up>   gk
+    nnoremap <Down> gj
+    xnoremap <Up>   gk
+    xnoremap <Down> gj
+    inoremap <Up>   <C-O>gk
+    inoremap <Down> <C-O>gj
 
 " Hopefully disables middle mouse click (and double/triple/quad click)
-nnoremap <MiddleMouse> <LeftMouse>
-xnoremap <MiddleMouse> <LeftMouse>
-inoremap <MiddleMouse> <LeftMouse>
-nnoremap <2-MiddleMouse> <nop>
-xnoremap <2-MiddleMouse> <nop>
-inoremap <2-MiddleMouse> <nop>
-nnoremap <3-MiddleMouse> <nop>
-xnoremap <3-MiddleMouse> <nop>
-inoremap <3-MiddleMouse> <nop>
-nnoremap <4-MiddleMouse> <nop>
-xnoremap <4-MiddleMouse> <nop>
-inoremap <4-MiddleMouse> <nop>
+    nnoremap <MiddleMouse> <LeftMouse>
+    xnoremap <MiddleMouse> <LeftMouse>
+    inoremap <MiddleMouse> <LeftMouse>
+    nnoremap <2-MiddleMouse> <nop>
+    xnoremap <2-MiddleMouse> <nop>
+    inoremap <2-MiddleMouse> <nop>
+    nnoremap <3-MiddleMouse> <nop>
+    xnoremap <3-MiddleMouse> <nop>
+    inoremap <3-MiddleMouse> <nop>
+    nnoremap <4-MiddleMouse> <nop>
+    xnoremap <4-MiddleMouse> <nop>
+    inoremap <4-MiddleMouse> <nop>
 
 "map jk and kj to escape using easyescape
     let g:easyescape_chars = { "j": 1, "k": 1 }
@@ -136,8 +148,8 @@ inoremap <4-MiddleMouse> <nop>
     cnoremap kj <ESC>
 
 " Ctrl + BS in insert mode deletes entire word
-noremap! <C-BS> <C-w>
-noremap! <C-h> <C-w>
+    noremap! <C-BS> <C-w>
+    noremap! <C-h> <C-w>
 
 """""""""""""""
 """PLUGINS"""""
