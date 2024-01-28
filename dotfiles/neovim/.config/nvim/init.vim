@@ -114,10 +114,16 @@ set splitbelow splitright
     inoremap ,fail <esc>ci[<C-k>*X<esc>
 
     " In normal mode, <,box> will send the box to the end of the line.
-    nnoremap ,box $a<Space>[ ]<esc>i
-    nnoremap ,ch i<esc>ci[<C-k>OK<esc>
-    nnoremap ,part i<esc>ci[<C-k>0m<esc>
-    nnoremap ,fail i<esc>ci[<C-k>*X<esc>
+    " nnoremap ,box $a<Space>[ ]<esc>i
+    " nnoremap ,ch i<esc>ci[<C-k>OK<esc>
+    " nnoremap ,part i<esc>ci[<C-k>0m<esc>
+    " nnoremap ,fail i<esc>ci[<C-k>*X<esc>
+
+    " In normal mode <,box> should place the box after the - or * but before
+    " the text.
+    nnoremap ,box ^a [ ]<esc> 
+    nnoremap ,ch ^f[lci[<C-k>OK<esc>
+    nnoremap ,part ^f[lci[<C-k>0m<esc>
 
 " Remaps arrow keys to move up or down by DISPLAY lines (like gj/gk)
     nnoremap <Up>   gk
