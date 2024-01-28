@@ -287,6 +287,10 @@ augroup custom_highlight
   au ColorScheme * highlight StartifyFooter ctermfg=131 ctermbg=145
 augroup END
 
+" augroup wiki_highlight
+"     autocmd!
+"     au ColorScheme
+
 """""""""""""""
 """VIMTEX.CONF" (Settings for VimTex plugin)
 """""""""""""""
@@ -370,6 +374,13 @@ set foldlevel=1
 """"""""""""""""""""""""""""""""""""""""
 ""SETTINGS THAT LIKE TO BE CALLED LATE""
 """"""""""""""""""""""""""""""""""""""""
+
+
+" Sets color scheme based on file type, then returns to a default
+" when exiting a buffer of that file type.
+autocmd BufNewFile,BufRead *.wiki let g:tmpcolor=g:colors_name            
+autocmd BufEnter *.wiki colorscheme darkblue | set ft=habamax                  
+autocmd BufLeave *.wiki exe 'colorscheme '.g:tmpcolor                     
 
 " Start NERDTree and put the cursor back in the other window.
 " autocmd VimEnter * NERDTree | wincmd p
