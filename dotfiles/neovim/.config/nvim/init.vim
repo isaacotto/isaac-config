@@ -125,6 +125,11 @@ set splitbelow splitright
     nnoremap ,ch ^f[lci[<C-k>OK<esc>
     nnoremap ,part ^f[lci[<C-k>0m<esc>
 
+" Flat, sharp and natural accidentals.
+    inoremap ,flat <C-K>Mb
+    inoremap ,sharp <C-k>MX
+    inoremap ,natural <C-k>Mx
+
 " Remaps arrow keys to move up or down by DISPLAY lines (like gj/gk)
     nnoremap <Up>   gk
     nnoremap <Down> gj
@@ -379,7 +384,7 @@ set foldlevel=1
 " Sets color scheme based on file type, then returns to a default
 " when exiting a buffer of that file type.
 autocmd BufNewFile,BufRead *.wiki let g:tmpcolor=g:colors_name            
-autocmd BufEnter *.wiki colorscheme darkblue | set ft=habamax                  
+autocmd BufEnter *.wiki colorscheme kanagawa-wave | set ft=habamax                  
 autocmd BufLeave *.wiki exe 'colorscheme '.g:tmpcolor                     
 
 " Start NERDTree and put the cursor back in the other window.
