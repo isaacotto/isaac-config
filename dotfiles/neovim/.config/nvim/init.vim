@@ -107,6 +107,12 @@ set splitbelow splitright
     nmap <silent> <c-h> :wincmd h<CR>
     nmap <silent> <c-l> :wincmd l<CR>
 
+" Quotation marks
+    inoremap ,germanleft „
+    inoremap ,germanright “
+    inoremap ,frenchleft « 
+    inoremap ,frenchright  »
+    
 " Tick boxes or check marks, etc.
     inoremap ,box [ ]<esc>i
     inoremap ,ch <esc>ci[<C-k>OK<esc>
@@ -241,8 +247,8 @@ Plug 'mhinz/vim-startify'
 "	  \ ]
 "
     let g:startify_bookmarks= [
-                \ {'v': '~/.config/nvim/init.vim'},
-                \ {'k': '~/.config/kitty/kitty.conf'},
+                \ {'1': '~/.config/nvim/init.vim'},
+                \ {'2': '~/.config/kitty/kitty.conf'},
                 \ ]
 
 	let g:startify_lists = [
