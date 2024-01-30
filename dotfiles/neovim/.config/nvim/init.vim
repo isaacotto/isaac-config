@@ -242,6 +242,7 @@ Plug 'mhinz/vim-startify'
 "
     let g:startify_bookmarks= [
                 \ {'v': '~/.config/nvim/init.vim'},
+                \ {'k': '~/.config/kitty/kitty.conf'},
                 \ ]
 
 	let g:startify_lists = [
