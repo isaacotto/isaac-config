@@ -168,6 +168,9 @@ set splitbelow splitright
     noremap! <C-BS> <C-w>
     noremap! <C-h> <C-w>
 
+" pdf word count
+    nnoremap ,pdfcount :!<Space>ps2ascii<Space>%:r.pdf<Space><BAR><Space>wc<Space>-w<CR>
+
 """""""""""""""
 """PLUGINS"""""
 """""""""""""""
