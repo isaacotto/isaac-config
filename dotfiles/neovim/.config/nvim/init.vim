@@ -378,13 +378,12 @@ augroup end
 
 " sets vimwiki folding behavior (can be '' to disable
 " 'expr' 'syntax' or 'list')
-let g:vimwiki_folding='syntax'
+let g:vimwiki_folding=''
 
 " sets fold level for entirety of vim
 " this should leave the topmost level 
-" open but anything underneat is fol-
-" ded by default.
-set foldlevel=1
+" open but anything underneath is folded by default.
+" set foldlevel=1
 
 """"""""""""""""""""""""""""""""""""""""
 ""SETTINGS THAT LIKE TO BE CALLED LATE""
