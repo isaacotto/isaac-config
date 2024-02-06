@@ -385,6 +385,10 @@ let g:vimwiki_folding=''
 " open but anything underneath is folded by default.
 " set foldlevel=1
 
+" Should auto-update vimwiki diary index whenever it's reloaded
+" let g:vimwiki_list = [{'auto_diary_index': 1}]
+autocmd BufEnter diary.md :VimwikiDiaryGenerateLinks
+
 """"""""""""""""""""""""""""""""""""""""
 ""SETTINGS THAT LIKE TO BE CALLED LATE""
 """"""""""""""""""""""""""""""""""""""""
