@@ -139,6 +139,13 @@ function lazygit() {
     git push
 }
 
+# Command will copy desired "locate" result (number)
+# to the clipboard with format:
+# > locatecopy something 1
+locatecopy() {
+    locate $1 | sed -n $2p | xsel -i -b
+}
+
 # Elapsed and execution time display for commands in ZSH
 function preexec() {
   timer=$(($(date +%s%0N)/1000000))
