@@ -120,8 +120,8 @@
     " In normal mode <,box> should place the box after the - or * but before
     " the text.
     nnoremap ,box ^a [ ]<esc> 
-    nnoremap ,ch ^f[lci[<C-k>OK<esc>
-    nnoremap ,part ^f[lci[<C-k>0m<esc>
+    nnoremap ,ch ^f]hci[<C-k>OK<esc>
+    nnoremap ,part ^f]hci[<C-k>0m<esc>
 
 " Flat, sharp and natural accidentals.
     inoremap ,flat <C-K>Mb
@@ -370,7 +370,7 @@ call plug#end()
 
 " COLOR SCHEME STUFF SEEMS TO ENJOY BEING AT THE END
     set background=dark
-    colorscheme habamax
+    colorscheme PaperColor
     "colorscheme kanagawa-dragon
     "colorscheme default
 

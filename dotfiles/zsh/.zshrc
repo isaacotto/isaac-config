@@ -133,6 +133,8 @@ alias ttt="trash-put"
 
 alias tail="colortail"
 
+alias calcurse="calcurse -D ~/Sync/calcurse"
+
 function lazygit() {
     git add .
     git commit -am "$1"

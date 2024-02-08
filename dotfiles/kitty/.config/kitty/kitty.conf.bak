@@ -1477,6 +1477,6 @@ background_opacity 0.91
 
 
 # BEGIN_KITTY_THEME
-# Dark Pastel
+# Seafoam Pastel
 include current-theme.conf
 # END_KITTY_THEME
