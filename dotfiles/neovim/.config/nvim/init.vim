@@ -328,7 +328,21 @@ call plug#end()
     "  autocmd BufReadPost quickfix 5wincmd _
     " augroup END
 
-"""END VIMTEX"""""""""""""""""""""""""""
+" END VIMTEX
+
+" HTML SETTINGS
+    
+" This sets the foldmethod to "marker" for html documents.
+" Use {{{sometag or <-- {{{sometag -->
+" Ideally there would be a way to do this ONLY when the 
+" file is opened in neomutt. Maybe you can pass commands when
+" opening the editor?
+    "autocmd FileType html set foldmethod=marker
+
+" This issues a command which pastes my email template into a document, first
+" setting fold method to "marker". You could just use :r to read the file but
+" .-1read pastes -1 lines up.
+    nnoremap ,email :set foldmethod=marker<CR>G:.-1read ~/.mutt/templates/emailtemplate.html<CR>jji
 
 """"""""""""""""""""""""""""""""""""""""
 ""VIMWIKI SETTINGS""""""""""""""""""""""
