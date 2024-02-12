@@ -315,6 +315,9 @@ call plug#end()
 
     autocmd FileType tex,latex inoremap ,bp \documentclass{article}<CR><CR>\usepackage[margin=1in]{geometry}<CR><CR>\title{Title}<CR>\author{Isaac Otto}<CR>\date{\today}<CR><CR>\begin{document}<CR>\maketitle<CR><CR><CR><CR>\end{document}<Esc>2ki
 
+" Sets char limit to 80 only for wiki files.
+    autocmd bufreadpre *.wiki setlocal textwidth=80
+
 " turn off the dumb vimtex concealing function!!
     let g:vimtex_syntax_conceal_disable = 1
 
