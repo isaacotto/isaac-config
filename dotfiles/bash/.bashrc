@@ -122,3 +122,5 @@ export PATH=/usr/local/texlive/2023/bin/x86_64-linux:$PATH
 . "$HOME/.cargo/env"
 PATH="$HOME/.local/bin:$PATH"
 PATH="$HOME/.local/bin:$PATH"
+
+export PATH="$PATH:/opt/nvim/"
