@@ -19,8 +19,8 @@
 #: etc. For example::
 
 #       font_family      Inconsolata Nerd Font 
-#       font_family      FiraCode Nerd Font
-       font_family      CaskaydiaCove Nerd Font
+        font_family      FiraCode Nerd Font
+#       font_family      CaskaydiaCove Nerd Font
 #       bold_font        CaskaydiaCoveNerdFont-Bold.ttf
 #       italic_font      CaskaydiaCoveNerdFont-Italic.ttf
 #       bold_italic_font CaskaydiaCoveNerdFont-BoldItalic.ttf
@@ -1477,6 +1477,6 @@ background_opacity 0.91
 
 
 # BEGIN_KITTY_THEME
-# Dark Pastel
+# C64
 include current-theme.conf
 # END_KITTY_THEME

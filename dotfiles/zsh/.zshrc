@@ -5,6 +5,9 @@ export PATH=$HOME/bin:/usr/local/texlive/2023/bin/x86_64-linux:/usr/local/sbin:/
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+export EDITOR=nvim
+export VISUAL=nvim
+
 # Different theme for SSH connections.
 # Top line is in case of SSH connection,
 # "else" is default.

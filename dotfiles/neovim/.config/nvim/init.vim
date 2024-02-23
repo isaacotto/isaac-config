@@ -111,6 +111,12 @@
     inoremap ,part <esc>ci[<C-k>0m<esc>
     inoremap ,fail <esc>ci[<C-k>*X<esc>
 
+" shortcut for "select all"
+    nnoremap ,a ggVG
+
+" run command on cursor line
+    nnoremap ,run "zyy:@z<CR>
+
     " In normal mode, <,box> will send the box to the end of the line.
     " nnoremap ,box $a<Space>[ ]<esc>i
     " nnoremap ,ch i<esc>ci[<C-k>OK<esc>
