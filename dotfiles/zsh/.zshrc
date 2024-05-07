@@ -144,6 +144,10 @@ function lazygit() {
     git push
 }
 
+function wordcount() {
+    pdftotext "$1" - | tr -d '.' | wc -w
+}
+
 # Command will copy desired "locate" result (number)
 # to the clipboard with format:
 # > locatecopy something 1
