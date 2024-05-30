@@ -362,6 +362,16 @@ call plug#end()
 """"""""""""""""""""""""""""""""""""""""
 ""VIMWIKI SETTINGS""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""
+
+let wiki_1 = {}
+let wiki_1.path = '~/vimwiki/'
+let wiki_1.syntax = 'markdown'
+let wiki_1.ext = '.md'
+
+let g:vimwiki_global_ext = 0 " This will make sure vimwiki will only set the filetype of markdown files inside a wiki directory, rather than globally.
+let g:vimwiki_list = [wiki_1]
+let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+
     command! Diary VimwikiDiaryIndex
     augroup vimwikigroup
         autocmd!
