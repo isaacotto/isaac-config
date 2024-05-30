@@ -188,6 +188,9 @@ call plug#begin()
 """"""""""""""""""""""""""""""""
 """"""""""""MY PLUGINS""""""""""
 """"""""""""""""""""""""""""""""
+" I don't know if this will work:
+    Plug 'vim-voom/VOoM'
+
 " Goyo distraction-free writing
     Plug 'junegunn/goyo.vim'
 
