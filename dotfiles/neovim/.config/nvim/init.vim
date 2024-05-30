@@ -188,6 +188,11 @@ call plug#begin()
 """"""""""""""""""""""""""""""""
 """"""""""""MY PLUGINS""""""""""
 """"""""""""""""""""""""""""""""
+" Goyo distraction-free writing
+    Plug 'junegunn/goyo.vim'
+
+" Vim Peekaboo (allows viewing of registers)
+    Plug 'junegunn/vim-peekaboo'
 
 " Nerdtree file browser
     Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -200,6 +205,7 @@ call plug#begin()
 
 " Get Utilisnips
     Plug 'sirver/ultisnips'
+
 " Snippets are separated from the engine. Add this if you want them:
     Plug 'honza/vim-snippets'
 
