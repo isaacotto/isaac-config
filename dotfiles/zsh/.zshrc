@@ -8,6 +8,9 @@ export ZSH="$HOME/.oh-my-zsh"
 export EDITOR=nvim
 export VISUAL=nvim
 
+# Open tmux automatically if installed and not already running
+if [ "$TMUX" = "" ]; then tmux; fi
+
 # Different theme for SSH connections.
 # Top line is in case of SSH connection,
 # "else" is default.

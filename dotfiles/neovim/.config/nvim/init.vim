@@ -241,8 +241,8 @@ call plug#begin()
 "	  \ ]
 "
     let g:startify_bookmarks= [
-                \ {'1': '~/.config/nvim/init.vim'},
-                \ {'2': '~/.config/kitty/kitty.conf'},
+                \ {'I': '~/.config/nvim/init.vim'},
+                \ {'K': '~/.config/kitty/kitty.conf'},
                 \ ]
 
 	let g:startify_lists = [
