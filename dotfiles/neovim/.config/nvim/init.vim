@@ -20,33 +20,35 @@
 "to the ssh-askpass utility
     com -bar W exe 'w !sudo tee >/dev/null %:p:S' | set1 nomod
 
-    set nocompatible            " disable compatibility to old-time vi
+    set nocompatible             " disable compatibility to old-time vi
     set foldmethod=syntax
-    "set showmatch              " show matching 
-    set ignorecase              " case insensitive 
-    set hlsearch                " highlight search 
-    set incsearch               " incremental search
-    set tabstop=4               " number of columns occupied by a tab 
-    set softtabstop=4           " see multiple spaces as tabstops so <BS> does the right thing
-    set expandtab               " converts tabs to white space
-    set shiftwidth=4            " width for autoindents
-    "set autoindent              " indent a new line the same amount as the line just typed
-    set number                  " add line numbers
-    set relativenumber          " line numbers relative to cursor
-                                " (having both on at once allows hybrid)
-    set wildmode=longest,list   " get bash-like tab completions
-    filetype plugin indent on   " allow auto-indenting depending on file type
-    syntax on                   " syntax highlighting
-    set mouse=a                 " enable mouse click
-    set cursorline              " highlight current cursorline
-    set ttyfast                 " Speed up scrolling in Vim
-    set spell                   " enable spell check (may need to download language package)
-    " set noswapfile            " disable creating swap file
+    "set showmatch               " show matching 
+    set ignorecase               " case insensitive 
+    set hlsearch                 " highlight search 
+    set incsearch                " incremental search
+    set tabstop=4                " number of columns occupied by a tab 
+    set softtabstop=4            " see multiple spaces as tabstops so <BS> does the right thing
+    set expandtab                " converts tabs to white space
+    set shiftwidth=4             " width for autoindents
+    "set autoindent               " indent a new line the same amount as the line just typed
+    set number                   " add line numbers
+    set relativenumber           " line numbers relative to cursor
+                                 " (having both on at once allows hybrid)
+    set wildmode=longest,list    " get bash-like tab completions
+    filetype plugin indent on    " allow auto-indenting depending on file type
+    syntax on                    " syntax highlighting
+    set mouse=a                  " enable mouse click
+    set cursorline               " highlight current cursorline
+    set ttyfast                  " Speed up scrolling in Vim
+    set spell                    " enable spell check (may need to download language package)
+    " set noswapfile             " disable creating swap file
     " set backupdir=~/.cache/vim " Directory to store backup files.
+    set conceallevel=2         " This is for markdown concealing.
+    let g:vim_markdown_folding_level = 0
 
 " sets column at 80 characters in gray
-    highlight ColorColumn ctermbg=gray
-    set colorcolumn=80
+"    highlight ColorColumn ctermbg=gray
+"    set colorcolumn=80
 
 " enable soft wrapping at the edge of the screen
     set wrap
@@ -190,6 +192,10 @@ call plug#begin()
 """"""""""""""""""""""""""""""""
 " I don't know if this will work:
     Plug 'vim-voom/VOoM'
+
+" Better markdown behavior??
+    Plug 'godlygeek/tabular'
+    Plug 'preservim/vim-markdown'
 
 " Goyo distraction-free writing
     Plug 'junegunn/goyo.vim'
@@ -366,13 +372,28 @@ call plug#end()
 ""VIMWIKI SETTINGS""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""
 
-let wiki_1 = {}
-let wiki_1.path = '~/vimwiki/'
-let wiki_1.syntax = 'markdown'
-let wiki_1.ext = '.md'
+" Creates default settings which hold across all wikis.
+let wiki_default = {}
+let wiki_default.auto_export = 0
+let wiki_default.auto_toc = 0
+let wiki_default.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'sh': 'sh'}
+let wiki_default.syntax = 'markdown'
+let wiki_default.ext = '.md'
+
+" Default wiki
+let home_wiki = copy(wiki_default)
+let home_wiki.path = '~/vimwiki/'
+let home_wiki.diary_rel_path = 'diary/'
+let home_wiki.path_html = '~/html/vimwiki/'
+
+" Work wiki
+let work_wiki = copy(wiki_default)
+let work_wiki.path = '~/isaac-otto-usc-docs/'
+let work_wiki.diary_rel_path = 'logbook/'
+
+let g:vimwiki_list = [home_wiki, work_wiki]
 
 let g:vimwiki_global_ext = 0 " This will make sure vimwiki will only set the filetype of markdown files inside a wiki directory, rather than globally.
-let g:vimwiki_list = [wiki_1]
 let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
 
     command! Diary VimwikiDiaryIndex
