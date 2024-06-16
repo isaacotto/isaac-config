@@ -199,6 +199,7 @@ call plug#begin()
 
 " Goyo distraction-free writing
     Plug 'junegunn/goyo.vim'
+    :command Minimal Goyo
 
 " Vim Peekaboo (allows viewing of registers)
     Plug 'junegunn/vim-peekaboo'
