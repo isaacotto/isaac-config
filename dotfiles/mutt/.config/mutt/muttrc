@@ -1,0 +1,154 @@
+# vim: filetype=neomuttrc
+source /usr/local/share/mutt-wizard/mutt-wizard.muttrc
+source /home/io/.config/mutt/accounts/isaacottohayes@gmail.com.muttrc
+macro index,pager i1 '<sync-mailbox><enter-command>source /home/io/.config/mutt/accounts/isaacottohayes@gmail.com.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to isaacottohayes@gmail.com"
+
+set editor="/home/io/.appImage/nvim.appimage"
+
+#source /home/io/.config/mutt/mutt-colors-solarized/mutt-colors-solarized-dark-16.muttrc
+
+bind index Z noop
+bind index Z delete-pattern
+bind index,compose <f12> edit-type
+
+# The following settings come from 
+# https://gideonwolfe.com/posts/workflow/neomutt/intro/
+
+# Set preferred view modes
+auto_view text/html text/calendar application/ics
+# View html automatically
+alternative_order text/html text/plain text/enriched text/*
+
+# Setting this allows default outgoing to be text/html but for some reason it
+# opens VIM instead of NEOVIM ... Why?? Well, if I uninstall vim it works...
+# Doesn't help if I set the editor here or in bash/zshrc or in
+# update-alternatives or anything.
+set content_type = "text/html"
+
+# main options
+set envelope_from
+set edit_headers
+set fast_reply
+set askcc
+set fcc_attach
+set forward_format = "Fwd: %s"
+set forward_decode
+set attribution = "On %d, %n wrote:"
+set reply_to
+set reverse_name
+set include
+set forward_quote
+set text_flowed
+# unset sig_dashes  # dashes in signature
+unset mime_forward
+#unset help
+
+unset confirmappend      # don't ask, just do!
+set quit                 # don't ask, just do!!
+unset mark_old           # read/new is good enough for me
+set beep_new             # bell on new mails
+set pipe_decode          # strip headers and eval mimes when piping
+set thorough_search      # strip headers and eval mimes before searching
+set timeout = 0
+
+# status bar, date format, finding stuff etc.
+set status_chars = " *%A"
+set status_format = "[ Folder: %f ] [%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]%>─%?p?( %p postponed )?"
+set date_format = "%d.%m.%Y %H:%M"
+set sort = threads
+set sort_aux = reverse-last-date-received
+set uncollapse_jump
+set sort_re
+set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+set send_charset = "utf-8:iso-8859-1:us-ascii"
+set charset = "utf-8"
+set arrow_cursor = "no" # Change `color indicator` depending 
+
+# Pager View Options
+set pager_index_lines = 10  # Shows 10 lines of index when pager is active
+set pager_context = 3
+set pager_stop
+set menu_scroll
+set tilde
+unset markers
+
+
+# DEFUNCTS #
+
+# macro compose m \
+# "<enter-command>set pipe_decode<enter>\
+# <pipe-message>docker run -i -v /tmp:/tmp --rm pandoc/core -f gfm -t plain -o /tmp/msg.txt<enter>\
+# <pipe-message>docker run -i -v /tmp:/tmp -v ~/.mutt/templates/email.html:/mutt/templates/email.html --rm pandoc/core -s -f gfm --self-contained -o /tmp/msg.html --resource-path /mutt/templates/ --template email<enter>\
+# <enter-command>unset pipe_decode<enter>\
+# <attach-file>/tmp/msg.txt<enter>\
+# <attach-file>/tmp/msg.html<enter>\
+# <tag-entry><previous-entry><tag-entry><group-alternatives>" \
+# "Convert markdown to HTML5 and plaintext alternative content types"
+
+# source ~/.mutt/gruvbox/colors-gruvbox-shuber.muttrc
+# # For neomutt uncomment this line:
+# source ~/.mutt/gruvbox/colors-gruvbox-shuber-extended.muttrc
+
+# A BIG HONKIN COLOR SETUP FILE
+
+## -------------------------------------------------------------------------
+## Name: color 
+## -------------------------------------------------------------------------
+## 
+## -------------------------------------------------------------------------
+#color normal            default             default
+#color indicator         brightyellow        red    
+#color tree              default             default 
+#color status            brightgreen         blue 
+#color error             brightred           default
+#color message           red                 default
+#color signature         red                 default
+#color attachment        yellow              default
+#color search            brightyellow        red 
+#color tilde             brightmagenta       default
+#color markers           red                 default
+#color hdrdefault        cyan                default
+#color bold              green               black  
+#color underline         yellow              black 
+
+#color index_flags       black               white           ~D  
+#color index_flags       green               default         ~g 
+#color index_flags       brightgreen         default         ~G 
+#color index_flags       yellow              default         ~N
+
+#color index_author      blue                brightred       ~F
+#color index_author      black               green          '%f Bekannte'
+#color index_author      black               red            '%f Work'
+
+#color index_number      green               default
+#color index_date        cyan                default 
+#color index_size        cyan                default
+
+#color header            brightcyan          default        '^From:'
+#color header            brightcyan          default        '^Subject:'
+#color header            black               brightgreen    '^User-Agent:.*Mutt'
+
+#color body              brightwhite         default        "([0-2][0-9]|[0-9]|[1-2][0-9]):[0-5][0-9](:[0-5][0-9])?"
+#color body              brightwhite         default        "([0-3])?[0-9]\\.([0-1])?[0-9]\\.([1-2][0-9])?[0-9][0-9]"
+#color body              brightgreen         default        "(^| )_[[:print:]]+_[ \n]"
+#color body              brightred           default        "(^| )\\*[[:print:]]+\\*[,.?!]?[ \n]"
+#color body              brightdefault       default        "^[[:blank:]]*-[[:print:]]+$"
+#color body              brightdefault       default        "^[[:blank:]]*\\*[[:print:]]+$"
+#color body              brightdefault       blue           "^=+[[:print:]]+$"
+#color body              default             blue           "^===+$"
+#color body              default             blue           "^---+$"
+#color body              brightdefault       blue           "^#+[[:print:]]+$"
+
+#color quoted     magenta        default 
+#color quoted1    red            default 
+#color quoted2    green          default 
+#color quoted3    magenta        default 
+#color quoted4    blue           default 
+#color quoted5    cyan           default 
+#color quoted6    green          default 
+#color quoted7    red            default 
+#color quoted8    magenta        default 
+#color quoted9    blue           default 
+
+

@@ -193,6 +193,9 @@ call plug#begin()
 " I don't know if this will work:
     Plug 'vim-voom/VOoM'
 
+" Adds new fun functionality like :Remove
+    Plug 'tpope/vim-eunuch'
+
 " Better markdown behavior??
     Plug 'godlygeek/tabular'
     Plug 'preservim/vim-markdown'
