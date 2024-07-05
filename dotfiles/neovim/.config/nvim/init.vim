@@ -113,6 +113,13 @@
     inoremap ,part <esc>ci[<C-k>0m<esc>
     inoremap ,fail <esc>ci[<C-k>*X<esc>
 
+" shortcut for spellchecking. auto-corrects last mistake and jumps back to
+" prev. cursor position.
+    inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+
+" Open markdown files with Firefox.
+    autocmd BufEnter *.md exe 'noremap <F5> :! /usr/lib/firefox/firefox %:p<CR><CR>'
+
 " shortcut for "select all"
     nnoremap ,a ggVG
 
