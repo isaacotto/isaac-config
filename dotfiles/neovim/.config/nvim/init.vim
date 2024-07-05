@@ -199,6 +199,9 @@ call plug#begin()
 """"""""""""""""""""""""""""""""
 " I don't know if this will work:
     Plug 'vim-voom/VOoM'
+    
+    let voom_ft_modes = {'markdown': 'pandoc', 'rmd': 'pandoc'}
+    au BufRead,BufNewFIle *.Rmd command! Toc Voom
 
 " Adds new fun functionality like :Remove
     Plug 'tpope/vim-eunuch'
