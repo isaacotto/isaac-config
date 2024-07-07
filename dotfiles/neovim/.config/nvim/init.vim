@@ -203,6 +203,9 @@ call plug#begin()
     let voom_ft_modes = {'markdown': 'pandoc', 'rmd': 'pandoc'}
     au BufRead,BufNewFIle *.Rmd command! Toc Voom
 
+" Surround.vim allows for more complex "surroundings"
+    Plug 'tpope/vim-surround'    
+
 " Adds new fun functionality like :Remove
     Plug 'tpope/vim-eunuch'
 
