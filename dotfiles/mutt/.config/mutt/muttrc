@@ -3,9 +3,10 @@ source /usr/local/share/mutt-wizard/mutt-wizard.muttrc
 source /home/io/.config/mutt/accounts/isaacottohayes@gmail.com.muttrc
 macro index,pager i1 '<sync-mailbox><enter-command>source /home/io/.config/mutt/accounts/isaacottohayes@gmail.com.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to isaacottohayes@gmail.com"
 
-set editor="/home/io/.appImage/nvim.appimage"
+set editor = nvim
 
-#source /home/io/.config/mutt/mutt-colors-solarized/mutt-colors-solarized-dark-16.muttrc
+source /home/io/.config/mutt/mutt-colors-solarized/mutt-colors-solarized-dark-16.muttrc
+
 
 bind index Z noop
 bind index Z delete-pattern
@@ -21,8 +22,6 @@ alternative_order text/html text/plain text/enriched text/*
 
 # Setting this allows default outgoing to be text/html but for some reason it
 # opens VIM instead of NEOVIM ... Why?? Well, if I uninstall vim it works...
-# Doesn't help if I set the editor here or in bash/zshrc or in
-# update-alternatives or anything.
 set content_type = "text/html"
 
 # main options
