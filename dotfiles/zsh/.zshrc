@@ -18,7 +18,8 @@ if [[ -n $SSH_CONNECTION ]]; then
     ZSH_THEME="agnoster"
 else
     #ZSH_THEME="powerlevel9k/powerlevel9k"
-    ZSH_THEME="robbyrussell"
+    #ZSH_THEME="robbyrussell"
+    ZSH_THEME="agnoster"
 fi
 
 # Set name of the theme to load --- if set to "random", it will
@@ -45,7 +46,7 @@ fi
 
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
+ zstyle ':omz:update' mode auto      # update automatically without asking
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
@@ -112,7 +113,7 @@ source $ZSH/oh-my-zsh.sh
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
-#   export EDITOR='mvim'
+#   export EDITOR='nvim'
 # fi
 
 # Compilation flags
@@ -134,7 +135,7 @@ alias texcompile="latexmk -lualatex"
 
 alias thes="dict -d moby-thesaurus"
 
-alias rm='echo "Consider using trash-put (ttt) instead. If you want rm, type \rm."; false'
+alias rm='echo "Consider using trash-put (ttt) instead. If you want rm, type <backslash>rm."; false'
 alias ttt="trash-put"
 
 alias tail="colortail"
