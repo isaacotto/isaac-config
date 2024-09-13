@@ -1,90 +1,55 @@
-
-"  ██████  ████████ ████████  ██████        ██    ██ ██ ███    ███ 
-" ██    ██    ██       ██    ██    ██       ██    ██ ██ ████  ████ 
-" ██    ██    ██       ██    ██    ██ █████ ██    ██ ██ ██ ████ ██ 
-" ██    ██    ██       ██    ██    ██        ██  ██  ██ ██  ██  ██ 
-"  ██████     ██       ██     ██████          ████   ██ ██      ██
-"                         _   _                        
-"                        | | (_)                       
-"                        | |  _   _ __    _   _  __  __
-"                        | | | | | '_ \  | | | | \ \/ /
-"                        | | | | | | | | | |_| |  >  < 
-"                        |_| |_| |_| |_|  \__,_| /_/\_\
+"   __  ____  ____  __        _  _  __  _  _  
+"  /  \(_  _)(_  _)/  \  ___ / )( \(  )( \/ ) 
+" (  O ) )(    )( (  O )(___)\ \/ / )( / \/ \ 
+"  \__/ (__)  (__) \__/       \__/ (__)\_)(_/ 
                                        
-"""""""""""""""""""""""""""""""
-"""BASIC CONFIGURATIONS""""""""
-"""""""""""""""""""""""""""""""
+" ---- Basic Config ----------------------------------
 
-"should allow saving with root privileges using :W
-"you will probably have to edit sudo.conf to point it 
-"to the ssh-askpass utility
-    com -bar W exe 'w !sudo tee >/dev/null %:p:S' | set1 nomod
+set nocompatible            " disable compatibility to old-time vi
+set foldmethod=syntax       " folds based on file syntax
+set smartcase               " case insensitive unless capital letters in search term
+set hlsearch                " highlight search 
+set incsearch               " incremental search
+set tabstop=2               " number of columns occupied by a tab 
+set softtabstop=2           " see multiple spaces as tabstops so <BS> does the right thing
+set expandtab               " converts tabs to white space
+set shiftwidth=2            " width for autoindents
+set number                  " add line numbers
+set relativenumber          " line numbers relative to cursor (use both number/relative for hybrid)
+set wildmode=longest,list   " get bash-like tab completions
+set mouse=a                 " enable mouse click
+set cursorline              " highlight current cursorline
+set ttyfast                 " Speed up scrolling in Vim
+set spell                   " enable spell check (may need to download language package)
+set noswapfile              " disable creating swap file
+set backupdir=~/.cache/vim  " Directory to store backup files.
+set conceallevel=2          " This is for markdown concealing.
+"set showmatch               " show matching 
+"set autoindent              " indent a new line the same amount as the line just typed
+set wrap                    " enable soft wrapping at the edge of the screen
+set linebreak               " make text not wrap in the middle of a "word"
+set whichwrap+=<,>,h,l      " allows < > h l to move to next/previous line
+set breakindent             "indents wrapped lines to level of current tab
+set showtabline=2           " always show tabs bar at top of screen
+set splitbelow splitright   " sets default new split to either below buffer or to right
+set clipboard+=unnamedplus  " set system clipboard to be default copy/paste register
 
-    set nocompatible             " disable compatibility to old-time vi
-    set foldmethod=syntax
-    "set showmatch               " show matching 
-    set ignorecase               " case insensitive 
-    set hlsearch                 " highlight search 
-    set incsearch                " incremental search
-    set tabstop=4                " number of columns occupied by a tab 
-    set softtabstop=4            " see multiple spaces as tabstops so <BS> does the right thing
-    set expandtab                " converts tabs to white space
-    set shiftwidth=4             " width for autoindents
-    "set autoindent               " indent a new line the same amount as the line just typed
-    set number                   " add line numbers
-    set relativenumber           " line numbers relative to cursor
-                                 " (having both on at once allows hybrid)
-    set wildmode=longest,list    " get bash-like tab completions
-    filetype plugin indent on    " allow auto-indenting depending on file type
-    syntax on                    " syntax highlighting
-    set mouse=a                  " enable mouse click
-    set cursorline               " highlight current cursorline
-    set ttyfast                  " Speed up scrolling in Vim
-    set spell                    " enable spell check (may need to download language package)
-    " set noswapfile             " disable creating swap file
-    " set backupdir=~/.cache/vim " Directory to store backup files.
-    set conceallevel=2         " This is for markdown concealing.
-    let g:vim_markdown_folding_level = 0
+filetype plugin indent on    " allow auto-indenting depending on file type
+syntax on                    " syntax highlighting
+
+let g:vim_markdown_folding_level = 0
 
 " sets column at 80 characters in gray
-"    highlight ColorColumn ctermbg=gray
-"    set colorcolumn=80
+" highlight ColorColumn ctermbg=gray
+" set colorcolumn=80
 
-" enable soft wrapping at the edge of the screen
-    set wrap
+" Open markdown files with Firefox.
+    autocmd BufEnter *.md exe 'noremap <F5> :! /usr/lib/firefox/firefox %:p<CR><CR>'
 
-" make text not wrap in the middle of a "word"
-    set linebreak
+" ---- Key Bindings -----------------------------------
 
-" allows < > h l to move to next/previous line
-    set whichwrap+=<,>,h,l
-
-"indents wrapped lines to level of current tab
-    set breakindent
-    " set breakindentopt=shift:2
-
-" Speed up text rendering which is necessary for some reason??
-    set ttyfast
-    set lazyredraw
-
-" set system clipboard to be default copy/paste register
-    set clipboard+=unnamedplus
-
-" always show tabs bar at top of screen
-    set showtabline=2
-
-" sets default new split location to either below current buffer or to right
-    set splitbelow splitright
-
-"""""""""""""""""
-"""KEY BINDINGS""
-"""""""""""""""""
-
-" Remap colon to semicolon to avoid "shift" when
-" entering commands. Then double press semicolon
-" to get semicolon.
-    "map ; :
-    "noremap ;; ;
+" Map global leader key to comma.
+    let mapleader=","           
 
 " ESC clears search field as well.
 " <silent> so that it doesn't display message.
@@ -102,46 +67,37 @@
     nmap <silent> <c-l> :wincmd l<CR>
 
 " Quotation marks
-    inoremap ,germanleft „
-    inoremap ,germanright “
-    inoremap ,frenchleft « 
-    inoremap ,frenchright  »
+    inoremap <leader>germanleft „
+    inoremap <leader>germanright “
+    inoremap <leader>frenchleft « 
+    inoremap <leader>frenchright  »
     
 " Tick boxes or check marks, etc.
-    inoremap ,box [ ]<esc>i
-    inoremap ,ch <esc>ci[<C-k>OK<esc>
-    inoremap ,part <esc>ci[<C-k>0m<esc>
-    inoremap ,fail <esc>ci[<C-k>*X<esc>
+    inoremap <leader>box [ ]<esc>i
+    inoremap <leader>ch <esc>ci[<C-k>OK<esc>
+    inoremap <leader>part <esc>ci[<C-k>0m<esc>
+    inoremap <leader>fail <esc>ci[<C-k>*X<esc>
+
+" In normal mode <,box> should place the box after the - or * but before
+" the text.
+    nnoremap <leader>box ^a [ ]<esc> 
+    nnoremap <leader>ch ^f]hci[<C-k>OK<esc>
+    nnoremap <leader>part ^f]hci[<C-k>0m<esc>
 
 " shortcut for spellchecking. auto-corrects last mistake and jumps back to
 " prev. cursor position.
     inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
-" Open markdown files with Firefox.
-    autocmd BufEnter *.md exe 'noremap <F5> :! /usr/lib/firefox/firefox %:p<CR><CR>'
-
 " shortcut for "select all"
-    nnoremap ,a ggVG
+    nnoremap <leader>a ggVG
 
 " run command on cursor line
-    nnoremap ,run "zyy:@z<CR>
-
-    " In normal mode, <,box> will send the box to the end of the line.
-    " nnoremap ,box $a<Space>[ ]<esc>i
-    " nnoremap ,ch i<esc>ci[<C-k>OK<esc>
-    " nnoremap ,part i<esc>ci[<C-k>0m<esc>
-    " nnoremap ,fail i<esc>ci[<C-k>*X<esc>
-
-    " In normal mode <,box> should place the box after the - or * but before
-    " the text.
-    nnoremap ,box ^a [ ]<esc> 
-    nnoremap ,ch ^f]hci[<C-k>OK<esc>
-    nnoremap ,part ^f]hci[<C-k>0m<esc>
+    nnoremap <leader>run "zyy:@z<CR>
 
 " Flat, sharp and natural accidentals.
-    inoremap ,flat <C-K>Mb
-    inoremap ,sharp <C-k>MX
-    inoremap ,natural <C-k>Mx
+    inoremap <leader>flat <C-K>Mb
+    inoremap <leader>sharp <C-k>MX
+    inoremap <leader>natural <C-k>Mx
 
 " Remaps arrow keys to move up or down by DISPLAY lines (like gj/gk)
     nnoremap <Up>   gk
@@ -176,28 +132,22 @@
     noremap! <C-h> <C-w>
 
 " pdf word count macro
-    nnoremap ,pdfcount :!<Space>ps2ascii<Space>%:r.pdf<Space><BAR><Space>wc<Space>-w<CR>
+    nnoremap <leader>pdfcount :!<Space>ps2ascii<Space>%:r.pdf<Space><BAR><Space>wc<Space>-w<CR>
 
-"""""""""""""""
-"""PLUGINS"""""
-"""""""""""""""
+" ---- Plugins ---------------------------------------
 
 call plug#begin()
     
-    " USE OF PLUGINS VIA VIMPLUG
-    "
-    " The default plugin directory will be as follows:
-    "   - Vim (Linux/macOS): '~/.vim/plugged'
-    "   - Vim (Windows): '~/vimfiles/plugged'
-    "   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
-    " You can specify a custom plugin directory by passing it as the argument
-    "   - e.g. `call plug#begin('~/.vim/plugged')`
-    "   - Avoid using standard Vim directory names like 'plugin'
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+" You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
 
-""""""""""""""""""""""""""""""""
-""""""""""""MY PLUGINS""""""""""
-""""""""""""""""""""""""""""""""
-" I don't know if this will work:
+" Markdown outliner
+" https://vim-voom.github.io/
     Plug 'vim-voom/VOoM'
     
     let voom_ft_modes = {'markdown': 'pandoc', 'rmd': 'pandoc'}
@@ -268,19 +218,27 @@ call plug#begin()
             \ ]
 
 
-	let g:startify_padding_left = 25
-	    let g:startify_custom_header = [
-	\ '     ╔═════════════════════════════════════════════════════════════════════╗ ',
-	\ '     ║                                                                     ║ ',
-	\ '     ║   ██████  ████████ ████████  ██████        ██    ██ ██ ███    ███   ║ ',
-	\ '     ║  ██    ██    ██       ██    ██    ██       ██    ██ ██ ████  ████   ║ ',
-	\ '     ║  ██    ██    ██       ██    ██    ██ █████ ██    ██ ██ ██ ████ ██   ║ ',
-	\ '     ║  ██    ██    ██       ██    ██    ██        ██  ██  ██ ██  ██  ██   ║ ',
-	\ '     ║   ██████     ██       ██     ██████          ████   ██ ██      ██   ║ ',
-	\ '     ║                                         (for Linux™)                ║ ',
-	\ '     ╚═════════════════════════════════════════════════════════════════════╝ ',
-	\]
+	" let g:startify_padding_left = 25
+	"     let g:startify_custom_header = [
+	" \ '     ╔═════════════════════════════════════════════════════════════════════╗ ',
+	" \ '     ║                                                                     ║ ',
+	" \ '     ║   ██████  ████████ ████████  ██████        ██    ██ ██ ███    ███   ║ ',
+	" \ '     ║  ██    ██    ██       ██    ██    ██       ██    ██ ██ ████  ████   ║ ',
+	" \ '     ║  ██    ██    ██       ██    ██    ██ █████ ██    ██ ██ ██ ████ ██   ║ ',
+	" \ '     ║  ██    ██    ██       ██    ██    ██        ██  ██  ██ ██  ██  ██   ║ ',
+	" \ '     ║   ██████     ██       ██     ██████          ████   ██ ██      ██   ║ ',
+	" \ '     ║                                         (for Linux™)                ║ ',
+	" \ '     ╚═════════════════════════════════════════════════════════════════════╝ ',
+	" \]
 	
+    let g:startify_padding_left = 7
+        let g:startify_custom_header = [
+\ '   __  ____  ____  __        _  _  __  _  _  ',
+\ '  /  \(_  _)(_  _)/  \  ___ / )( \(  )( \/ ) ',
+\ ' (  O ) )(    )( (  O )(___)\ \/ / )( / \/ \ ',
+\ '  \__/ (__)  (__) \__/       \__/ (__)\_)(_/ ',
+\]
+
 	let g:startify_commands = []
 	let g:startify_files_number = 5
 	let g:startify_session_before_save = []
@@ -297,12 +255,12 @@ call plug#begin()
     Plug 'tpope/vim-commentary'
 
 call plug#end()
-"""""""""""""""
-"""END PLUGINS"
-"""""""""""""""
-" For some reason this REALLY wants to go here.
-" Now, no matter what color scheme is used, it will
-" make the header color #131 (indian red)
+
+" Custom startify highlighting scheme:
+    " For some reason this REALLY wants to go here.
+    " Now, no matter what color scheme is used, it will
+    " make the header color #131 (indian red)
+     
     augroup custom_highlight
       autocmd!
       au ColorScheme * highlight StartifyHeader ctermfg=131
@@ -312,9 +270,8 @@ call plug#end()
       au ColorScheme * highlight StartifyFooter ctermfg=131 ctermbg=145
     augroup END
 
-"""""""""""""""
-"""VIMTEX.CONF" (Settings for VimTex plugin)
-"""""""""""""""
+" ---- Vimtex configuration --------------------------
+  
 " Viewer options: One may configure the viewer either by specifying a built-in
 " viewer method:
     let g:vimtex_view_method = 'zathura'
@@ -369,9 +326,8 @@ call plug#end()
     "  autocmd BufReadPost quickfix 5wincmd _
     " augroup END
 
-" END VIMTEX
 
-" HTML SETTINGS
+" ---- HTML settings ---------------------------------
     
 " This sets the foldmethod to "marker" for html documents.
 " Use {{{sometag or <-- {{{sometag -->
@@ -385,9 +341,7 @@ call plug#end()
 " .-1read pastes -1 lines up.
     nnoremap ,email :set foldmethod=marker<CR>G:.-1read ~/.mutt/templates/emailtemplate.html<CR>jji
 
-""""""""""""""""""""""""""""""""""""""""
-""VIMWIKI SETTINGS""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""
+" ---- Vimwiki settings ------------------------------
 
 " Creates default settings which hold across all wikis.
 let wiki_default = {}
@@ -410,13 +364,14 @@ let work_wiki.diary_rel_path = 'logbook/'
 
 let g:vimwiki_list = [home_wiki, work_wiki]
 
-let g:vimwiki_global_ext = 0 " This will make sure vimwiki will only set the filetype of markdown files inside a wiki directory, rather than globally.
+" This will make sure vimwiki will only set the filetype of markdown files inside a wiki directory, rather than globally.
+let g:vimwiki_global_ext = 0 
 let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
 
+" Automatically update links on read diary
     command! Diary VimwikiDiaryIndex
     augroup vimwikigroup
         autocmd!
-        " automatically update links on read diary
         autocmd BufRead,BufNewFile diary.wiki VimwikiDiaryGenerateLinks
     augroup end
 
@@ -424,20 +379,11 @@ let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown'
 " 'expr' 'syntax' or 'list')
     let g:vimwiki_folding=''
 
-" sets fold level for entirety of vim
-" this should leave the topmost level 
-" open but anything underneath is folded by default.
-    " set foldlevel=1
-
 " Should auto-update vimwiki diary index whenever it's reloaded
 " let g:vimwiki_list = [{'auto_diary_index': 1}]
     autocmd BufEnter diary.md :VimwikiDiaryGenerateLinks
 
-""END VIMWIKI"""""""""""""""""""""""""""
-
-""""""""""""""""""""""""""""""""""""""""
-""SETTINGS THAT LIKE TO BE CALLED LATE""
-""""""""""""""""""""""""""""""""""""""""
+" ---- Settings that like to be called late ----------
 
 " Sets color scheme based on file type, then returns to a default
 " when exiting a buffer of that file type.
@@ -464,6 +410,4 @@ let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown'
 " allows transparent background for vim
 " must go underneath color scheme!
     hi Normal guibg=NONE ctermbg=NONE
-
-""""""""END LATE SETTINGS""""""""""""""""""
 
