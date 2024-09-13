@@ -217,20 +217,6 @@ call plug#begin()
             \ { 'type': 'bookmarks',},
             \ ]
 
-
-	" let g:startify_padding_left = 25
-	"     let g:startify_custom_header = [
-	" \ '     ╔═════════════════════════════════════════════════════════════════════╗ ',
-	" \ '     ║                                                                     ║ ',
-	" \ '     ║   ██████  ████████ ████████  ██████        ██    ██ ██ ███    ███   ║ ',
-	" \ '     ║  ██    ██    ██       ██    ██    ██       ██    ██ ██ ████  ████   ║ ',
-	" \ '     ║  ██    ██    ██       ██    ██    ██ █████ ██    ██ ██ ██ ████ ██   ║ ',
-	" \ '     ║  ██    ██    ██       ██    ██    ██        ██  ██  ██ ██  ██  ██   ║ ',
-	" \ '     ║   ██████     ██       ██     ██████          ████   ██ ██      ██   ║ ',
-	" \ '     ║                                         (for Linux™)                ║ ',
-	" \ '     ╚═════════════════════════════════════════════════════════════════════╝ ',
-	" \]
-	
     let g:startify_padding_left = 7
         let g:startify_custom_header = [
 \ '   __  ____  ____  __        _  _  __  _  _  ',
@@ -326,7 +312,6 @@ call plug#end()
     "  autocmd BufReadPost quickfix 5wincmd _
     " augroup END
 
-
 " ---- HTML settings ---------------------------------
     
 " This sets the foldmethod to "marker" for html documents.
@@ -397,7 +382,6 @@ let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown'
 " COLOR SCHEME STUFF SEEMS TO ENJOY BEING AT THE END
     set background=dark
     colorscheme PaperColor
-    "colorscheme kanagawa-dragon
     "colorscheme default
 
 " SETS BRACE MATCHING COLORS -- should be called after color scheme
