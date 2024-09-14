@@ -146,6 +146,10 @@ call plug#begin()
 "   - e.g. `call plug#begin('~/.vim/plugged')`
 "   - Avoid using standard Vim directory names like 'plugin'
 
+" oil.nvim = sophisticated file manager
+Plug 'stevearc/oil.nvim'
+
+
 " Markdown outliner
 " https://vim-voom.github.io/
     Plug 'vim-voom/VOoM'
@@ -394,4 +398,10 @@ let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown'
 " allows transparent background for vim
 " must go underneath color scheme!
     hi Normal guibg=NONE ctermbg=NONE
+
+" ---- Lua start -------------------------------------
+" Default setup for oil.nvim from https://github.com/stevearc/oil.nvim
+
+" oilconfig is stored at ./lua/oilconfig.lua
+  lua require('oilconfig')
 
