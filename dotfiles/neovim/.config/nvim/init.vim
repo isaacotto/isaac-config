@@ -5,43 +5,52 @@
                                        
 " ---- Basic Config ----------------------------------
 
-set nocompatible            " disable compatibility to old-time vi
-set foldmethod=syntax       " folds based on file syntax
-set smartcase               " case insensitive unless capital letters in search term
-set hlsearch                " highlight search 
-set incsearch               " incremental search
-set tabstop=2               " number of columns occupied by a tab 
-set softtabstop=2           " see multiple spaces as tabstops so <BS> does the right thing
-set expandtab               " converts tabs to white space
-set shiftwidth=2            " width for autoindents
-set number                  " add line numbers
-set relativenumber          " line numbers relative to cursor (use both number/relative for hybrid)
-set wildmode=longest,list   " get bash-like tab completions
-set mouse=a                 " enable mouse click
-set cursorline              " highlight current cursorline
-set ttyfast                 " Speed up scrolling in Vim
-set spell                   " enable spell check (may need to download language package)
-set noswapfile              " disable creating swap file
-set backupdir=~/.cache/vim  " Directory to store backup files.
-set conceallevel=2          " This is for markdown concealing.
-"set showmatch               " show matching 
-"set autoindent              " indent a new line the same amount as the line just typed
-set wrap                    " enable soft wrapping at the edge of the screen
-set linebreak               " make text not wrap in the middle of a "word"
-set whichwrap+=<,>,h,l      " allows < > h l to move to next/previous line
-set breakindent             "indents wrapped lines to level of current tab
-set showtabline=2           " always show tabs bar at top of screen
-set splitbelow splitright   " sets default new split to either below buffer or to right
-set clipboard+=unnamedplus  " set system clipboard to be default copy/paste register
+" This little bracketing method allows inclusion of lua in init.vim. Makes for
+" easy migration and I can just add a few commands at a time over time.
 
-filetype plugin indent on    " allow auto-indenting depending on file type
-syntax on                    " syntax highlighting
+lua <<EOF
 
-let g:vim_markdown_folding_level = 0
+-- Just a little substitution that makes for cleaner code.
+local o = vim.opt
 
-" sets column at 80 characters in gray
-" highlight ColorColumn ctermbg=gray
-" set colorcolumn=80
+-- General
+o.compatible = false
+o.syntax = 'on'
+o.wildmode = 'longest,list'
+o.mouse = 'a'
+o.swapfile = false
+o.backupdir = '~/.cache/vim'
+
+vim.g.mapleader = ','
+
+-- Display
+o.foldmethod = 'syntax'
+o.cursorline = true
+o.wrap = true
+o.linebreak = true
+o.breakindent = true
+o.showtabline = 2
+o.splitbelow = true
+o.splitright = true
+o.number = true
+o.relativenumber = true
+
+-- Search
+o.ignorecase = true
+o.smartcase = true
+o.hlsearch = true
+o.incsearch = true
+
+-- Tabs/indenting
+o.tabstop = 2
+o.softtabstop = 2
+o.expandtab = true
+o.shiftwidth = 2
+
+-- Behavior
+o.whichwrap = '<,>,h,l'
+
+EOF
 
 " Open markdown files with Firefox.
     autocmd BufEnter *.md exe 'noremap <F5> :! /usr/lib/firefox/firefox %:p<CR><CR>'
@@ -49,7 +58,7 @@ let g:vim_markdown_folding_level = 0
 " ---- Key Bindings -----------------------------------
 
 " Map global leader key to comma.
-    let mapleader=","           
+    " let mapleader=","           
 
 " ESC clears search field as well.
 " <silent> so that it doesn't display message.
@@ -166,6 +175,9 @@ Plug 'stevearc/oil.nvim'
 " Better markdown behavior??
     Plug 'godlygeek/tabular'
     Plug 'preservim/vim-markdown'
+
+  " Sets folding behavior for vim-markdown
+      let g:vim_markdown_folding_level = 0
 
 " Goyo distraction-free writing
     Plug 'junegunn/goyo.vim'
@@ -404,4 +416,38 @@ let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown'
 
 " oilconfig is stored at ./lua/oilconfig.lua
   lua require('oilconfig')
+
+" ---- Old settings ----------------------------------
+
+"set nocompatible            " disable compatibility to old-time vi
+"set foldmethod=syntax       " folds based on file syntax
+"set ignorecase
+"set smartcase               " case insensitive unless capital letters in search term
+"set hlsearch                " highlight search 
+"set incsearch               " incremental search
+"set tabstop=2               " number of columns occupied by a tab 
+"set softtabstop=2           " see multiple spaces as tabstops so <BS> does the right thing
+"set expandtab               " converts tabs to white space
+"set shiftwidth=2            " width for autoindents
+"set number                  " add line numbers
+"set relativenumber          " line numbers relative to cursor (use both number/relative for hybrid)
+"set wildmode=longest,list   " get bash-like tab completions
+"set mouse=a                 " enable mouse click
+"set cursorline              " highlight current cursorline
+"set spell                   " enable spell check (may need to download language package)
+"set noswapfile              " disable creating swap file
+"set backupdir=~/.cache/vim  " Directory to store backup files.
+"set conceallevel=2          " This is for markdown concealing.
+"set showmatch               " show matching 
+"set autoindent              " indent a new line the same amount as the line just typed
+"set wrap                    " enable soft wrapping at the edge of the screen
+"set linebreak               " make text not wrap in the middle of a word
+"set whichwrap+=<,>,h,l      " allows < > h l to move to next/previous line
+"set breakindent             "indents wrapped lines to level of current tab
+"set showtabline=2           " always show tabs bar at top of screen
+"set splitbelow splitright   " sets default new split to either below buffer or to right
+"set clipboard+=unnamedplus  " set system clipboard to be default copy/paste register
+
+"filetype plugin indent on    " allow auto-indenting depending on file type
+"syntax on                    " syntax highlighting
 
