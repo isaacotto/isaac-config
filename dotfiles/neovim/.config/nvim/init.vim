@@ -69,6 +69,7 @@ EOF
 " Map NERDTreeToggle to F6
     nmap <F6> :NERDTreeToggle<CR>
 
+
 " Use ctrl-[hjkl] to select the active split!
     nmap <silent> <c-k> :wincmd k<CR>
     nmap <silent> <c-j> :wincmd j<CR>
@@ -77,8 +78,6 @@ EOF
 
 " Quotation marks
     inoremap <leader>germanleft „
-    inoremap <leader>germanright “
-    inoremap <leader>frenchleft « 
     inoremap <leader>frenchright  »
     
 " Tick boxes or check marks, etc.
@@ -156,7 +155,17 @@ call plug#begin()
 "   - Avoid using standard Vim directory names like 'plugin'
 
 " oil.nvim = sophisticated file manager
-Plug 'stevearc/oil.nvim'
+    Plug 'stevearc/oil.nvim'
+
+" Telescope
+    Plug 'nvim-lua/plenary.nvim' " Dependency for Telescope (and others)
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " Dependency
+    Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
+    
+    nnoremap <leader>ff <cmd>Telescope find_files<cr>
+    nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+    nnoremap <leader>fb <cmd>Telescope buffers<cr>
+    nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 
 " Markdown outliner
@@ -215,35 +224,41 @@ Plug 'stevearc/oil.nvim'
 " Startify (start-up screen)
     Plug 'mhinz/vim-startify'
 
-"	let g:startify_lists = [
-"	  \ { 'type': 'files',     'header': ['   MRU']            },
-"	  \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
-"	  \ { 'type': 'sessions',  'header': ['   Sessions']       },
-"	  \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-"	  \ { 'type': 'commands',  'header': ['   Commands']       },
-"	  \ ]
-"
+    nmap <leader>st :Startify<CR>
+
+    "	let g:startify_lists = [
+    "	  \ { 'type': 'files',     'header': ['   MRU']            },
+    "	  \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+    "	  \ { 'type': 'sessions',  'header': ['   Sessions']       },
+    "	  \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+    "	  \ { 'type': 'commands',  'header': ['   Commands']       },
+    "	  \ ]
+
     let g:startify_bookmarks= [
                 \ {'I': '~/.config/nvim/init.vim'},
                 \ {'K': '~/.config/kitty/kitty.conf'},
+                \ {'U': '~/isaac-otto-usc-docs/'},
+                \ {'C': '~/isaac-config/'},
+                \ {'D': '~/isaac-docs/'},
                 \ ]
 
-	let g:startify_lists = [
-            \ { 'type': 'sessions',  'header': ['   Sessions']       },
-            \ { 'type': 'bookmarks',},
-            \ ]
+    let g:startify_lists = [
+              \ { 'type': 'sessions',  'header': ['   Sessions']       },
+              \ { 'type': 'bookmarks',},
+              \ ]
 
     let g:startify_padding_left = 7
         let g:startify_custom_header = [
-\ '   __  ____  ____  __        _  _  __  _  _  ',
-\ '  /  \(_  _)(_  _)/  \  ___ / )( \(  )( \/ ) ',
-\ ' (  O ) )(    )( (  O )(___)\ \/ / )( / \/ \ ',
-\ '  \__/ (__)  (__) \__/       \__/ (__)\_)(_/ ',
-\]
+        \ '   __  ____  ____  __        _  _  __  _  _  ',
+        \ '  /  \(_  _)(_  _)/  \  ___ / )( \(  )( \/ ) ',
+        \ ' (  O ) )(    )( (  O )(___)\ \/ / )( / \/ \ ',
+        \ '  \__/ (__)  (__) \__/       \__/ (__)\_)(_/ ',
+        \ '                Current as of September 2024 ',
+        \]
 
-	let g:startify_commands = []
-	let g:startify_files_number = 5
-	let g:startify_session_before_save = []
+    let g:startify_commands = []
+    let g:startify_files_number = 5
+    let g:startify_session_before_save = []
 
 " SOME MORE COLOR SCHEMES
     Plug 'ellisonleao/gruvbox.nvim'
@@ -303,14 +318,16 @@ call plug#end()
     let maplocalleader = ","
 
 " Other LaTeX keybindings:
-    autocmd FileType tex,latex inoremap ,b \textbf{}<Esc>i 
-    autocmd FileType tex,latex inoremap ,i \textit{}<Esc>i
-    autocmd FileType tex,latex inoremap ,sc \textsc{}<Esc>i
-    autocmd FileType tex,latex inoremap ,tt \texttt{}<Esc>i
-    autocmd FileType tex,latex inoremap ,m $$<Esc>i
-    autocmd FileType tex,latex inoremap ,e \emph{}<Esc>i
+    autocmd FileType tex,latex inoremap <leader>b \textbf{}<Esc>i 
+    autocmd FileType tex,latex inoremap <leader>i \textit{}<Esc>i
+    autocmd FileType tex,latex inoremap <leader>sc \textsc{}<Esc>i
+    autocmd FileType tex,latex inoremap <leader>tt \texttt{}<Esc>i
+    autocmd FileType tex,latex inoremap <leader>m $$<Esc>i
+    autocmd FileType tex,latex inoremap <leader>e \emph{}<Esc>i
 
-    autocmd FileType tex,latex inoremap ,bp \documentclass{article}<CR><CR>\usepackage[margin=1in]{geometry}<CR><CR>\title{Title}<CR>\author{Isaac Otto}<CR>\date{\today}<CR><CR>\begin{document}<CR>\maketitle<CR><CR><CR><CR>\end{document}<Esc>2ki
+    nnoremap <leader>boiler :r ~/.config/nvim/templates/boilerplate.tex<CR>kdd22j
+
+
 
 " Sets char limit to 80 only for wiki files.
     autocmd bufreadpre *.wiki setlocal textwidth=80
