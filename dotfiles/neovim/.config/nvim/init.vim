@@ -14,21 +14,21 @@ lua <<EOF
 local o = vim.opt
 
 -- General
-o.compatible = false
-o.syntax = 'on'
-o.wildmode = 'longest,list'
-o.mouse = 'a'
-o.swapfile = false
-o.backupdir = '~/.cache/vim'
+o.compatible = false          -- no vi compatibility
+o.syntax = 'on'               -- syntax highlighting
+o.wildmode = 'longest,list'   -- wildcard search mode
+o.mouse = 'a'                 -- mouse on
+o.swapfile = false            -- no swapfiles
+o.backupdir = '~/.cache/vim'  -- backup directory
 
-vim.g.mapleader = ','
+vim.g.mapleader = ','         -- leader key
 
 -- Display
-o.foldmethod = 'syntax'
-o.cursorline = true
-o.wrap = true
-o.linebreak = true
-o.breakindent = true
+o.foldmethod = 'syntax'       -- fold method
+o.cursorline = true           -- highlight cursor line
+o.wrap = true                 -- text wrap
+o.linebreak = true            -- wraps long lines at 'breakat'
+o.breakindent = true          -- same indent as last line
 o.showtabline = 2
 o.splitbelow = true
 o.splitright = true
@@ -50,15 +50,73 @@ o.shiftwidth = 2
 -- Behavior
 o.whichwrap = '<,>,h,l'
 
+----------------------------------------------------------------------
+-- from kickstart.nvim (https://github.com/nvim-lua/kickstart.nvim) --
+----------------------------------------------------------------------
+
+-- keep signcolumn on by default
+o.signcolumn = 'yes' 
+
+-- decrease update time
+o.updatetime = 250
+
+-- decrease mapped sequence wait time
+-- displays which-key popup sooner
+o.timeoutlen = 300
+
+-- sets how neovim will display certain whitespace characters
+-- see `:help 'list'`
+-- and `:help 'listchars'`
+o.list = true
+o.listchars = { tab = '<< ', trail = '·', nbsp = '⍽' }
+
+-- preview substitutions live, as you type!
+o.inccommand = 'split'
+
+-- minimal number of screen lines to keep above and below the cursor
+o.scrolloff = 10
+
+-- In lua keymappings take the form of
+-- vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+-- where the first arg is the mode, 2nd is input, third is output.
+
+-- With lua you can run arbitrary functions triggered by key mappings:
+-- vim.keymap.set("n", "<leader>$", function()
+--     print("hello isaac")
+-- end)
+
+
+-- Open terminal in vsplit
+vim.keymap.set("n", "<leader>tty", ":vs term://zsh<CR>a", { desc = "Terminal in vsplit" })
+
+-- Sensible way to return to normal mode in terminal.
+vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
+-- Highlight when yanking text
+vim.api.nvim_create_autocmd("TextYankPost", {
+  desc = "Highlight when yanking text",
+  group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
+
 EOF
 
-" Open markdown files with Firefox.
+"" Open markdown files with Firefox.
     autocmd BufEnter *.md exe 'noremap <F5> :! /usr/lib/firefox/firefox %:p<CR><CR>'
+
+" Sensible controls to resize splits
+" (control + arrow keys)
+    nnoremap <silent> <c-Up> :resize -1<CR>
+    nnoremap <silent> <c-Down> :resize +1<CR>
+    nnoremap <silent> <c-left> :vertical resize -1<CR>
+    nnoremap <silent> <c-right> :vertical resize +1<CR>
 
 " ---- Key Bindings -----------------------------------
 
 " Map global leader key to comma.
-    " let mapleader=","           
+    " let mapleader=","
 
 " ESC clears search field as well.
 " <silent> so that it doesn't display message.
@@ -162,7 +220,9 @@ call plug#begin()
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " Dependency
     Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
     
-    nnoremap <leader>ff <cmd>Telescope find_files<cr>
+    " I changed this first find_files command to search across the entire home
+    " directory. Time will tell whether this was a bad idea or not.
+    nnoremap <leader>ff <cmd>Telescope find_files search_dirs=~/<cr>
     nnoremap <leader>fg <cmd>Telescope live_grep<cr>
     nnoremap <leader>fb <cmd>Telescope buffers<cr>
     nnoremap <leader>fh <cmd>Telescope help_tags<cr>
@@ -467,4 +527,3 @@ let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown'
 
 "filetype plugin indent on    " allow auto-indenting depending on file type
 "syntax on                    " syntax highlighting
-
