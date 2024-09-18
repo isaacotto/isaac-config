@@ -103,6 +103,17 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 EOF
 
+"" Windows settings
+if has("win32")
+
+  scriptencoding utf-8
+
+  if exists("&smoothscroll")
+    set smoothscroll
+  endif
+
+endif
+
 "" Open markdown files with Firefox.
     autocmd BufEnter *.md exe 'noremap <F5> :! /usr/lib/firefox/firefox %:p<CR><CR>'
 
@@ -294,6 +305,7 @@ call plug#begin()
     "	  \ { 'type': 'commands',  'header': ['   Commands']       },
     "	  \ ]
 
+if has("Linux")
     let g:startify_bookmarks= [
                 \ {'I': '~/.config/nvim/init.vim'},
                 \ {'K': '~/.config/kitty/kitty.conf'},
@@ -313,8 +325,24 @@ call plug#begin()
         \ '  /  \(_  _)(_  _)/  \  ___ / )( \(  )( \/ ) ',
         \ ' (  O ) )(    )( (  O )(___)\ \/ / )( / \/ \ ',
         \ '  \__/ (__)  (__) \__/       \__/ (__)\_)(_/ ',
-        \ '                Current as of September 2024 ',
+        \ '                       (running GNU/Linux)   ',
         \]
+endif
+
+if has("win32")
+  let g:startify_bookmarks= [
+              \ {'I': '~/AppData/Local/nvim/init.vim'},
+              \ ]
+
+    let g:startify_padding_left = 7
+        let g:startify_custom_header = [
+        \ '   __  ____  ____  __        _  _  __  _  _  ',
+        \ '  /  \(_  _)(_  _)/  \  ___ / )( \(  )( \/ ) ',
+        \ ' (  O ) )(    )( (  O )(___)\ \/ / )( / \/ \ ',
+        \ '  \__/ (__)  (__) \__/       \__/ (__)\_)(_/ ',
+        \ '                       (running Windows)     ',
+        \]
+endif
 
     let g:startify_commands = []
     let g:startify_files_number = 5
@@ -351,11 +379,12 @@ call plug#end()
   
 " Viewer options: One may configure the viewer either by specifying a built-in
 " viewer method:
-    let g:vimtex_view_method = 'zathura'
 
-" Or with a generic interface:
+if has("Linux")
+    let g:vimtex_view_method = 'zathura'
     let g:vimtex_view_general_viewer = 'okular'
     let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
+endif
 
 " Should disable dumb highlighting on zathura on startup.
     let g:vimtex_view_forward_search_on_start = 0
@@ -417,7 +446,9 @@ call plug#end()
 " This issues a command which pastes my email template into a document, first
 " setting fold method to "marker". You could just use :r to read the file but
 " .-1read pastes -1 lines up.
+if has("Linux")
     nnoremap ,email :set foldmethod=marker<CR>G:.-1read ~/.mutt/templates/emailtemplate.html<CR>jji
+endif
 
 " ---- Vimwiki settings ------------------------------
 
@@ -492,7 +523,9 @@ let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown'
 " Default setup for oil.nvim from https://github.com/stevearc/oil.nvim
 
 " oilconfig is stored at ./lua/oilconfig.lua
+if has ("Linux")
   lua require('oilconfig')
+endif
 
 " ---- Old settings ----------------------------------
 
