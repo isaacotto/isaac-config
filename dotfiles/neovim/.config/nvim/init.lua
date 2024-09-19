@@ -1,96 +1,39 @@
-"   __  ____  ____  __        _  _  __  _  _  
-"  /  \(_  _)(_  _)/  \  ___ / )( \(  )( \/ ) 
-" (  O ) )(    )( (  O )(___)\ \/ / )( / \/ \ 
-"  \__/ (__)  (__) \__/       \__/ (__)\_)(_/ 
-                                       
-" ---- Basic Config ----------------------------------
+--   __  ____  ____  __        _  _  __  _  _
+--  /  \(_  _)(_  _)/  \  ___ / )( \(  )( \/ )
+-- (  O ) )(    )( (  O )(___)\ \/ / )( / \/ \
+--  \__/ (__)  (__) \__/       \__/ (__)\_)(_/
 
-" This little bracketing method allows inclusion of lua in init.vim. Makes for
-" easy migration and I can just add a few commands at a time over time.
-
-lua <<EOF
+------- Basic Config ---------------------------------
 
 -- Just a little substitution that makes for cleaner code.
 local o = vim.opt
 
 -- General
 o.compatible = false          -- no vi compatibility
+vim.g.mapleader = ','         -- leader key
 o.syntax = 'on'               -- syntax highlighting
 o.wildmode = 'longest,list'   -- wildcard search mode
 o.mouse = 'a'                 -- mouse on
 o.swapfile = false            -- no swapfiles
 o.backupdir = '~/.cache/vim'  -- backup directory
-
-vim.g.mapleader = ','         -- leader key
+o.updatetime = 250            -- decrease update time
+o.timeoutlen = 300            -- decrease mapped sequence wait time
 
 -- Display
-o.foldmethod = 'syntax'       -- fold method
-o.cursorline = true           -- highlight cursor line
-o.wrap = true                 -- text wrap
-o.linebreak = true            -- wraps long lines at 'breakat'
-o.breakindent = true          -- same indent as last line
-o.showtabline = 2
+o.foldmethod = 'syntax'       -- Fold method.
+o.cursorline = true           -- Highlight cursor line.
+o.wrap = true                 -- Text wrap.
+o.linebreak = true            -- Wraps long lines at 'breakat'.
+o.breakindent = true          -- Same indent as last line.
+o.showtabline = 2             -- Always show tab line.
 o.splitbelow = true
 o.splitright = true
 o.number = true
 o.relativenumber = true
-
--- Search
-o.ignorecase = true
-o.smartcase = true
-o.hlsearch = true
-o.incsearch = true
-
--- Tabs/indenting
-o.tabstop = 2
-o.softtabstop = 2
-o.expandtab = true
-o.shiftwidth = 2
-
--- Behavior
-o.whichwrap = '<,>,h,l'
-
-----------------------------------------------------------------------
--- from kickstart.nvim (https://github.com/nvim-lua/kickstart.nvim) --
-----------------------------------------------------------------------
-
--- keep signcolumn on by default
-o.signcolumn = 'yes' 
-
--- decrease update time
-o.updatetime = 250
-
--- decrease mapped sequence wait time
--- displays which-key popup sooner
-o.timeoutlen = 300
-
--- sets how neovim will display certain whitespace characters
--- see `:help 'list'`
--- and `:help 'listchars'`
-o.list = true
+o.scrolloff = 10              -- Minimum number of lines at top/bottom.
+o.list = true                 -- Sets how whitespace characters display.
 o.listchars = { tab = '<< ', trail = '·', nbsp = '⍽' }
-
--- preview substitutions live, as you type!
-o.inccommand = 'split'
-
--- minimal number of screen lines to keep above and below the cursor
-o.scrolloff = 10
-
--- In lua keymappings take the form of
--- vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
--- where the first arg is the mode, 2nd is input, third is output.
-
--- With lua you can run arbitrary functions triggered by key mappings:
--- vim.keymap.set("n", "<leader>$", function()
---     print("hello isaac")
--- end)
-
-
--- Open terminal in vsplit
-vim.keymap.set("n", "<leader>tty", ":vs term://zsh<CR>a", { desc = "Terminal in vsplit" })
-
--- Sensible way to return to normal mode in terminal.
-vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+o.signcolumn = 'yes'          -- keep signcolumn on by default
 
 -- Highlight when yanking text
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -101,117 +44,125 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
-EOF
+-- Search
+o.ignorecase = true           -- Ignore case when searching
+o.smartcase = true            -- ...unless contains capital.
+o.hlsearch = true             -- Highlights all matches.
+o.incsearch = true            -- Shows pattern while searching.
+o.inccommand = 'split'        -- Preview substitutions live, as you type.
 
-"" Windows settings
-if has("win32")
+-- Tabs/indenting
+o.tabstop = 2
+o.softtabstop = 2
+o.expandtab = true
+o.shiftwidth = 2
 
-  scriptencoding utf-8
+-- Behavior
+o.whichwrap = '<,>,h,l'
 
-  if exists("&smoothscroll")
-    set smoothscroll
-  endif
+-- Key bindings
 
-endif
+-- Sensible controls to resize splits (control + arrows).
+vim.keymap.set('n', '<c-Up>', ':resize -1<CR')
+vim.keymap.set('n', '<c-Down>', ':resize +1<CR')
+vim.keymap.set('n', '<c-left>', ':vertical resize -1<CR')
+vim.keymap.set('n', '<c-right>', ':vertical resize +1<CR')
 
-"" Open markdown files with Firefox.
-    autocmd BufEnter *.md exe 'noremap <F5> :! /usr/lib/firefox/firefox %:p<CR><CR>'
+-- Clear highlight of search, messages, floating windows.
+vim.keymap.set({ "n", "i" }, "<Esc>", function()
+  vim.cmd([[nohl]]) -- clear highlight of search
+  vim.cmd([[stopinsert]]) -- clear messages (the line below statusline)
+  for _, win in ipairs(vim.api.nvim_list_wins()) do -- clear all floating windows
+    if vim.api.nvim_win_get_config(win).relative == "win" then
+      vim.api.nvim_win_close(win, false)
+    end
+  end
+end, { desc = "Clear highlight of search, messages, floating windows" })
 
-" Sensible controls to resize splits
-" (control + arrow keys)
-    nnoremap <silent> <c-Up> :resize -1<CR>
-    nnoremap <silent> <c-Down> :resize +1<CR>
-    nnoremap <silent> <c-left> :vertical resize -1<CR>
-    nnoremap <silent> <c-right> :vertical resize +1<CR>
+-- Toggle nerdtree.
+vim.keymap.set('n', '<F6>', ':NERDTreeToggle<CR>')
 
-" ---- Key Bindings -----------------------------------
+-- Use ctrl-[hjkl] to select the active split!
+vim.keymap.set('n', '<c-k>', ':wincmd k<CR>')
+vim.keymap.set('n', '<c-j>', ':wincmd j<CR>')
+vim.keymap.set('n', '<c-h>', ':wincmd h<CR>')
+vim.keymap.set('n', '<c-l>', ':wincmd l<CR>')
 
-" Map global leader key to comma.
-    " let mapleader=","
+-- Checkboxes.
+vim.keymap.set('n', '<leader>box', '^ [ ]<esc>')
+vim.keymap.set('n', '<leader>ch', '^f]hci[<C-k>OK<esc>')
+vim.keymap.set('n', '<leader>part', '^f]hci[<C-k>0m<esc>')
 
-" ESC clears search field as well.
-" <silent> so that it doesn't display message.
-" I think the <C-U> removes any selected range
-" to avoid error 481.
-    map <silent> <esc> :<C-U>noh<CR>
+-- Shortcut for spellchecking. Auto-corrects last mistake and jumps back to
+-- prev. cursor position.
+vim.keymap.set('i', '<C-l>', '<c-g>u<Esc>[s1z=`]a<c-g>u')
 
-" Map NERDTreeToggle to F6
-    nmap <F6> :NERDTreeToggle<CR>
+-- Shortcut for 'select all'
+vim.keymap.set('n', '<leader>a', 'ggVG')
 
+-- Run command on cursor line.
+vim.keymap.set('n', '<leader>run', '"zyy:@z<CR>')
 
-" Use ctrl-[hjkl] to select the active split!
-    nmap <silent> <c-k> :wincmd k<CR>
-    nmap <silent> <c-j> :wincmd j<CR>
-    nmap <silent> <c-h> :wincmd h<CR>
-    nmap <silent> <c-l> :wincmd l<CR>
+-- Remap arrow keys to move up or down by DISPLAY lines (like gj/gk)
+vim.keymap.set('n', '<Up>', 'gk')
+vim.keymap.set('n', '<Down>', 'gj')
+vim.keymap.set('x', '<Up>', 'gk')
+vim.keymap.set('x', '<Down>', 'gj')
+vim.keymap.set('i', '<Up>', '<C-O>gk')
+vim.keymap.set('i', '<Down>', '<C-O>gj')
 
-" Quotation marks
-    inoremap <leader>germanleft „
-    inoremap <leader>frenchright  »
-    
-" Tick boxes or check marks, etc.
-    inoremap <leader>box [ ]<esc>i
-    inoremap <leader>ch <esc>ci[<C-k>OK<esc>
-    inoremap <leader>part <esc>ci[<C-k>0m<esc>
-    inoremap <leader>fail <esc>ci[<C-k>*X<esc>
+-- Hopefully disables middle mouse click (and double/triple/quad click).
+vim.keymap.set({ 'n', 'x', 'i' }, '<MiddleMouse>', '<LeftMouse>')
+vim.keymap.set({ 'n', 'x', 'i' }, '<2-MiddleMouse>', '<nop>')
+vim.keymap.set({ 'n', 'x', 'i' }, '<3-MiddleMouse>', '<nop>')
+vim.keymap.set({ 'n', 'x', 'i' }, '<4-MiddleMouse>', '<nop>')
 
-" In normal mode <,box> should place the box after the - or * but before
-" the text.
-    nnoremap <leader>box ^a [ ]<esc> 
-    nnoremap <leader>ch ^f]hci[<C-k>OK<esc>
-    nnoremap <leader>part ^f]hci[<C-k>0m<esc>
+-- Map jk and kj to escape using easyescape
+vim.keymap.set('i', '<C-BS>', '<C-w>')
+vim.keymap.set('i', '<C-h>', '<C-w>')
 
-" shortcut for spellchecking. auto-corrects last mistake and jumps back to
-" prev. cursor position.
-    inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+-- .pdf word count macro.
+vim.keymap.set('n', '<leader>words', ':!<Space>ps2ascii<Space>%:r.pdf<Space><BAR><Space>wc<Space>-w<CR>')
 
-" shortcut for "select all"
-    nnoremap <leader>a ggVG
-
-" run command on cursor line
-    nnoremap <leader>run "zyy:@z<CR>
-
-" Flat, sharp and natural accidentals.
-    inoremap <leader>flat <C-K>Mb
-    inoremap <leader>sharp <C-k>MX
-    inoremap <leader>natural <C-k>Mx
-
-" Remaps arrow keys to move up or down by DISPLAY lines (like gj/gk)
-    nnoremap <Up>   gk
-    nnoremap <Down> gj
-    xnoremap <Up>   gk
-    xnoremap <Down> gj
-    inoremap <Up>   <C-O>gk
-    inoremap <Down> <C-O>gj
-
-" Hopefully disables middle mouse click (and double/triple/quad click)
-    nnoremap <MiddleMouse> <LeftMouse>
-    xnoremap <MiddleMouse> <LeftMouse>
-    inoremap <MiddleMouse> <LeftMouse>
-    nnoremap <2-MiddleMouse> <nop>
-    xnoremap <2-MiddleMouse> <nop>
-    inoremap <2-MiddleMouse> <nop>
-    nnoremap <3-MiddleMouse> <nop>
-    xnoremap <3-MiddleMouse> <nop>
-    inoremap <3-MiddleMouse> <nop>
-    nnoremap <4-MiddleMouse> <nop>
-    xnoremap <4-MiddleMouse> <nop>
-    inoremap <4-MiddleMouse> <nop>
-
-"map jk and kj to escape using easyescape
+-- Map jk and kj to escape using easyescape
+vim.cmd([[
     let g:easyescape_chars = { "j": 1, "k": 1 }
     let g:easyescape_timeout = 100
     cnoremap jk <ESC>
     cnoremap kj <ESC>
+    ]])
 
-" Ctrl + BS in insert mode deletes entire word
-    noremap! <C-BS> <C-w>
-    noremap! <C-h> <C-w>
+-- Open terminal in vsplit
+vim.keymap.set("n", "<leader>tty", ":vs term://zsh<CR>a", { desc = "Terminal in vsplit" })
 
-" pdf word count macro
-    nnoremap <leader>pdfcount :!<Space>ps2ascii<Space>%:r.pdf<Space><BAR><Space>wc<Space>-w<CR>
+-- Sensible way to return to normal mode in terminal.
+vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
-" ---- Plugins ---------------------------------------
+-- Windows settings
+vim.cmd([[
+    if has("win32")
+
+      scriptencoding utf-8
+
+      if exists("&smoothscroll")
+        set smoothscroll
+
+      endif
+    endif
+    ]])
+
+-- Open markdown files using Firefox.
+vim.cmd([[
+    autocmd BufEnter *.md exe 'noremap <F5> :! /usr/lib/firefox/firefox %:p<CR><CR>'
+    ]])
+
+---- END OF LUA --------------------------------------
+
+---- Plugins -----------------------------------------
+
+-- If editing vimscript, use "set syntax=vim" to make things a little more pleasant.
+
+vim.cmd([[
 
 call plug#begin()
     
@@ -237,7 +188,6 @@ call plug#begin()
     nnoremap <leader>fg <cmd>Telescope live_grep<cr>
     nnoremap <leader>fb <cmd>Telescope buffers<cr>
     nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-
 
 " Markdown outliner
 " https://vim-voom.github.io/
@@ -307,7 +257,7 @@ call plug#begin()
 
 if has("Linux")
     let g:startify_bookmarks= [
-                \ {'I': '~/.config/nvim/init.vim'},
+                \ {'I': '~/.config/nvim/init.lua'},
                 \ {'K': '~/.config/kitty/kitty.conf'},
                 \ {'U': '~/isaac-otto-usc-docs/'},
                 \ {'C': '~/isaac-config/'},
@@ -416,8 +366,6 @@ endif
 
     nnoremap <leader>boiler :r ~/.config/nvim/templates/boilerplate.tex<CR>kdd22j
 
-
-
 " Sets char limit to 80 only for wiki files.
     autocmd bufreadpre *.wiki setlocal textwidth=80
 
@@ -519,44 +467,16 @@ let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown'
 " must go underneath color scheme!
     hi Normal guibg=NONE ctermbg=NONE
 
-" ---- Lua start -------------------------------------
 " Default setup for oil.nvim from https://github.com/stevearc/oil.nvim
+" Oilconfig is stored at ./lua/oilconfig.lua
 
-" oilconfig is stored at ./lua/oilconfig.lua
 if has ("Linux")
   lua require('oilconfig')
 endif
 
-" ---- Old settings ----------------------------------
+]])
 
-"set nocompatible            " disable compatibility to old-time vi
-"set foldmethod=syntax       " folds based on file syntax
-"set ignorecase
-"set smartcase               " case insensitive unless capital letters in search term
-"set hlsearch                " highlight search 
-"set incsearch               " incremental search
-"set tabstop=2               " number of columns occupied by a tab 
-"set softtabstop=2           " see multiple spaces as tabstops so <BS> does the right thing
-"set expandtab               " converts tabs to white space
-"set shiftwidth=2            " width for autoindents
-"set number                  " add line numbers
-"set relativenumber          " line numbers relative to cursor (use both number/relative for hybrid)
-"set wildmode=longest,list   " get bash-like tab completions
-"set mouse=a                 " enable mouse click
-"set cursorline              " highlight current cursorline
-"set spell                   " enable spell check (may need to download language package)
-"set noswapfile              " disable creating swap file
-"set backupdir=~/.cache/vim  " Directory to store backup files.
-"set conceallevel=2          " This is for markdown concealing.
-"set showmatch               " show matching 
-"set autoindent              " indent a new line the same amount as the line just typed
-"set wrap                    " enable soft wrapping at the edge of the screen
-"set linebreak               " make text not wrap in the middle of a word
-"set whichwrap+=<,>,h,l      " allows < > h l to move to next/previous line
-"set breakindent             "indents wrapped lines to level of current tab
-"set showtabline=2           " always show tabs bar at top of screen
-"set splitbelow splitright   " sets default new split to either below buffer or to right
-"set clipboard+=unnamedplus  " set system clipboard to be default copy/paste register
-
-"filetype plugin indent on    " allow auto-indenting depending on file type
-"syntax on                    " syntax highlighting
+-- With lua you can run arbitrary functions triggered by key mappings:
+-- vim.keymap.set("n", "<leader>$", function()
+--     print("hello isaac")
+-- end)
