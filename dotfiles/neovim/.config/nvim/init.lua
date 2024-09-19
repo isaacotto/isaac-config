@@ -156,91 +156,72 @@ vim.cmd([[
     autocmd BufEnter *.md exe 'noremap <F5> :! /usr/lib/firefox/firefox %:p<CR><CR>'
     ]])
 
----- END OF LUA --------------------------------------
+---- PLUGINS IN LUA ----------------------------------
+local vim = vim
+local Plug = vim.fn['plug#']
 
----- Plugins -----------------------------------------
+vim.call('plug#begin')
+
+Plug('stevearc/oil.nvim')
+
+Plug('nvim-lua/plenary.nvim')
+Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
+Plug('nvim-telescope/telescope.vim', { ['tag'] = '0.1.8' })
+
+Plug('vim-voom/VOoM')
+  -- let voom_ft_modes = {'markdown': 'pandoc', 'rmd': 'pandoc'}
+  -- au BufRead,BufNewFIle *.Rmd command! Toc Voom
+
+Plug('preservim/nerdtree', { ['on'] = 'NERDTreeToggle' })
+
+Plug('tpope/vim-surround')
+
+Plug 'godlygeek/tabular'
+Plug 'preservim/vim-markdown'
+
+  -- Disables weird markdown folding
+  vim.g.vim_markdown_folding_level = 0
+
+-- Distraction-free mode.
+Plug 'junegunn/goyo.vim'
+
+  -- Alias to open Goyo because I can never remember that word.
+  vim.cmd('command Mini Goyo')
+
+Plug('tpope/vim-eunuch')
+
+Plug 'junegunn/vim-peekaboo'
+
+Plug 'lervag/vimtex'
+
+-- Allows mapping jk/kj to escape without pausing.
+Plug 'zhou13/vim-easyescape'
+
+-- LSP support.
+Plug('neoclide/coc.nvim', { ['branch'] = 'release' })
+
+-- Allows vimwiki.
+Plug('vimwiki/vimwiki')
+
+-- Allows use of <gcc> to auto-comment code.
+Plug('tpope/vim-commentary')
+
+-- Some more color schemes.
+Plug('ellisonleao/gruvbox.nvim')
+Plug('folke/tokyonight.nvim')
+Plug('bluz71/vim-nightfly-colors')
+Plug('catppuccin/nvim', { ['as'] = 'catppuccin' })
+Plug('rebelot/kanagawa.nvim')
+Plug('NLKNguyen/papercolor-theme')
+
+
+vim.call('plug#end')
+
+---- END OF LUA --------------------------------------
 
 -- If editing vimscript, use "set syntax=vim" to make things a little more pleasant.
 
 vim.cmd([[
-
-call plug#begin()
-    
-" The default plugin directory will be as follows:
-"   - Vim (Linux/macOS): '~/.vim/plugged'
-"   - Vim (Windows): '~/vimfiles/plugged'
-"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
-" You can specify a custom plugin directory by passing it as the argument
-"   - e.g. `call plug#begin('~/.vim/plugged')`
-"   - Avoid using standard Vim directory names like 'plugin'
-
-" oil.nvim = sophisticated file manager
-    Plug 'stevearc/oil.nvim'
-
-" Telescope
-    Plug 'nvim-lua/plenary.nvim' " Dependency for Telescope (and others)
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " Dependency
-    Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
-    
-    " I changed this first find_files command to search across the entire home
-    " directory. Time will tell whether this was a bad idea or not.
-    nnoremap <leader>ff <cmd>Telescope find_files search_dirs=~/<cr>
-    nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-    nnoremap <leader>fb <cmd>Telescope buffers<cr>
-    nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-
-" Markdown outliner
-" https://vim-voom.github.io/
-    Plug 'vim-voom/VOoM'
-    
-    let voom_ft_modes = {'markdown': 'pandoc', 'rmd': 'pandoc'}
-    au BufRead,BufNewFIle *.Rmd command! Toc Voom
-
-" Surround.vim allows for more complex "surroundings"
-    Plug 'tpope/vim-surround'    
-
-" Adds new fun functionality like :Remove
-    Plug 'tpope/vim-eunuch'
-
-" Better markdown behavior??
-    Plug 'godlygeek/tabular'
-    Plug 'preservim/vim-markdown'
-
-  " Sets folding behavior for vim-markdown
-      let g:vim_markdown_folding_level = 0
-
-" Goyo distraction-free writing
-    Plug 'junegunn/goyo.vim'
-    :command Minimal Goyo
-
-" Vim Peekaboo (allows viewing of registers)
-    Plug 'junegunn/vim-peekaboo'
-
-" Nerdtree file browser
-    Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
-
-" Vimtex (for compiling latex inside vim)
-    Plug 'lervag/vimtex'
-
-" allows mapping jk and kj to escape without pausing?
-    Plug 'zhou13/vim-easyescape'
-
-" Get Utilisnips
-    Plug 'sirver/ultisnips'
-
-" Snippets are separated from the engine. Add this if you want them:
-    Plug 'honza/vim-snippets'
-
-    let g:UltiSnipsSnippetDirectories=[$HOME.'/home/io/.local/share/nvim/plugged/vim-snippets/UltiSnips']
-    let g:UltiSnipsExpandTrigger = '<tab>'
-    let g:UltiSnipsJumpForwardTrigger = '<tab>'
-    let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
-
-" Use release branch 
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Allows vimwiki
-    Plug 'vimwiki/vimwiki'
 
 " Startify (start-up screen)
     Plug 'mhinz/vim-startify'
@@ -269,27 +250,18 @@ if has("Linux")
               \ { 'type': 'bookmarks',},
               \ ]
 
-    "let g:startify_padding_left = 7
-    "    let g:startify_custom_header = [
-    "    \ '   __  ____  ____  __        _  _  __  _  _  ',
-    "    \ '  /  \(_  _)(_  _)/  \  ___ / )( \(  )( \/ ) ',
-    "    \ ' (  O ) )(    )( (  O )(___)\ \/ / )( / \/ \ ',
-    "    \ '  \__/ (__)  (__) \__/       \__/ (__)\_)(_/ ',
-    "    \ '                       (running GNU/Linux)   ',
-    "    \]
-
     let g:startify_padding_left = 7
         let g:startify_custom_header = [
-\ '           ⠀⠀⠀⠀⣠⣴⣤⡔⣦⠀⠀⢀⢤⡀⣀⡰⠞⠒⠦⣀⠀',
-\ '           ⠀⠀⠀⢀⣿⣿⣿⡇⡿⠉⠕⣾⢸⣿⣿⣸⠀⡖⢀⢻⠀',
-\ '           ⠀⢠⠦⣄⣹⡿⠛⠑⢧⠬⢥⠏⠸⠻⢿⣿⡗⠚⢊⡏⠀',
-\ '           ⠀⠀⠉⠒⡝⡖⢩⢢⠀⠉⢁⢴⠲⡄⠀⡹⠁⠀⡼⠀⠀',
-\ '           ⢀⡤⠤⣒⣣⡑⣜⢜⡀⠀⠘⣸⣠⠓⡿⠁⡄⣼⣭⣦⡄',
-\ '           ⠀⠉⠉⢀⠤⠷⢬⣛⣿⣿⣿⠿⢋⠊⡠⢈⣼⣭⣛⣿⣷',
-\ '           ⠀⠀⠀⢧⢆⣰⣬⡿⢻⠏⠁⢕⠅⠀⣴⠃⠈⠛⣿⣿⡿',
-\ '           ⠀⠀⠀⠀⠉⠻⢅⣠⢾⠔⠖⠓⠁⠀⠘⡤⠔⢎⢍⠿⠃',
-\ '           ⠀⠀⠀⠀⠀⠀⣀⣀⣀⠧⣀⣀⠀⢀⡔⠻⠴⣛⣁⠀⠀',
-\ '       neovim⠀⠀⠀⢿⣶⣾⣿⡶⠕⠛⠉⠉⠒⢴⣯⣴⣾⡿⠀',
+\ '             ⠀⠀⠀⠀⣠⣴⣤⡔⣦⠀⠀⢀⢤⡀⣀⡰⠞⠒⠦⣀⠀',
+\ '             ⠀⠀⠀⢀⣿⣿⣿⡇⡿⠉⠕⣾⢸⣿⣿⣸⠀⡖⢀⢻⠀',
+\ '             ⠀⢠⠦⣄⣹⡿⠛⠑⢧⠬⢥⠏⠸⠻⢿⣿⡗⠚⢊⡏⠀',
+\ '             ⠀⠀⠉⠒⡝⡖⢩⢢⠀⠉⢁⢴⠲⡄⠀⡹⠁⠀⡼⠀⠀',
+\ '             ⢀⡤⠤⣒⣣⡑⣜⢜⡀⠀⠘⣸⣠⠓⡿⠁⡄⣼⣭⣦⡄',
+\ '             ⠀⠉⠉⢀⠤⠷⢬⣛⣿⣿⣿⠿⢋⠊⡠⢈⣼⣭⣛⣿⣷',
+\ '             ⠀⠀⠀⢧⢆⣰⣬⡿⢻⠏⠁⢕⠅⠀⣴⠃⠈⠛⣿⣿⡿',
+\ '             ⠀⠀⠀⠀⠉⠻⢅⣠⢾⠔⠖⠓⠁⠀⠘⡤⠔⢎⢍⠿⠃',
+\ '             ⠀⠀⠀⠀⠀⠀⣀⣀⣀⠧⣀⣀⠀⢀⡔⠻⠴⣛⣁⠀⠀',
+\ '         neovim⠀⠀⠀⢿⣶⣾⣿⡶⠕⠛⠉⠉⠒⢴⣯⣴⣾⡿⠀',
 \]
 endif
 
@@ -298,27 +270,18 @@ if has("win32")
               \ {'I': '~/AppData/Local/nvim/init.vim'},
               \ ]
 
-    "let g:startify_padding_left = 7
-    "    let g:startify_custom_header = [
-    "    \ '   __  ____  ____  __        _  _  __  _  _  ',
-    "    \ '  /  \(_  _)(_  _)/  \  ___ / )( \(  )( \/ ) ',
-    "    \ ' (  O ) )(    )( (  O )(___)\ \/ / )( / \/ \ ',
-    "    \ '  \__/ (__)  (__) \__/       \__/ (__)\_)(_/ ',
-    "    \ '                       (running Windows)     ',
-    "    \]
-
     let g:startify_padding_left = 7
         let g:startify_custom_header = [
-\ '           ⠀⠀⠀⠀⣠⣴⣤⡔⣦⠀⠀⢀⢤⡀⣀⡰⠞⠒⠦⣀⠀',
-\ '           ⠀⠀⠀⢀⣿⣿⣿⡇⡿⠉⠕⣾⢸⣿⣿⣸⠀⡖⢀⢻⠀',
-\ '           ⠀⢠⠦⣄⣹⡿⠛⠑⢧⠬⢥⠏⠸⠻⢿⣿⡗⠚⢊⡏⠀',
-\ '           ⠀⠀⠉⠒⡝⡖⢩⢢⠀⠉⢁⢴⠲⡄⠀⡹⠁⠀⡼⠀⠀',
-\ '           ⢀⡤⠤⣒⣣⡑⣜⢜⡀⠀⠘⣸⣠⠓⡿⠁⡄⣼⣭⣦⡄',
-\ '           ⠀⠉⠉⢀⠤⠷⢬⣛⣿⣿⣿⠿⢋⠊⡠⢈⣼⣭⣛⣿⣷',
-\ '           ⠀⠀⠀⢧⢆⣰⣬⡿⢻⠏⠁⢕⠅⠀⣴⠃⠈⠛⣿⣿⡿',
-\ '           ⠀⠀⠀⠀⠉⠻⢅⣠⢾⠔⠖⠓⠁⠀⠘⡤⠔⢎⢍⠿⠃',
-\ '       neovim⠀⠀⠀⠀⣀⣀⣀⠧⣀⣀⠀⢀⡔⠻⠴⣛⣁⠀⠀',
-\ '       -win32 ⠀⠀⢿⣶⣾⣿⡶⠕⠛⠉⠉⠒⢴⣯⣴⣾⡿⠀',
+\ '             ⠀⠀⠀⠀⣠⣴⣤⡔⣦⠀⠀⢀⢤⡀⣀⡰⠞⠒⠦⣀⠀',
+\ '             ⠀⠀⠀⢀⣿⣿⣿⡇⡿⠉⠕⣾⢸⣿⣿⣸⠀⡖⢀⢻⠀',
+\ '             ⠀⢠⠦⣄⣹⡿⠛⠑⢧⠬⢥⠏⠸⠻⢿⣿⡗⠚⢊⡏⠀',
+\ '             ⠀⠀⠉⠒⡝⡖⢩⢢⠀⠉⢁⢴⠲⡄⠀⡹⠁⠀⡼⠀⠀',
+\ '             ⢀⡤⠤⣒⣣⡑⣜⢜⡀⠀⠘⣸⣠⠓⡿⠁⡄⣼⣭⣦⡄',
+\ '             ⠀⠉⠉⢀⠤⠷⢬⣛⣿⣿⣿⠿⢋⠊⡠⢈⣼⣭⣛⣿⣷',
+\ '             ⠀⠀⠀⢧⢆⣰⣬⡿⢻⠏⠁⢕⠅⠀⣴⠃⠈⠛⣿⣿⡿',
+\ '             ⠀⠀⠀⠀⠉⠻⢅⣠⢾⠔⠖⠓⠁⠀⠘⡤⠔⢎⢍⠿⠃',
+\ '         neovim⠀⠀⠀⠀⣀⣀⣀⠧⣀⣀⠀⢀⡔⠻⠴⣛⣁⠀⠀',
+\ '         -win32 ⠀⠀⢿⣶⣾⣿⡶⠕⠛⠉⠉⠒⢴⣯⣴⣾⡿⠀',
 \]
 
 endif
@@ -326,17 +289,6 @@ endif
     let g:startify_commands = []
     let g:startify_files_number = 5
     let g:startify_session_before_save = []
-
-" SOME MORE COLOR SCHEMES
-    Plug 'ellisonleao/gruvbox.nvim'
-    Plug 'folke/tokyonight.nvim'
-    Plug 'bluz71/vim-nightfly-colors'
-    Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
-    Plug 'rebelot/kanagawa.nvim'
-    Plug 'NLKNguyen/papercolor-theme'
-
-" Allows use of <gcc> to auto-comment code
-    Plug 'tpope/vim-commentary'
 
 call plug#end()
 
