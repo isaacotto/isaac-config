@@ -18,6 +18,7 @@ o.swapfile = false            -- no swapfiles
 o.backupdir = '~/.cache/vim'  -- backup directory
 o.updatetime = 250            -- decrease update time
 o.timeoutlen = 300            -- decrease mapped sequence wait time
+o.clipboard = 'unnamedplus'
 
 -- Display
 o.foldmethod = 'syntax'       -- Fold method.
@@ -61,6 +62,9 @@ o.shiftwidth = 2
 o.whichwrap = '<,>,h,l'
 
 -- Key bindings
+
+-- Returns to dashboard
+vim.keymap.set('n', '<leader>home', ':Alpha<CR>')
 
 -- Sensible controls to resize splits (control + arrows).
 vim.keymap.set('n', '<c-Up>', ':resize -1<CR')
@@ -117,6 +121,9 @@ vim.keymap.set({ 'n', 'x', 'i' }, '<2-MiddleMouse>', '<nop>')
 vim.keymap.set({ 'n', 'x', 'i' }, '<3-MiddleMouse>', '<nop>')
 vim.keymap.set({ 'n', 'x', 'i' }, '<4-MiddleMouse>', '<nop>')
 
+
+
+
 -- Map jk and kj to escape using easyescape
 vim.keymap.set('i', '<C-BS>', '<C-w>')
 vim.keymap.set('i', '<C-h>', '<C-w>')
@@ -130,10 +137,10 @@ vim.cmd([[
     let g:easyescape_timeout = 100
     cnoremap jk <ESC>
     cnoremap kj <ESC>
-    ]])
+     ]])
 
 -- Open terminal in vsplit
-vim.keymap.set("n", "<leader>tty", ":vs term://zsh<CR>a", { desc = "Terminal in vsplit" })
+vim.keymap.set("n", "<leader>term", ":vs term://zsh<CR>a", { desc = "Terminal in vsplit" })
 
 -- Sensible way to return to normal mode in terminal.
 vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
@@ -154,7 +161,7 @@ vim.cmd([[
 -- Open markdown files using Firefox.
 vim.cmd([[
     autocmd BufEnter *.md exe 'noremap <F5> :! /usr/lib/firefox/firefox %:p<CR><CR>'
-    ]])
+     ]])
 
 ---- PLUGINS IN LUA ----------------------------------
 local vim = vim
@@ -166,7 +173,7 @@ Plug('stevearc/oil.nvim')
 
 Plug('nvim-lua/plenary.nvim')
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
-Plug('nvim-telescope/telescope.vim', { ['tag'] = '0.1.8' })
+Plug('nvim-telescope/telescope.nvim', { ['tag'] = '0.1.8' })
 
 Plug('vim-voom/VOoM')
   -- let voom_ft_modes = {'markdown': 'pandoc', 'rmd': 'pandoc'}
@@ -176,8 +183,11 @@ Plug('preservim/nerdtree', { ['on'] = 'NERDTreeToggle' })
 
 Plug('tpope/vim-surround')
 
-Plug 'godlygeek/tabular'
-Plug 'preservim/vim-markdown'
+Plug('godlygeek/tabular')
+Plug('preservim/vim-markdown')
+
+Plug('nvim-tree/nvim-web-devicons')
+Plug('echasnovski/mini.icons')
 
   -- Disables weird markdown folding
   vim.g.vim_markdown_folding_level = 0
@@ -190,12 +200,12 @@ Plug 'junegunn/goyo.vim'
 
 Plug('tpope/vim-eunuch')
 
-Plug 'junegunn/vim-peekaboo'
+Plug('junegunn/vim-peekaboo')
 
-Plug 'lervag/vimtex'
+Plug('lervag/vimtex')
 
 -- Allows mapping jk/kj to escape without pausing.
-Plug 'zhou13/vim-easyescape'
+Plug('zhou13/vim-easyescape')
 
 -- LSP support.
 Plug('neoclide/coc.nvim', { ['branch'] = 'release' })
@@ -208,89 +218,34 @@ Plug('tpope/vim-commentary')
 
 -- Some more color schemes.
 Plug('ellisonleao/gruvbox.nvim')
-Plug('folke/tokyonight.nvim')
 Plug('bluz71/vim-nightfly-colors')
 Plug('catppuccin/nvim', { ['as'] = 'catppuccin' })
 Plug('rebelot/kanagawa.nvim')
 Plug('NLKNguyen/papercolor-theme')
+Plug('folke/tokyonight.nvim')
 
+-- Alpha-related plugins
+Plug('goolord/alpha-nvim', { ['lazy'] = true })
+Plug('akinsho/bufferline.nvim', { ['dependencies'] = 'nvim-tree/nvim-web-devicons' })
+Plug('nvim-lualine/lualine.nvim', { ['dependencies'] = 'nvim-tree/nvim-web-devicons' })
+Plug('folke/which-key.nvim', { ['lazy'] = true })
 
 vim.call('plug#end')
+
+-- Telescope key bindings (must be called post-plug#end.
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files'})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+
+vim.keymap.set("n", "<leader>fa", ":Telescope find_files hidden=true search_dirs=~/<CR>")
 
 ---- END OF LUA --------------------------------------
 
 -- If editing vimscript, use "set syntax=vim" to make things a little more pleasant.
 
 vim.cmd([[
-
-" Startify (start-up screen)
-    Plug 'mhinz/vim-startify'
-
-    nmap <leader>st :Startify<CR>
-
-    "	let g:startify_lists = [
-    "	  \ { 'type': 'files',     'header': ['   MRU']            },
-    "	  \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
-    "	  \ { 'type': 'sessions',  'header': ['   Sessions']       },
-    "	  \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-    "	  \ { 'type': 'commands',  'header': ['   Commands']       },
-    "	  \ ]
-
-if has("Linux")
-    let g:startify_bookmarks= [
-                \ {'I': '~/.config/nvim/init.lua'},
-                \ {'K': '~/.config/kitty/kitty.conf'},
-                \ {'U': '~/isaac-otto-usc-docs/'},
-                \ {'C': '~/isaac-config/'},
-                \ {'D': '~/isaac-docs/'},
-                \ ]
-
-    let g:startify_lists = [
-              \ { 'type': 'sessions',  'header': ['   Sessions']       },
-              \ { 'type': 'bookmarks',},
-              \ ]
-
-    let g:startify_padding_left = 7
-        let g:startify_custom_header = [
-\ '             ⠀⠀⠀⠀⣠⣴⣤⡔⣦⠀⠀⢀⢤⡀⣀⡰⠞⠒⠦⣀⠀',
-\ '             ⠀⠀⠀⢀⣿⣿⣿⡇⡿⠉⠕⣾⢸⣿⣿⣸⠀⡖⢀⢻⠀',
-\ '             ⠀⢠⠦⣄⣹⡿⠛⠑⢧⠬⢥⠏⠸⠻⢿⣿⡗⠚⢊⡏⠀',
-\ '             ⠀⠀⠉⠒⡝⡖⢩⢢⠀⠉⢁⢴⠲⡄⠀⡹⠁⠀⡼⠀⠀',
-\ '             ⢀⡤⠤⣒⣣⡑⣜⢜⡀⠀⠘⣸⣠⠓⡿⠁⡄⣼⣭⣦⡄',
-\ '             ⠀⠉⠉⢀⠤⠷⢬⣛⣿⣿⣿⠿⢋⠊⡠⢈⣼⣭⣛⣿⣷',
-\ '             ⠀⠀⠀⢧⢆⣰⣬⡿⢻⠏⠁⢕⠅⠀⣴⠃⠈⠛⣿⣿⡿',
-\ '             ⠀⠀⠀⠀⠉⠻⢅⣠⢾⠔⠖⠓⠁⠀⠘⡤⠔⢎⢍⠿⠃',
-\ '             ⠀⠀⠀⠀⠀⠀⣀⣀⣀⠧⣀⣀⠀⢀⡔⠻⠴⣛⣁⠀⠀',
-\ '         neovim⠀⠀⠀⢿⣶⣾⣿⡶⠕⠛⠉⠉⠒⢴⣯⣴⣾⡿⠀',
-\]
-endif
-
-if has("win32")
-  let g:startify_bookmarks= [
-              \ {'I': '~/AppData/Local/nvim/init.vim'},
-              \ ]
-
-    let g:startify_padding_left = 7
-        let g:startify_custom_header = [
-\ '             ⠀⠀⠀⠀⣠⣴⣤⡔⣦⠀⠀⢀⢤⡀⣀⡰⠞⠒⠦⣀⠀',
-\ '             ⠀⠀⠀⢀⣿⣿⣿⡇⡿⠉⠕⣾⢸⣿⣿⣸⠀⡖⢀⢻⠀',
-\ '             ⠀⢠⠦⣄⣹⡿⠛⠑⢧⠬⢥⠏⠸⠻⢿⣿⡗⠚⢊⡏⠀',
-\ '             ⠀⠀⠉⠒⡝⡖⢩⢢⠀⠉⢁⢴⠲⡄⠀⡹⠁⠀⡼⠀⠀',
-\ '             ⢀⡤⠤⣒⣣⡑⣜⢜⡀⠀⠘⣸⣠⠓⡿⠁⡄⣼⣭⣦⡄',
-\ '             ⠀⠉⠉⢀⠤⠷⢬⣛⣿⣿⣿⠿⢋⠊⡠⢈⣼⣭⣛⣿⣷',
-\ '             ⠀⠀⠀⢧⢆⣰⣬⡿⢻⠏⠁⢕⠅⠀⣴⠃⠈⠛⣿⣿⡿',
-\ '             ⠀⠀⠀⠀⠉⠻⢅⣠⢾⠔⠖⠓⠁⠀⠘⡤⠔⢎⢍⠿⠃',
-\ '         neovim⠀⠀⠀⠀⣀⣀⣀⠧⣀⣀⠀⢀⡔⠻⠴⣛⣁⠀⠀',
-\ '         -win32 ⠀⠀⢿⣶⣾⣿⡶⠕⠛⠉⠉⠒⢴⣯⣴⣾⡿⠀',
-\]
-
-endif
-
-    let g:startify_commands = []
-    let g:startify_files_number = 5
-    let g:startify_session_before_save = []
-
-call plug#end()
 
 " Custom startify highlighting scheme:
     " For some reason this REALLY wants to go here.
@@ -453,6 +408,7 @@ let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown'
 
 if has ("Linux")
   lua require('oilconfig')
+  lua require('alpha-config')
 endif
 
 ]])
