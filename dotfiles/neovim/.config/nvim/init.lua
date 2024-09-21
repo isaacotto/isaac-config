@@ -121,9 +121,6 @@ vim.keymap.set({ 'n', 'x', 'i' }, '<2-MiddleMouse>', '<nop>')
 vim.keymap.set({ 'n', 'x', 'i' }, '<3-MiddleMouse>', '<nop>')
 vim.keymap.set({ 'n', 'x', 'i' }, '<4-MiddleMouse>', '<nop>')
 
-
-
-
 -- Map jk and kj to escape using easyescape
 vim.keymap.set('i', '<C-BS>', '<C-w>')
 vim.keymap.set('i', '<C-h>', '<C-w>')
@@ -144,6 +141,9 @@ vim.keymap.set("n", "<leader>term", ":vs term://zsh<CR>a", { desc = "Terminal in
 
 -- Sensible way to return to normal mode in terminal.
 vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
+-- Subfield delimiter!
+vim.keymap.set('i', '!$', 'ǂ')
 
 -- Windows settings
 vim.cmd([[
@@ -228,8 +228,6 @@ Plug('folke/tokyonight.nvim')
 Plug('goolord/alpha-nvim', { ['lazy'] = true })
 Plug('akinsho/bufferline.nvim', { ['dependencies'] = 'nvim-tree/nvim-web-devicons' })
 Plug('nvim-lualine/lualine.nvim', { ['dependencies'] = 'nvim-tree/nvim-web-devicons' })
-Plug('folke/which-key.nvim', { ['lazy'] = true })
-
 vim.call('plug#end')
 
 -- Telescope key bindings (must be called post-plug#end.
@@ -240,6 +238,50 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' 
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
 vim.keymap.set("n", "<leader>fa", ":Telescope find_files hidden=true search_dirs=~/<CR>")
+
+-- Lualine setup
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = 'auto',
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {
+      statusline = {},
+      winbar = {},
+    },
+    ignore_focus = {},
+    always_divide_middle = true,
+    globalstatus = false,
+    refresh = {
+      statusline = 1000,
+      tabline = 1000,
+      winbar = 1000,
+    }
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  winbar = {},
+  inactive_winbar = {},
+  extensions = {}
+}
+Plug('folke/which-key.nvim', { ['lazy'] = true })
+
 
 ---- END OF LUA --------------------------------------
 
