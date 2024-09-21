@@ -26,7 +26,7 @@ o.cursorline = true           -- Highlight cursor line.
 o.wrap = true                 -- Text wrap.
 o.linebreak = true            -- Wraps long lines at 'breakat'.
 o.breakindent = true          -- Same indent as last line.
-o.showtabline = 2             -- Always show tab line.
+o.showtabline = 1             -- Always show tab line.
 o.splitbelow = true           -- Always split below.
 o.splitright = true           -- Always split right.
 o.number = true               -- Show line numbers.
@@ -279,6 +279,43 @@ require('lualine').setup {
 
 Plug('folke/which-key.nvim', { ['lazy'] = true })
 
+-- Define a local function called "Goyo_enter" which runs a function called "hide" defined in the "lualine" file (that it seeks on its own special PATH). Passes options defined in the "require" bit.
+-- In this case the options specify sites of action (statusline, et al.), and whether it hides or unhides.
+-- This local function is what we want to call when Goyo is activated, but there is nothing linking the local function to that event yet.
+local Goyo_enter = function ()
+  require("lualine").hide({
+    place = { "statusline", "tabline", "winbar" },
+    unhide = false,
+    hide = true,
+  })
+end
+
+-- This defines the opposing local function that we want to call when Goyo closes.
+ local function Goyo_leave()
+   require("lualine").hide({
+     place = { "statusline", "tabline", "winbar" },
+     unhide = true,
+   })
+ end
+
+-- This creates a local function called GoyoGroup comprising a vim auto-group.
+local GoyoGroup = vim.api.nvim_create_augroup("GoyoGroup", { clear = true })
+
+-- The following two autocommands are grouped together by passing the "group" option to the create_autocmd function. The pattern is what triggers the autocommand and the callback is what runs (our earlier defined local functions).
+-- I'm not really sure why these need to be grouped together though.
+-- I guess they don't have to (I tried separating them) -- it's just best practice?
+ vim.api.nvim_create_autocmd("User", {
+   pattern = "GoyoEnter",
+   callback = Goyo_enter,
+   group = GoyoGroup,
+ })
+
+vim.api.nvim_create_autocmd("User", {
+  pattern = "GoyoLeave",
+  callback = Goyo_leave,
+  group = GoyoGroup,
+})
+
 
 ---- END OF LUA --------------------------------------
 
@@ -288,7 +325,7 @@ vim.cmd([[
 
 " Custom startify highlighting scheme:
     " For some reason this REALLY wants to go here.
-    " Now, no matter what color scheme is used, it will
+	    " Now, no matter what color scheme is used, it will
     " make the header color #131 (indian red)
 
     augroup custom_highlight
