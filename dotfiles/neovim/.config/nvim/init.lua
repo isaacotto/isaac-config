@@ -27,10 +27,10 @@ o.wrap = true                 -- Text wrap.
 o.linebreak = true            -- Wraps long lines at 'breakat'.
 o.breakindent = true          -- Same indent as last line.
 o.showtabline = 2             -- Always show tab line.
-o.splitbelow = true
-o.splitright = true
-o.number = true
-o.relativenumber = true
+o.splitbelow = true           -- Always split below.
+o.splitright = true           -- Always split right.
+o.number = true               -- Show line numbers.
+o.relativenumber = true       -- Relative line numbers.
 o.scrolloff = 10              -- Minimum number of lines at top/bottom.
 o.list = true                 -- Sets how whitespace characters display.
 o.listchars = { tab = '<< ', trail = '·', nbsp = '⍽' }
@@ -53,26 +53,23 @@ o.incsearch = true            -- Shows pattern while searching.
 o.inccommand = 'split'        -- Preview substitutions live, as you type.
 
 -- Tabs/indenting
-o.tabstop = 2
+o.tabstop = 2                 -- Two-space tabs.
 o.softtabstop = 2
-o.expandtab = true
+o.expandtab = true            -- Turn tab into spaces.
 o.shiftwidth = 2
 
 -- Behavior
-o.whichwrap = '<,>,h,l'
+o.whichwrap = '<,>,h,l'       -- Allows movement to next line from last char.
 
 -- Key bindings
 
--- Returns to dashboard
-vim.keymap.set('n', '<leader>home', ':Alpha<CR>')
+vim.keymap.set('n', '<leader>home', ':Alpha<CR>', { desc = 'Return to dashboard' })
 
--- Sensible controls to resize splits (control + arrows).
-vim.keymap.set('n', '<c-Up>', ':resize -1<CR')
-vim.keymap.set('n', '<c-Down>', ':resize +1<CR')
-vim.keymap.set('n', '<c-left>', ':vertical resize -1<CR')
-vim.keymap.set('n', '<c-right>', ':vertical resize +1<CR')
+vim.keymap.set('n', '<c-Up>', ':resize -1<CR>', { desc = 'resize split' })
+vim.keymap.set('n', '<c-Down>', ':resize +1<CR>', { desc = 'resize split' })
+vim.keymap.set('n', '<c-left>', ':vertical resize -1<CR>', { desc = 'resize split' })
+vim.keymap.set('n', '<c-right>', ':vertical resize +1<CR>', { desc = 'resize split' })
 
--- Clear highlight of search, messages, floating windows.
 vim.keymap.set({ "n", "i" }, "<Esc>", function()
   vim.cmd([[nohl]]) -- clear highlight of search
   vim.cmd([[stopinsert]]) -- clear messages (the line below statusline)
@@ -83,29 +80,29 @@ vim.keymap.set({ "n", "i" }, "<Esc>", function()
   end
 end, { desc = "Clear highlight of search, messages, floating windows" })
 
--- Toggle nerdtree.
-vim.keymap.set('n', '<F6>', ':NERDTreeToggle<CR>')
+vim.keymap.set('n', '<F6>', ':NERDTreeToggle<CR>', { desc = 'toggle NERDTree' })
 
 -- Use ctrl-[hjkl] to select the active split!
-vim.keymap.set('n', '<c-k>', ':wincmd k<CR>')
-vim.keymap.set('n', '<c-j>', ':wincmd j<CR>')
-vim.keymap.set('n', '<c-h>', ':wincmd h<CR>')
-vim.keymap.set('n', '<c-l>', ':wincmd l<CR>')
+vim.keymap.set('n', '<c-k>', ':wincmd k<CR>', { desc = 'select split above' })
+vim.keymap.set('n', '<c-j>', ':wincmd j<CR>', { desc = 'select split below' })
+vim.keymap.set('n', '<c-h>', ':wincmd h<CR>', { desc = 'select split left' })
+vim.keymap.set('n', '<c-l>', ':wincmd l<CR>', { desc = 'select split right' })
 
 -- Checkboxes.
-vim.keymap.set('n', '<leader>box', '^ [ ]<esc>')
-vim.keymap.set('n', '<leader>ch', '^f]hci[<C-k>OK<esc>')
-vim.keymap.set('n', '<leader>part', '^f]hci[<C-k>0m<esc>')
+vim.keymap.set('n', '<leader>box', '^li [ ]<esc>', { desc = 'make checkbox on current line' })
+vim.keymap.set('n', '<leader>ch', '^f]hci[<C-k>OK<esc>', { desc = 'check the checkbox' })
+vim.keymap.set('n', '<leader>part', '^f]hci[<C-k>0m<esc>', { desc = 'partially check the checkbox' })
+vim.keymap.set('i', '<leader>box', '<Esc>^li [ ]<esc>$', { desc = 'make checkbox on current line' })
 
 -- Shortcut for spellchecking. Auto-corrects last mistake and jumps back to
 -- prev. cursor position.
-vim.keymap.set('i', '<C-l>', '<c-g>u<Esc>[s1z=`]a<c-g>u')
+vim.keymap.set('i', '<C-l>', '<c-g>u<Esc>[s1z=`]a<c-g>u', { desc = 'Auto-correct last spelling mistake' })
 
 -- Shortcut for 'select all'
-vim.keymap.set('n', '<leader>a', 'ggVG')
+vim.keymap.set('n', '<leader>a', 'ggVG', { desc = 'Select all' })
 
 -- Run command on cursor line.
-vim.keymap.set('n', '<leader>run', '"zyy:@z<CR>')
+vim.keymap.set('n', '<leader>run', '"zyy:@z<CR>', { desc = 'Run command on cursor line' })
 
 -- Remap arrow keys to move up or down by DISPLAY lines (like gj/gk)
 vim.keymap.set('n', '<Up>', 'gk')
@@ -116,17 +113,16 @@ vim.keymap.set('i', '<Up>', '<C-O>gk')
 vim.keymap.set('i', '<Down>', '<C-O>gj')
 
 -- Hopefully disables middle mouse click (and double/triple/quad click).
-vim.keymap.set({ 'n', 'x', 'i' }, '<MiddleMouse>', '<LeftMouse>')
-vim.keymap.set({ 'n', 'x', 'i' }, '<2-MiddleMouse>', '<nop>')
-vim.keymap.set({ 'n', 'x', 'i' }, '<3-MiddleMouse>', '<nop>')
-vim.keymap.set({ 'n', 'x', 'i' }, '<4-MiddleMouse>', '<nop>')
+vim.keymap.set({ 'n', 'x', 'i' }, '<MiddleMouse>', '<LeftMouse>', { desc = 'Disable middle-click paste' })
+vim.keymap.set({ 'n', 'x', 'i' }, '<2-MiddleMouse>', '<nop>', { desc = 'Disable middle-click paste' })
+vim.keymap.set({ 'n', 'x', 'i' }, '<3-MiddleMouse>', '<nop>', { desc = 'Disable middle-click paste' })
+vim.keymap.set({ 'n', 'x', 'i' }, '<4-MiddleMouse>', '<nop>', { desc = 'Disable middle-click paste' })
 
--- Map jk and kj to escape using easyescape
-vim.keymap.set('i', '<C-BS>', '<C-w>')
-vim.keymap.set('i', '<C-h>', '<C-w>')
+vim.keymap.set('i', '<C-BS>', '<C-w>', { desc = 'Ctrl + backspace' })
+vim.keymap.set('i', '<C-h>', '<C-w>', { desc = 'Ctrl + backsapce' })
 
 -- .pdf word count macro.
-vim.keymap.set('n', '<leader>words', ':!<Space>ps2ascii<Space>%:r.pdf<Space><BAR><Space>wc<Space>-w<CR>')
+vim.keymap.set('n', '<leader>words', ':!<Space>ps2ascii<Space>%:r.pdf<Space><BAR><Space>wc<Space>-w<CR>', { desc = 'Pdf word count' })
 
 -- Map jk and kj to escape using easyescape
 vim.cmd([[
@@ -143,7 +139,7 @@ vim.keymap.set("n", "<leader>term", ":vs term://zsh<CR>a", { desc = "Terminal in
 vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- Subfield delimiter!
-vim.keymap.set('i', '!$', 'ǂ')
+vim.keymap.set('i', '!$', 'ǂ', { desc = 'Subfield delimiter' })
 
 -- Windows settings
 vim.cmd([[
@@ -232,7 +228,7 @@ vim.call('plug#end')
 
 -- Telescope key bindings (must be called post-plug#end.
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files'})
+vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
@@ -280,6 +276,7 @@ require('lualine').setup {
   inactive_winbar = {},
   extensions = {}
 }
+
 Plug('folke/which-key.nvim', { ['lazy'] = true })
 
 
@@ -293,7 +290,7 @@ vim.cmd([[
     " For some reason this REALLY wants to go here.
     " Now, no matter what color scheme is used, it will
     " make the header color #131 (indian red)
-     
+
     augroup custom_highlight
       autocmd!
       au ColorScheme * highlight StartifyHeader ctermfg=131
