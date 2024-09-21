@@ -65,6 +65,12 @@ o.whichwrap = '<,>,h,l'       -- Allows movement to next line from last char.
 
 vim.keymap.set('n', '<leader>home', ':Alpha<CR>', { desc = 'Return to dashboard' })
 
+-- These allow <leader>o (O) to append blank lines after (before) current line without leaving normal mode. They can also be multiplied by a number before the prefix, e.g. 3<leader>o.
+vim.cmd([[
+nnoremap <silent> <leader>o :<C-u>call append(line("."), repeat([""], v:count1))<CR>
+nnoremap <silent> <leader>O :<C-u>call append(line(".")-1, repeat([""], v:count1))<CR>
+]])
+
 vim.keymap.set('n', '<c-Up>', ':resize -1<CR>', { desc = 'resize split' })
 vim.keymap.set('n', '<c-Down>', ':resize +1<CR>', { desc = 'resize split' })
 vim.keymap.set('n', '<c-left>', ':vertical resize -1<CR>', { desc = 'resize split' })
