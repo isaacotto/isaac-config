@@ -63,7 +63,21 @@ o.whichwrap = '<,>,h,l'       -- Allows movement to next line from last char.
 
 -- Key bindings
 
+-- MARC normalizer
+-- This takes a human-readable marc record and copies it into the main buffer in such a way that it can be pasted into Connexion.
+-- I should probably also do one to turn it into MARCedit readable code...
+vim.cmd([[
+nnoremap <silent> <leader>marc yi{/}<CR><CR>o{<CR>}<Esc>kpvi{:s/ //<CR>vi{:s/ //<CR>vi{:s/\\/ /g<CR>vi{:s/\$\$/ǂ/g<CR>yi{
+]])
+
+vim.cmd([[
+imap <CR> <CR>
+]])
+
 vim.keymap.set('n', '<leader>home', ':Alpha<CR>', { desc = 'Return to dashboard' })
+
+
+vim.keymap.set('n', '<leader>here', ':!thunar .<CR>', {desc = 'Open terminal in current directory' })
 
 -- These allow <leader>o (O) to append blank lines after (before) current line without leaving normal mode. They can also be multiplied by a number before the prefix, e.g. 3<leader>o.
 vim.cmd([[
