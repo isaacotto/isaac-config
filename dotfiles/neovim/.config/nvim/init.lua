@@ -32,8 +32,9 @@ o.splitright = true           -- Always split right.
 o.number = true               -- Show line numbers.
 o.relativenumber = true       -- Relative line numbers.
 o.scrolloff = 10              -- Minimum number of lines at top/bottom.
-o.list = true                 -- Sets how whitespace characters display.
-o.listchars = { tab = '<< ', trail = '·', nbsp = '⍽' }
+-- o.list = true                 -- Sets how whitespace characters display.
+-- o.listchars = { tab = '<< ', trail = '·', nbsp = '⍽' }
+-- o.listchars = { trail = '·', nbsp = '⍽' }
 o.signcolumn = 'yes'          -- keep signcolumn on by default
 
 -- Highlight when yanking text
@@ -70,6 +71,12 @@ vim.cmd([[
 nnoremap <silent> <leader>marc yi{/}<CR><CR>o{<CR>}<Esc>kpvi{:s/ //<CR>vi{:s/ //<CR>vi{:s/\\/ /g<CR>vi{:s/\$\$/ǂ/g<CR>yi{
 ]])
 
+-- Normalizes human-readable MARC to MARCedit format for copy-pasting.
+vim.cmd([[
+nnoremap <silent> <leader>medit yi{/}<CR><CR>o{<CR>}<Esc>kp vi{:s/^\(.\)/=\1<CR> vi{:s/^=\(\d\d\d\) /=\1  /<CR> vi{:s/ǂ/\$\$/g<CR> vi{:s/ \(\$\$\)\(.\)/\1\2/g<CR>vi{:s/\(\$\$\)\(.\) /\1\2/g<CR>vi{:s/\$\$/\$/g<CR>
+]])
+
+-- Seems to avoid issues with VimWikiReturn that I don't fully understand.
 vim.cmd([[
 imap <CR> <CR>
 ]])
