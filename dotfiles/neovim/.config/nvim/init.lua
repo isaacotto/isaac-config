@@ -68,12 +68,12 @@ o.whichwrap = '<,>,h,l'       -- Allows movement to next line from last char.
 -- This takes a human-readable marc record and copies it into the main buffer in such a way that it can be pasted into Connexion.
 -- I should probably also do one to turn it into MARCedit readable code...
 vim.cmd([[
-nnoremap <silent> <leader>marc yi{/}<CR><CR>o{<CR>}<Esc>kpvi{:s/ //<CR>vi{:s/ //<CR>vi{:s/\\/ /g<CR>vi{:s/\$\$/ǂ/g<CR>yi{
+nnoremap <silent> <leader>oclc <Esc><Esc>yi{/}<CR>o{<CR>}<Esc>kpvi{:s/ //<CR>vi{:s/ //<CR>vi{:s/\\/ /g<CR>vi{:s/\$\$/ǂ/g<CR>yi{:noh<CR>:echo"MARC normalized for Connexion"<CR>
 ]])
 
 -- Normalizes human-readable MARC to MARCedit format for copy-pasting.
 vim.cmd([[
-nnoremap <silent> <leader>medit yi{/}<CR><CR>o{<CR>}<Esc>kp vi{:s/^\(.\)/=\1<CR> vi{:s/^=\(\d\d\d\) /=\1  /<CR> vi{:s/ǂ/\$\$/g<CR> vi{:s/ \(\$\$\)\(.\)/\1\2/g<CR>vi{:s/\(\$\$\)\(.\) /\1\2/g<CR>vi{:s/\$\$/\$/g<CR>
+nnoremap <silent> <leader>medit <Esc><Esc>yi{/}<CR>o{<CR>}<Esc>kpvi{:s/^\(.\)/=\1<CR> vi{:s/^=\(\d\d\d\) /=\1  /<CR>vi{:s/ǂ/\$\$/g<CR><CR>vi{:s/<Space>\(\$\$\)\(.\)/\1\2/g<CR>vi{:s/\(\$\$\)\(.\)<Space>/\1\2/g<CR>vi{:s/\$\$/\$/g<CR>:noh<CR>:echo"MARC normalized for MARCedit"<CR>
 ]])
 
 -- Seems to avoid issues with VimWikiReturn that I don't fully understand.
@@ -167,6 +167,7 @@ vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode
 
 -- Subfield delimiter!
 vim.keymap.set('i', '!$', 'ǂ', { desc = 'Subfield delimiter' })
+vim.keymap.set('i', '$!', 'ǂ', { desc = 'Subfield delimiter also' })
 
 -- Windows settings
 vim.cmd([[
@@ -219,7 +220,7 @@ Plug('echasnovski/mini.icons')
 Plug 'junegunn/goyo.vim'
 
   -- Alias to open Goyo because I can never remember that word.
-  vim.cmd('command Mini Goyo')
+  vim.cmd('command! Mini Goyo')
 
 Plug('tpope/vim-eunuch')
 
