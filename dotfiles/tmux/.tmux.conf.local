@@ -7,6 +7,7 @@
 set -s escape-time 0
 # -- bindings ------------------------------------------------------------------
 
+
 # preserve tmux stock bindings,
 # while adding bindings that don't conflict with these stock bindings
 # /!\ this disables some of Oh my tmux! bindings described in README.md
@@ -14,11 +15,9 @@ set -s escape-time 0
 #   - false (default)
 tmux_conf_preserve_stock_bindings=false
 
-
 # -- session creation ----------------------------------------------------------
 
-# prompt for session name when creating a new session, possible values are:
-#   - true
+# prompt for session name when creating a new session, possible values are: - true
 #   - false (default)
 #   - disabled (do not modify new-session bindings)
 tmux_conf_new_session_prompt=false
@@ -55,7 +54,6 @@ tmux_conf_new_pane_retain_current_path=true
 #   - false (default)
 #   - disabled (do not modify split-window bindings)
 tmux_conf_new_pane_reconnect_ssh=false
-
 
 # -- display -------------------------------------------------------------------
 

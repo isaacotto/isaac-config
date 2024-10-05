@@ -83,7 +83,6 @@ imap <CR> <CR>
 
 vim.keymap.set('n', '<leader>home', ':Alpha<CR>', { desc = 'Return to dashboard' })
 
-
 vim.keymap.set('n', '<leader>here', ':!thunar .<CR>', {desc = 'Open terminal in current directory' })
 
 -- These allow <leader>o (O) to append blank lines after (before) current line without leaving normal mode. They can also be multiplied by a number before the prefix, e.g. 3<leader>o.
@@ -149,7 +148,7 @@ vim.keymap.set('i', '<C-BS>', '<C-w>', { desc = 'Ctrl + backspace' })
 vim.keymap.set('i', '<C-h>', '<C-w>', { desc = 'Ctrl + backsapce' })
 
 -- .pdf word count macro.
-vim.keymap.set('n', '<leader>words', ':!<Space>ps2ascii<Space>%:r.pdf<Space><BAR><Space>wc<Space>-w<CR>', { desc = 'Pdf word count' })
+vim.keymap.set('n', '<leader>words', ':!<Space>ps2ascii<Space>%:r.pdf<Space><BAR><Space>wc<Space>-w<CR>', { desc = 'pdf word count' })
 
 -- Map jk and kj to escape using easyescape
 vim.cmd([[
@@ -168,25 +167,13 @@ vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode
 -- Subfield delimiter!
 vim.keymap.set('i', '!$', 'ǂ', { desc = 'Subfield delimiter' })
 vim.keymap.set('i', '$!', 'ǂ', { desc = 'Subfield delimiter also' })
-
--- Windows settings
-vim.cmd([[
-    if has("win32")
-
-      scriptencoding utf-8
-
-      if exists("&smoothscroll")
-        set smoothscroll
-
-      endif
-    endif
-    ]])
+vim.keymap.set('i', '<C-d>','ǂ', { desc = 'Subfield delimiter also' })
 
 -- Open markdown files using Firefox.
 vim.cmd([[
     autocmd BufEnter *.md exe 'noremap <F5> :! /usr/lib/firefox/firefox %:p<CR><CR>'
      ]])
-
+ 
 ---- PLUGINS IN LUA ----------------------------------
 local vim = vim
 local Plug = vim.fn['plug#']
