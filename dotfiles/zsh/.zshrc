@@ -127,6 +127,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# alias / mapping / binding
 alias ls="logo-ls"
 
 alias blogout="kill -9 -1"
@@ -140,6 +141,8 @@ alias ttt="trash-put"
 alias tail="colortail"
 
 alias calcurse="calcurse -D ~/Sync/calcurse"
+
+alias fzf="fzf --bind 'ctrl-v:execute(nvim {} < /dev/tty)'"
 
 function lazygit() {
     git add .
