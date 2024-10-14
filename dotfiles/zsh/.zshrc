@@ -128,22 +128,37 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # alias / mapping / binding
-alias ls="logo-ls"
+
 
 alias blogout="kill -9 -1"
+alias calcurse="calcurse -D ~/Sync/calcurse"
+alias fzf="fzf --bind 'ctrl-v:execute(nvim {} < /dev/tty)'"
+alias ls="logo-ls"
+alias music="musikcube"
+alias rm='echo "Consider using trash-put (alias ttt) instead. If you want rm, type \\\rm."; false'
+alias tail="colortail"
 alias texcompile="latexmk -lualatex"
-
 alias thes="dict -d moby-thesaurus"
-
-alias rm='echo "Consider using trash-put (ttt) instead. If you want rm, type \rm."; false'
 alias ttt="trash-put"
 
-alias tail="colortail"
-
-alias calcurse="calcurse -D ~/Sync/calcurse"
-
-alias fzf="fzf --bind 'ctrl-v:execute(nvim {} < /dev/tty)'"
-
+# Use like normal fzf, but the output is copied to the clipboard.
+f()
+{
+	# https://stackoverflow.com/a/46726373/9157799
+	if [ -p /dev/stdin ]  # if data was piped
+	then
+		stdin=$(</dev/stdin)
+		echo "$stdin" | fzf "$@" | xclip
+		fzo="$(xclip -o)"
+	else
+		fzo=$(fzf "$@")
+	fi
+	if [ "$fzo" != "" ]
+	then
+		echo -n "$fzo" | xclip -se c
+		echo "$fzo"
+	fi
+}
 function lazygit() {
     git add .
     git commit -am "$1"
