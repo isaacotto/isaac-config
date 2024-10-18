@@ -192,6 +192,11 @@ function precmd() {
 }
 PATH="$HOME/.local/bin:$PATH"
 
+
+alias google='function _google(){ w3m "https://www.google.com/search?q=$(echo "$*" | sed "s/ /+/g")"; }; _google'
+
+alias duck='function _duck(){ w3m "https://duckduckgo.com/?q=$(echo "$*" | sed "s/ /+/g")"; }; _duck'
+
 # Nodejs
 VERSION=v10.15.0
 DISTRO=linux-x64
