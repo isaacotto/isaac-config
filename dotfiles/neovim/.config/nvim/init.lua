@@ -54,10 +54,10 @@ o.incsearch = true            -- Shows pattern while searching.
 o.inccommand = 'split'        -- Preview substitutions live, as you type.
 
 -- Tabs/indenting
-o.tabstop = 2                 -- Two-space tabs.
-o.softtabstop = 2
-o.expandtab = true            -- Turn tab into spaces.
-o.shiftwidth = 2
+o.tabstop = 8                 -- Default setting 8
+o.softtabstop = 4             -- Number of spaces that <Tab> counts for.
+o.expandtab = true            -- Turn tabs into spaces.
+o.shiftwidth = 4              -- Auto-indents by 4 spaces; also shift + > is 4 spaces.
 
 -- Behavior
 o.whichwrap = '<,>,h,l'       -- Allows movement to next line from last char.
@@ -182,6 +182,14 @@ vim.call('plug#begin')
 
 Plug('stevearc/oil.nvim')
 
+-- Plugin for converting MARC 21 bibliographic records between .mrc, .mrk and .xml file formats
+Plug('whatupmiked/vim-marc')
+
+Plug('marcweber/vim-addon-mw-utils')
+Plug('garbas/vim-snipmate')
+Plug('MMinkova/vim-snippets-mrk')
+
+
 Plug('nvim-lua/plenary.nvim')
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
 
@@ -236,6 +244,9 @@ Plug('catppuccin/nvim', { ['as'] = 'catppuccin' })
 Plug('rebelot/kanagawa.nvim')
 Plug('NLKNguyen/papercolor-theme')
 Plug('folke/tokyonight.nvim')
+
+-- recfile syntax highlighting
+Plug('zaid/vim-rec')
 
 -- Alpha-related plugins
 Plug('goolord/alpha-nvim', { ['lazy'] = true })
