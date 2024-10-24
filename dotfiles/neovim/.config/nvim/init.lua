@@ -36,6 +36,7 @@ o.scrolloff = 10              -- Minimum number of lines at top/bottom.
 -- o.listchars = { tab = '<< ', trail = '·', nbsp = '⍽' }
 -- o.listchars = { trail = '·', nbsp = '⍽' }
 o.signcolumn = 'yes'          -- keep signcolumn on by default
+o.fillchars = {eob = " "}     -- end-of-buffer character
 
 -- Highlight when yanking text
 vim.api.nvim_create_autocmd("TextYankPost", {
