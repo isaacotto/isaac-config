@@ -122,10 +122,10 @@ end, { desc = "Clear highlight of search, messages, floating windows" })
 vim.keymap.set('n', '<F6>', ':NERDTreeToggle<CR>', { desc = 'toggle NERDTree' })
 
 -- Use ctrl-[hjkl] to select the active split!
-vim.keymap.set('n', '<c-k>', ':wincmd k<CR>', { desc = 'select split above' })
-vim.keymap.set('n', '<c-j>', ':wincmd j<CR>', { desc = 'select split below' })
-vim.keymap.set('n', '<c-h>', ':wincmd h<CR>', { desc = 'select split left' })
-vim.keymap.set('n', '<c-l>', ':wincmd l<CR>', { desc = 'select split right' })
+vim.keymap.set('n', '<c-k>', ':wincmd k<CR>', { desc = 'select split above', silent = true })
+vim.keymap.set('n', '<c-j>', ':wincmd j<CR>', { desc = 'select split below', silent = true })
+vim.keymap.set('n', '<c-h>', ':wincmd h<CR>', { desc = 'select split left', silent = true })
+vim.keymap.set('n', '<c-l>', ':wincmd l<CR>', { desc = 'select split right', silent = true })
 
 -- Checkboxes.
 vim.keymap.set('n', '<leader>box', '^li [ ]<esc>', { desc = 'make checkbox on current line' })
