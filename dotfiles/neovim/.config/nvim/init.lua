@@ -46,6 +46,19 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
+-- Set filetype to markdown for .md files
+-- I had to get rid of 'preservim/vim-markdown' to fix ugly folding and
+-- institute this caveman method instead.
+-- I'm not sure why I have to tell nvim that the file type is markdown
+-- when Lualine understands it already, but I do.
+-- Also, setting foldlevel=1 means that the first level of folds (i.e.
+-- the broadest header) will remain unfolded.
+vim.cmd([[ 
+autocmd BufNewFile,BufRead *.md set filetype=markdown 
+autocmd BufNewFile,BufRead *.md let g:markdown_folding=1
+autocmd BufNewFile,BufRead *.md set foldlevel=1
+]])
+
 -- Search
 o.ignorecase = true           -- Ignore case when searching
 o.smartcase = true            -- ...unless contains capital.
@@ -170,9 +183,8 @@ vim.keymap.set('i', '$!', 'ǂ', { desc = 'Subfield delimiter also' })
 vim.keymap.set('i', '<C-d>','ǂ', { desc = 'Subfield delimiter also' })
 
 -- Open markdown files using Firefox.
-vim.cmd([[
-    autocmd BufEnter *.md exe 'noremap <F5> :! /usr/lib/firefox/firefox %:p<CR><CR>'
-     ]])
+vim.cmd([[ autocmd BufEnter *.md exe 'noremap <F5> :! /usr/lib/firefox/firefox %:p<CR><CR>' ]])
+
  
 ---- PLUGINS IN LUA ----------------------------------
 local vim = vim
@@ -193,8 +205,8 @@ Plug('MMinkova/vim-snippets-mrk')
 Plug('nvim-lua/plenary.nvim')
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
 
-
-Plug('nvim-telescope/telescope.nvim', { ['tag'] = '0.1.8' })
+-- Plug('nvim-telescope/telescope.nvim', { ['tag'] = '0.1.8' })
+Plug('nvim-telescope/telescope.nvim')
 
 Plug('vim-voom/VOoM')
   -- let voom_ft_modes = {'markdown': 'pandoc', 'rmd': 'pandoc'}
@@ -205,13 +217,16 @@ Plug('preservim/nerdtree', { ['on'] = 'NERDTreeToggle' })
 Plug('tpope/vim-surround')
 
 Plug('godlygeek/tabular')
-Plug('preservim/vim-markdown')
+-- Plug('preservim/vim-markdown')
+
+-- Plug('masukomi/vim-markdown-folding')
 
 Plug('nvim-tree/nvim-web-devicons')
 Plug('echasnovski/mini.icons')
 
-  -- Disables weird markdown folding
-  vim.g.vim_markdown_folding_level = 0
+-- Disables weird markdown folding
+-- vim.g.vim_markdown_folding_level = 0
+-- vim.g.foldenable = 0
 
 -- Distraction-free mode.
 Plug 'junegunn/goyo.vim'
@@ -305,7 +320,7 @@ require('lualine').setup {
   extensions = {}
 }
 
--- Treesitter configuration (should be called post plugend?
+-- Treesitter configuration (should be called post plugend?)
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the listed parsers MUST always be installed)
   ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "latex", "supercollider"},
@@ -330,7 +345,7 @@ require'nvim-treesitter.configs'.setup {
     -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
     -- the name of the parser)
     -- list of language that will be disabled
-    disable = { "c", "rust" },
+    disable = { "c", "rust", "markdown" },
     -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
     -- disable = function(lang, buf)
     --     local max_filesize = 100 * 1024 -- 100 KB
@@ -344,7 +359,7 @@ require'nvim-treesitter.configs'.setup {
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
     -- Using this option may slow down your editor, and you may see some duplicate highlights.
     -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
+     additional_vim_regex_highlighting = true,
   },
 }
 
@@ -393,6 +408,12 @@ vim.api.nvim_create_autocmd("User", {
 -- If editing vimscript, use "set syntax=vim" to make things a little more pleasant.
 
 vim.cmd([[
+
+" Required by vim-markdown-folding
+"set nocompatible
+"if has("autocmd")
+"    filetype plugin indent on
+"endif
 
 " Custom startify highlighting scheme:
     " For some reason this REALLY wants to go here.
@@ -483,6 +504,7 @@ endif
 
 " ---- Vimwiki settings ------------------------------
 
+
 " Creates default settings which hold across all wikis.
 let wiki_default = {}
 let wiki_default.auto_export = 0
@@ -506,7 +528,7 @@ let g:vimwiki_list = [home_wiki, work_wiki]
 
 " This will make sure vimwiki will only set the filetype of markdown files inside a wiki directory, rather than globally.
 let g:vimwiki_global_ext = 0 
-let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+" let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
 
 " Automatically update links on read diary
     command! Diary VimwikiDiaryIndex
@@ -517,11 +539,15 @@ let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown'
 
 " sets vimwiki folding behavior (can be '' to disable
 " 'expr' 'syntax' or 'list')
-    let g:vimwiki_folding=''
+let g:vimwiki_folding=''
 
 " Should auto-update vimwiki diary index whenever it's reloaded
 " let g:vimwiki_list = [{'auto_diary_index': 1}]
     autocmd BufEnter diary.md :VimwikiDiaryGenerateLinks
+
+" Should override vimwiki syntax settings in favor of typical markdown 
+au BufRead,BufWinEnter,BufNewFile *.{md,mdx,mdown,mkd,mkdn,markdown,mdwn} setlocal filetype=markdown
+au BufRead,BufWinEnter,BufNewFile *.{md,mdx,mdown,mkd,mkdn,markdown,mdwn}.{des3,des,bf,bfa,aes,idea,cast,rc2,rc4,rc5,desx} setlocal filetype=markdown
 
 " ---- Settings that like to be called late ----------
 
