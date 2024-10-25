@@ -90,13 +90,13 @@ tmux_conf_theme_colour_1="#080808"    # dark gray
 tmux_conf_theme_colour_2="#303030"    # gray
 tmux_conf_theme_colour_3="#8a8a8a"    # light gray
 tmux_conf_theme_colour_4="#a2bffe"    # light blue (default 00afff)
-tmux_conf_theme_colour_5="#ffff00"    # yellow
+tmux_conf_theme_colour_5="#fdfd96"    # yellow (default ffff00)
 tmux_conf_theme_colour_6="#080808"    # dark gray
 tmux_conf_theme_colour_7="#080808"    # white (uptime text) (default e4e4e4)
 tmux_conf_theme_colour_8="#080808"    # dark gray
 tmux_conf_theme_colour_9="#fdfd96"    # yellow (default ffff00)
 tmux_conf_theme_colour_10="#dcbab5"   # pink (default ff00af)
-tmux_conf_theme_colour_11="#5fff00"   # green
+tmux_conf_theme_colour_11="#77dd77"   # green (default 5fff00)
 tmux_conf_theme_colour_12="#8a8a8a"   # light gray
 tmux_conf_theme_colour_13="#e4e4e4"   # white
 tmux_conf_theme_colour_14="#080808"   # dark gray
@@ -289,16 +289,19 @@ tmux_conf_theme_pairing_bg="none"
 tmux_conf_theme_pairing_attr="none"
 
 # prefix indicator
-tmux_conf_theme_prefix="⌨"                  # U+2328
+# tmux_conf_theme_prefix="⌨"                  # U+2328
+tmux_conf_theme_prefix="🞹"                  # U+2328
 tmux_conf_theme_prefix_fg="none"
 tmux_conf_theme_prefix_bg="none"
 tmux_conf_theme_prefix_attr="none"
 
 # mouse indicator
-tmux_conf_theme_mouse="↗"                   # U+2197
+# tmux_conf_theme_mouse="↗"                   # U+2197
+tmux_conf_theme_mouse="⧮"
 tmux_conf_theme_mouse_fg="none"
 tmux_conf_theme_mouse_bg="none"
 tmux_conf_theme_mouse_attr="none"
+
 
 # root indicator
 tmux_conf_theme_root="!"
@@ -313,8 +316,10 @@ tmux_conf_theme_synchronized_bg="none"
 tmux_conf_theme_synchronized_attr="none"
 
 # battery bar symbols
-tmux_conf_battery_bar_symbol_full="◼"
-tmux_conf_battery_bar_symbol_empty="◻"
+# tmux_conf_battery_bar_symbol_full="◼"
+# tmux_conf_battery_bar_symbol_empty="◻"
+tmux_conf_battery_bar_symbol_full="●"
+tmux_conf_battery_bar_symbol_empty="○"
 #tmux_conf_battery_bar_symbol_full="♥"
 #tmux_conf_battery_bar_symbol_empty="·"
 
@@ -327,7 +332,7 @@ tmux_conf_battery_bar_length="auto"
 #   - gradient (default)
 #   - heat
 #   - "colour_full_fg,colour_empty_fg,colour_bg"
-tmux_conf_battery_bar_palette="gradient"
+tmux_conf_battery_bar_palette="heat"
 #tmux_conf_battery_bar_palette="#d70000,#e4e4e4,#000000"   # red, white, black
 
 # battery hbar palette, possible values are:
@@ -345,8 +350,10 @@ tmux_conf_battery_vbar_palette="gradient"
 #tmux_conf_battery_vbar_palette="#d70000,#ff5f00,#5fff00"  # red, orange, green
 
 # symbols used to indicate whether battery is charging or discharging
-tmux_conf_battery_status_charging="↑"       # U+2191
-tmux_conf_battery_status_discharging="↓"    # U+2193
+# tmux_conf_battery_status_charging="↑"       # U+2191
+# tmux_conf_battery_status_discharging="↓"    # U+2193
+tmux_conf_battery_status_charging="⭜"       # U+2191
+tmux_conf_battery_status_discharging="⭝"    # U+2193
 #tmux_conf_battery_status_charging="🔌"     # U+1F50C
 #tmux_conf_battery_status_discharging="🔋"  # U+1F50B
 

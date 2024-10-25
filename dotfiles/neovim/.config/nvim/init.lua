@@ -82,7 +82,7 @@ o.whichwrap = '<,>,h,l'       -- Allows movement to next line from last char.
 -- This takes a human-readable marc record and copies it into the main buffer in such a way that it can be pasted into Connexion.
 -- I should probably also do one to turn it into MARCedit readable code...
 vim.cmd([[
-nnoremap <silent> <leader>oclc <Esc><Esc>yi{/}<CR>o{<CR>}<Esc>kpvi{:s/ //<CR>vi{:s/ //<CR>vi{:s/\\/ /g<CR>vi{:s/\$\$/ǂ/g<CR>yi{:noh<CR>:echo"MARC normalized for Connexion"<CR>
+nnoremap <silent> <leader>oclc <Esc><Esc>yi{/}<CR>o{<CR>}<Esc>kpvi{:s/ //<CR>vi{:s/ //<CR>vi{:s/\\/ /g<CR>vi{:s/\$\$/ǂ/g<CR>vi{:s/ǂa //<CR>yi{:noh<CR>:echo"MARC normalized for Connexion"<CR>
 ]])
 
 -- Normalizes human-readable MARC to MARCedit format for copy-pasting.
@@ -181,11 +181,12 @@ vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode
 -- Subfield delimiter!
 vim.keymap.set('i', '!$', 'ǂ', { desc = 'Subfield delimiter' })
 vim.keymap.set('i', '$!', 'ǂ', { desc = 'Subfield delimiter also' })
-vim.keymap.set('i', '<C-d>','ǂ', { desc = 'Subfield delimiter also' })
 
--- Open markdown files using Firefox.
+-- Open current markdown file in Firefox.
 vim.cmd([[ autocmd BufEnter *.md exe 'noremap <F5> :! /usr/lib/firefox/firefox %:p<CR><CR>' ]])
 
+-- Open current html file in Firefox
+vim.cmd([[ nnoremap <F5>f :exe ':silent !firefox %'<CR> ]])
  
 ---- PLUGINS IN LUA ----------------------------------
 local vim = vim

@@ -20,7 +20,7 @@
 
 #       font_family      Inconsolata Nerd Font 
 #       font_family      FiraCode Nerd Font
-       font_family      CaskaydiaCove Nerd Font
+# font_family      CaskaydiaCove Nerd Font
 #       bold_font        CaskaydiaCoveNerdFont-Bold.ttf
 #       italic_font      CaskaydiaCoveNerdFont-Italic.ttf
 #       bold_italic_font CaskaydiaCoveNerdFont-BoldItalic.ttf
@@ -264,7 +264,7 @@
 
 #: Mouse {{{
 
-# mouse_hide_wait 3.0
+mouse_hide_wait 3.0
 
 #: Hide mouse cursor after the specified number of seconds of the
 #: mouse not being used. Set to zero to disable mouse cursor hiding.
@@ -274,7 +274,7 @@
 #: much effort.
 
 # url_color #0087bd
-# url_style curly
+url_style double
 
 #: The color and style for highlighting URLs on mouse-over. url_style
 #: can be one of: none, single, double, curly
@@ -302,7 +302,7 @@
 #: URLs under the mouse cursor. By default, all characters legal in
 #: URLs are allowed.
 
-# copy_on_select no
+copy_on_select yes
 
 #: Copy to clipboard or a private buffer on select. With this set to
 #: clipboard, simply selecting text with the mouse will cause the text
@@ -318,13 +318,13 @@
 #: programs, including websites open in your browser can read the
 #: contents of the system clipboard.
 
-# strip_trailing_spaces never
+strip_trailing_spaces smart
 
 #: Remove spaces at the end of lines when copying to clipboard. A
 #: value of smart will do it when using normal selections, but not
 #: rectangle selections. always will always do it.
 
-# select_by_word_characters @-./_~?&=%+#
+select_by_word_characters @-./_~?&=%+#
 
 #: Characters considered part of a word when double clicking. In
 #: addition to these characters any character that is marked as an
@@ -501,7 +501,7 @@ enable_audio_bell no
 
  remember_window_size  no
  initial_window_width  82c
- initial_window_height 24c
+ initial_window_height 55c
 
 
 
@@ -617,7 +617,7 @@ enable_audio_bell no
 #: scaled. A value of blank means draw a blank window. A value of size
 #: means show the window size in cells.
 
-# resize_in_steps no
+resize_in_steps yes
 
 #: Resize the OS window in steps as large as the cells, instead of
 #: with the usual pixel accuracy. Combined with an
@@ -626,7 +626,7 @@ enable_audio_bell no
 #: when resizing the OS window. Note that this does not currently work
 #: on Wayland.
 
-confirm_os_window_close -1
+confirm_os_window_close 0
 
 #: Ask for confirmation when closing an OS window or a tab that has at
 #: least this number of kitty windows in it. A value of zero disables
@@ -1480,3 +1480,11 @@ background_opacity 1
 # Alabaster Dark
 include current-theme.conf
 # END_KITTY_THEME
+
+
+# BEGIN_KITTY_FONTS
+font_family      family='CaskaydiaCove Nerd Font' postscript_name=CaskaydiaCoveNF-Regular
+bold_font        auto
+italic_font      auto
+bold_italic_font auto
+# END_KITTY_FONTS
