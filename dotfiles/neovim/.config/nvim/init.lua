@@ -541,7 +541,7 @@ let g:vimwiki_global_ext = 0
 
 " sets vimwiki folding behavior (can be '' to disable
 " 'expr' 'syntax' or 'list')
-let g:vimwiki_folding=''
+let g:vimwiki_folding='syntax'
 
 " Should auto-update vimwiki diary index whenever it's reloaded
 " let g:vimwiki_list = [{'auto_diary_index': 1}]

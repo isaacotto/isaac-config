@@ -388,24 +388,36 @@ set -g mouse on
 #set -g status-keys vi
 #set -g mode-keys vi
 
+
+# -- user bindings -------------------------------------------------------------
+
+# if you don't want Oh my tmux! to alter a binding, use #!important
+# bind c new-window -c '#{pane_current_path}' #!important
+
 # replace C-b by C-a instead of using both prefixes
 # set -gu prefix2
 # unbind C-a
 # unbind C-b
 # set -g prefix C-a
 # bind C-a send-prefix
-set -gu prefix2
+
+# Assign C-Space and C-g to prefix
 unbind C-a
 unbind C-b
 set -g prefix C-Space
+set -g prefix2 C-g
 bind C-Space send-prefix
+bind C-g send-prefix
 
+# Split window
 set -g base-index 1
-bind \ split-window -h
+bind \\ split-window -h #!important # need to escape this backslash
 bind - split-window -v
 
-# if you don't want Oh my tmux! to alter a binding, use #!important
-# bind c new-window -c '#{pane_current_path}' #!important
+# Resize window is set by default to C-H, C-J, C-K, C-L
+
+# Toggle status bar
+bind x set status
 
 # move status line to top
 #set -g status-position top
