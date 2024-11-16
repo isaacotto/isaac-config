@@ -7,6 +7,11 @@ export ZSH="$HOME/.oh-my-zsh"
 
 export EDITOR=nvim
 export VISUAL=nvim
+export PATH="$PATH:/opt/nvim-linux64/bin"
+
+# Path to antigen
+source /home/io/antigen.zsh
+antigen init ~/.antigenrc
 
 # Open tmux automatically if installed and not already running
 if [ "$TMUX" = "" ]; then tmux; fi
@@ -18,7 +23,7 @@ if [[ -n $SSH_CONNECTION ]]; then
     ZSH_THEME="agnoster"
 else
     #ZSH_THEME="powerlevel9k/powerlevel9k"
-    ZSH_THEME="robbyrussell"
+    ZSH_THEME="eastwood"
 fi
 
 # Set name of the theme to load --- if set to "random", it will
@@ -91,11 +96,11 @@ fi
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 
-plugins=(
-    zsh-autosuggestions
-    zsh-vi-mode
-    zsh-syntax-highlighting
-)
+# plugins=(
+#     zsh-autosuggestions
+#     zsh-vi-mode
+#     zsh-syntax-highlighting
+# )
 
 # PLUGINS MUST BE SOURCED BEFORE OH-MY-ZSH.SH IS SOURCED
 
@@ -133,10 +138,10 @@ source $ZSH/oh-my-zsh.sh
 alias blogout="kill -9 -1"
 alias calcurse="calcurse -D ~/Sync/calcurse"
 alias fzf="fzf --bind 'ctrl-v:execute(nvim {} < /dev/tty)'"
-alias ls="logo-ls"
+# alias ls="logo-ls"
 alias music="musikcube"
 alias rm='echo "Consider using trash-put (alias ttt) instead. If you want rm, type \\\rm."; false'
-alias tail="colortail"
+# alias tail="colortail"
 alias texcompile="latexmk -lualatex"
 alias thes="dict -d moby-thesaurus"
 alias ttt="trash-put"
