@@ -261,6 +261,10 @@ Plug('catppuccin/nvim', { ['as'] = 'catppuccin' })
 Plug('rebelot/kanagawa.nvim')
 Plug('NLKNguyen/papercolor-theme')
 Plug('folke/tokyonight.nvim')
+Plug('Mofiqul/dracula.nvim')
+Plug('sho-87/kanagawa-paper.nvim')
+Plug('navarasu/onedark.nvim')
+Plug('projekt0n/github-nvim-theme')
 
 -- recfile syntax highlighting
 Plug('zaid/vim-rec')
