@@ -187,6 +187,10 @@ vim.cmd([[ autocmd BufEnter *.md exe 'noremap <F5> :! /usr/lib/firefox/firefox %
 
 -- Open current html file in Firefox
 vim.cmd([[ nnoremap <F5>f :exe ':silent !firefox %'<CR> ]])
+
+-- Start vim-instant-markdown
+vim.keymap.set('n', '<leader>mark', ':InstantMarkdownPreview<CR>', { desc = 'Start instant markdown preview' })
+vim.keymap.set('n', '<leader>nomark', ':InstantMarkdownStop<CR>', { desc = 'Stop instant markdown preview' })
  
 ---- PLUGINS IN LUA ----------------------------------
 local vim = vim
@@ -273,6 +277,26 @@ Plug('zaid/vim-rec')
 Plug('goolord/alpha-nvim', { ['lazy'] = true })
 Plug('akinsho/bufferline.nvim', { ['dependencies'] = 'nvim-tree/nvim-web-devicons' })
 Plug('nvim-lualine/lualine.nvim', { ['dependencies'] = 'nvim-tree/nvim-web-devicons' })
+
+-- vim-instant-markdown
+vim.cmd([[ 
+"Uncomment to override defaults:
+"let g:instant_markdown_slow = 1
+"let g:instant_markdown_autostart = 0
+"let g:instant_markdown_open_to_the_world = 1
+"let g:instant_markdown_allow_unsafe_content = 1
+"let g:instant_markdown_allow_external_content = 0
+"let g:instant_markdown_mathjax = 1
+"let g:instant_markdown_mermaid = 1
+"let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
+"let g:instant_markdown_autoscroll = 0
+"let g:instant_markdown_port = 8888
+"let g:instant_markdown_python = 1
+let g:instant_markdown_theme = 'dark'
+]])
+
+Plug('instant-markdown/vim-instant-markdown', {['for'] = 'markdown', ['do'] = 'yarn install'})
+
 vim.call('plug#end')
 
 -- Telescope key bindings (must be called post-plug#end.
