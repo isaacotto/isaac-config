@@ -97,7 +97,7 @@ imap <CR> <CR>
 
 vim.keymap.set('n', '<leader>home', ':Alpha<CR>', { desc = 'Return to dashboard' })
 
-vim.keymap.set('n', '<leader>here', ':!thunar .<CR>', {desc = 'Open terminal in current directory' })
+vim.keymap.set('n', '<leader>tt', ':!thunar .<CR><CR>', {desc = 'Open terminal in current directory', silent = true  })
 
 -- These allow <leader>o (O) to append blank lines after (before) current line without leaving normal mode. They can also be multiplied by a number before the prefix, e.g. 3<leader>o.
 vim.cmd([[
@@ -163,9 +163,6 @@ vim.keymap.set('i', '<C-h>', '<C-w>', { desc = 'Ctrl + backsapce' })
 
 -- .pdf word count macro.
 vim.keymap.set('n', '<leader>words', ':!<Space>ps2ascii<Space>%:r.pdf<Space><BAR><Space>wc<Space>-w<CR>', { desc = 'pdf word count' })
-
--- open thunar here
-vim.keymap.set('n', '<leader>tt', ':!thunar .<CR>', { desc = 'opens thunar in current working directory' })
 
 -- Map jk and kj to escape using easyescape
 vim.cmd([[
