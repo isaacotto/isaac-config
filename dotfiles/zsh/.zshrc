@@ -9,12 +9,11 @@ export EDITOR=nvim
 export VISUAL=nvim
 export PATH="$PATH:/opt/nvim-linux64/bin"
 
-# Path to antigen
-source /home/io/antigen.zsh
-antigen init ~/.antigenrc
-
 # Open tmux automatically if installed and not already running
 if [ "$TMUX" = "" ]; then tmux; fi
+
+source /home/io/antigen.zsh
+antigen init ~/.antigenrc
 
 # Different theme for SSH connections.
 # Top line is in case of SSH connection,
@@ -134,13 +133,14 @@ source $ZSH/oh-my-zsh.sh
 
 # alias / mapping / binding
 
+source ~/isaac-config/dotfiles/zsh-key-bindings.zsh
 
 alias blogout="kill -9 -1"
 alias calcurse="calcurse -D ~/Sync/calcurse"
-alias fzf="fzf --bind 'ctrl-v:execute(nvim {} < /dev/tty)'"
+# alias fzf="fzf --bind 'ctrl-v:execute(nvim {} < /dev/tty)'"
 # alias ls="logo-ls"
 alias music="musikcube"
-alias rm='echo "Consider using trash-put (alias ttt) instead. If you want rm, type \\\rm."; false'
+# alias rm='echo "Consider using trash-put (alias ttt) instead. If you want rm, type \\\rm."; false'
 # alias tail="colortail"
 alias texcompile="latexmk -lualatex"
 alias thes="dict -d moby-thesaurus"
@@ -164,6 +164,7 @@ f()
 		echo "$fzo"
 	fi
 }
+
 function lazygit() {
     git add .
     git commit -am "$1"
@@ -206,3 +207,4 @@ alias duck='function _duck(){ w3m "https://duckduckgo.com/?q=$(echo "$*" | sed "
 VERSION=v10.15.0
 DISTRO=linux-x64
 export PATH=/usr/local/lib/nodejs/node-v20.9.0-linux-x64/bin:$PATH
+

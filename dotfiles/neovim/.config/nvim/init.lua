@@ -164,6 +164,9 @@ vim.keymap.set('i', '<C-h>', '<C-w>', { desc = 'Ctrl + backsapce' })
 -- .pdf word count macro.
 vim.keymap.set('n', '<leader>words', ':!<Space>ps2ascii<Space>%:r.pdf<Space><BAR><Space>wc<Space>-w<CR>', { desc = 'pdf word count' })
 
+-- open thunar here
+vim.keymap.set('n', '<leader>tt', ':!thunar .<CR>', { desc = 'opens thunar in current working directory' })
+
 -- Map jk and kj to escape using easyescape
 vim.cmd([[
     let g:easyescape_chars = { "j": 1, "k": 1 }

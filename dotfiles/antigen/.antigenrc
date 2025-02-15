@@ -1,0 +1,17 @@
+# load oh-my-zsh
+antigen use oh-my-zsh
+
+# use oh-my-zsh plugin
+antigen bundle git
+
+# use custom plugin
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-autosuggestions
+# antigen bundle jeffreytse/zsh-vi-mode
+# antigen bundle unixorn/fzf-zsh-plugin@main
+
+# load the theme
+antigen theme eastwood
+
+# apply antigen changes
+antigen apply
