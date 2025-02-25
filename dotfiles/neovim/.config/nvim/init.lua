@@ -534,6 +534,9 @@ endif
 
 " ---- Vimwiki settings ------------------------------
 
+" Keybindings
+nnoremap <Leader>di <Plug>VimwikiDiaryIndex
+nnoremap <Leader>dd <Plug>VimwikiMakeDiaryNote
 
 " Creates default settings which hold across all wikis.
 let wiki_default = {}
