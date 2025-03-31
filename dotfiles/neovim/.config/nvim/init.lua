@@ -183,7 +183,7 @@ vim.keymap.set('i', '!$', 'ǂ', { desc = 'Subfield delimiter' })
 vim.keymap.set('i', '$!', 'ǂ', { desc = 'Subfield delimiter also' })
 
 -- Open current markdown file in Firefox.
-vim.cmd([[ autocmd BufEnter *.md exe 'noremap <F5> :! /usr/lib/firefox/firefox %:p<CR><CR>' ]])
+vim.cmd([[ autocmd BufEnter *.md exe 'noremap <F5> :! /usr/bin/firefox %:p<CR><CR>' ]])
 
 -- Open current html file in Firefox
 vim.cmd([[ nnoremap <F5>f :exe ':silent !firefox %'<CR> ]])
@@ -296,6 +296,9 @@ let g:instant_markdown_theme = 'dark'
 ]])
 
 Plug('instant-markdown/vim-instant-markdown', {['for'] = 'markdown', ['do'] = 'yarn install'})
+
+-- telescope symbols
+Plug('nvim-telescope/telescope-symbols.nvim')
 
 vim.call('plug#end')
 
