@@ -191,6 +191,33 @@ vim.cmd([[ nnoremap <F5>f :exe ':silent !firefox %'<CR> ]])
 -- Start vim-instant-markdown
 vim.keymap.set('n', '<leader>mark', ':InstantMarkdownPreview<CR>', { desc = 'Start instant markdown preview' })
 vim.keymap.set('n', '<leader>nomark', ':InstantMarkdownStop<CR>', { desc = 'Stop instant markdown preview' })
+
+-- Create CSV from current recfile.
+vim.api.nvim_create_user_command("CSV", function() 
+    -- Get the full path of the current file
+    local filepath = vim.fn.expand("%:p")
+    if filepath == "" then
+        print("No file is open.")
+        return
+    end
+
+    -- Get the filename without extension
+    local filename = vim.fn.expand("%:t:r")
+
+    -- Generate timestamp (YYYYMMDD)
+    local timestamp = os.date("%Y%m%d")
+
+    -- Construct the output CSV filename
+    local csv_filename = filename .. "_" .. timestamp .. ".csv"
+
+    -- Run the rec2csv command
+    local cmd = string.format("rec2csv '%s' > '%s'", filepath, csv_filename)
+    vim.fn.system(cmd)
+
+    -- Notify the user
+    print("CSV file created: " .. csv_filename)
+end, {})
+
  
 ---- PLUGINS IN LUA ----------------------------------
 local vim = vim
@@ -500,6 +527,11 @@ endif
     autocmd FileType tex,latex inoremap <leader>tt \texttt{}<Esc>i
     autocmd FileType tex,latex inoremap <leader>m $$<Esc>i
     autocmd FileType tex,latex inoremap <leader>e \emph{}<Esc>i
+
+    " Encloses text in \emph{}
+    autocmd FileType tex,latex vnoremap <C-e> c\emph{<C-r>"}<Esc>
+    " Encloses text in \textbf{}
+    autocmd FileType tex,latex vnoremap <C-b> c\textbf{<C-r>"}<Esc>
 
     nnoremap <leader>boiler :r ~/.config/nvim/templates/boilerplate.tex<CR>kdd22j
 
