@@ -528,6 +528,8 @@ endif
     autocmd FileType tex,latex inoremap <leader>m $$<Esc>i
     autocmd FileType tex,latex inoremap <leader>e \emph{}<Esc>i
 
+    autocmd FileType tex,latex inoremap <leader>item \begin{itemize}<CR>\item<CR>\end{itemize}<Esc>k$a<Space>
+
     " Encloses text in \emph{}
     autocmd FileType tex,latex vnoremap <C-e> c\emph{<C-r>"}<Esc>
     " Encloses text in \textbf{}
@@ -651,6 +653,9 @@ if has ("Linux")
   lua require('oilconfig')
   lua require('alpha-config')
 endif
+
+" Changes markdown comment string for vim.commentary to .html
+autocmd FileType markdown setlocal commentstring=<!--\ %s\ -->
 
 ]])
 
