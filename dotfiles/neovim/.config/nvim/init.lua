@@ -594,7 +594,12 @@ let work_wiki = copy(wiki_default)
 let work_wiki.path = '~/isaac-otto-usc-docs/'
 let work_wiki.diary_rel_path = 'logbook/'
 
-let g:vimwiki_list = [home_wiki, work_wiki]
+" Phone wiki
+let phone_wiki = copy(wiki_default)
+let phone_wiki.path = '~/sync-phone/neutrinote-backup/mirror/'
+let phone_wiki.diary_rel_path = 'phone-diary/'
+
+let g:vimwiki_list = [home_wiki, work_wiki, phone_wiki]
 
 " This will make sure vimwiki will only set the filetype of markdown files inside a wiki directory, rather than globally.
 let g:vimwiki_global_ext = 0 
