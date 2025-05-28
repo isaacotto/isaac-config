@@ -264,8 +264,12 @@ Plug('echasnovski/mini.icons')
 -- Distraction-free mode.
 Plug 'junegunn/goyo.vim'
 
+-- Limelight
+Plug 'junegunn/limelight.vim'
+
   -- Alias to open Goyo because I can never remember that word.
   vim.cmd('command! Mini Goyo')
+  vim.cmd('noremap <leader>go :Goyo<cr>')
 
 Plug('tpope/vim-eunuch')
 
@@ -635,11 +639,6 @@ au BufRead,BufWinEnter,BufNewFile *.{md,mdx,mdown,mkd,mkdn,markdown,mdwn}.{des3,
 " Start NERDTree and put the cursor back in the other window.
     " autocmd VimEnter * NERDTree | wincmd p
 
-" COLOR SCHEME STUFF SEEMS TO ENJOY BEING AT THE END
-    set background=dark
-    colorscheme PaperColor
-    "colorscheme default
-
 " SETS BRACE MATCHING COLORS -- should be called after color scheme
     hi MatchParen cterm=none ctermbg=green ctermfg=blue
 
@@ -661,6 +660,11 @@ endif
 
 " Changes markdown comment string for vim.commentary to .html
 autocmd FileType markdown setlocal commentstring=<!--\ %s\ -->
+
+" COLOR SCHEME STUFF SEEMS TO ENJOY BEING AT THE END
+    set background=dark
+    colorscheme PaperColor
+    "colorscheme default
 
 ]])
 
