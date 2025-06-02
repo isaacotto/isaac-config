@@ -225,6 +225,9 @@ local Plug = vim.fn['plug#']
 
 vim.call('plug#begin')
 
+Plug('github/copilot.vim')
+Plug('CopilotC-Nvim/CopilotChat.nvim')
+
 Plug('stevearc/oil.nvim')
 
 -- Plugin for converting MARC 21 bibliographic records between .mrc, .mrk and .xml file formats
@@ -332,6 +335,26 @@ Plug('instant-markdown/vim-instant-markdown', {['for'] = 'markdown', ['do'] = 'y
 Plug('nvim-telescope/telescope-symbols.nvim')
 
 vim.call('plug#end')
+
+-- Copilot settings
+
+require("CopilotChat").setup {
+    -- See Configuration section for options
+}
+
+vim.cmd([[
+let g:copilot_enabled = 0
+]])
+
+-- -- Disable Copilot by default on VimEnter
+-- vim.api.nvim_create_autocmd("VimEnter", {
+--   callback = function()
+--     vim.cmd("Copilot disable")
+--   end,
+-- })
+
+-- Command to toggle Copilot
+vim.keymap.set('n', '<leader>cop', ':Copilot enable<CR>', { desc = 'Enable Copilot' })
 
 -- Telescope key bindings (must be called post-plug#end.
 local builtin = require('telescope.builtin')
@@ -481,7 +504,7 @@ vim.cmd([[
 
 " Custom startify highlighting scheme:
     " For some reason this REALLY wants to go here.
-	    " Now, no matter what color scheme is used, it will
+    " Now, no matter what color scheme is used, it will
     " make the header color #131 (indian red)
 
     augroup custom_highlight
@@ -633,7 +656,7 @@ au BufRead,BufWinEnter,BufNewFile *.{md,mdx,mdown,mkd,mkdn,markdown,mdwn}.{des3,
 " Sets color scheme based on file type, then returns to a default
 " when exiting a buffer of that file type.
     autocmd BufNewFile,BufRead *.wiki let g:tmpcolor=g:colors_name            
-    autocmd BufEnter *.wiki colorscheme kanagawa-wave | set ft=habamax                  
+    autocmd BufEnter *.wiki colorscheme PaperColor | set ft=habamax                  
     autocmd BufLeave *.wiki exe 'colorscheme '.g:tmpcolor                     
 
 " Start NERDTree and put the cursor back in the other window.
@@ -662,11 +685,14 @@ endif
 autocmd FileType markdown setlocal commentstring=<!--\ %s\ -->
 
 " COLOR SCHEME STUFF SEEMS TO ENJOY BEING AT THE END
-    set background=dark
-    colorscheme PaperColor
-    "colorscheme default
+    "set background=dark
+    "colorscheme PaperColor
+    ""colorscheme default
 
 ]])
+
+vim.opt.termguicolors = true
+vim.cmd('colorscheme PaperColor')
 
 -- With lua you can run arbitrary functions triggered by key mappings:
 -- vim.keymap.set("n", "<leader>$", function()
