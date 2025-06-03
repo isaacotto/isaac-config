@@ -346,15 +346,24 @@ vim.cmd([[
 let g:copilot_enabled = 0
 ]])
 
--- -- Disable Copilot by default on VimEnter
--- vim.api.nvim_create_autocmd("VimEnter", {
---   callback = function()
---     vim.cmd("Copilot disable")
---   end,
--- })
-
 -- Command to toggle Copilot
-vim.keymap.set('n', '<leader>cop', ':Copilot enable<CR>', { desc = 'Enable Copilot' })
+function ToggleCopilot()
+    if vim.g.copilot_enabled == 1 then
+        vim.cmd("Copilot disable")
+        vim.g.copilot_enabled = 0
+        print("Copilot disabled")
+    else
+        vim.cmd("Copilot enable")
+        vim.g.copilot_enabled = 1
+        print("Copilot enabled")
+    end
+end
+
+vim.keymap.set("n", "<leader>cop", ToggleCopilot , { noremap = true, silent = true })
+
+-- Remap key to accept copilot suggestion from <Tab> to <C-y>
+vim.g.copilot_no_tab_map = true
+vim.api.nvim_set_keymap("i", "<C-y>", 'copilot#Accept("<CR>")', { expr = true, silent = true, noremap = true})
 
 -- Telescope key bindings (must be called post-plug#end.
 local builtin = require('telescope.builtin')
@@ -579,6 +588,13 @@ endif
     "  autocmd!
     "  autocmd BufReadPost quickfix 5wincmd _
     " augroup END
+
+" Ignore certain warnings
+    let g:vimtex_quickfix_ignore_filters = [
+    \ 'Underfull',
+    \ 'Overfull',
+    \ 'auxhook Warning',
+    \]
 
 " ---- HTML settings ---------------------------------
     
