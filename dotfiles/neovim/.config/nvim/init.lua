@@ -233,6 +233,8 @@ Plug('stevearc/oil.nvim')
 -- Plugin for converting MARC 21 bibliographic records between .mrc, .mrk and .xml file formats
 Plug('whatupmiked/vim-marc')
 
+Plug('keysmashes/vim-lilypond')
+
 Plug('marcweber/vim-addon-mw-utils')
 Plug('garbas/vim-snipmate')
 Plug('MMinkova/vim-snippets-mrk')
