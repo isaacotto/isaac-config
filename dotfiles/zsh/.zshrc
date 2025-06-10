@@ -1,13 +1,18 @@
 # If you come from bash you might have to change your $PATH.
 #export PATH=$HOME/bin:/usr/local/bin:$PATH
-export PATH=$HOME/bin:/usr/local/texlive/2023/bin/x86_64-linux:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/io/.fzf/bin:$PATH
+export PATH=$HOME/bin:/usr/local/texlive/2025/bin/x86_64-linux:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/io/.fzf/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
 export EDITOR=nvim
 export VISUAL=nvim
-export PATH="$PATH:/opt/nvim-linux64/bin"
+# export PATH="$PATH:/opt/nvim-linux64/bin"
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+
+# Set sudo to use nvim as the editor
+# I created a symlink in /usr/bin/nvim to point to /opt/nvim-linux-x86_64/bin/nvim...
+export SUDO_EDITOR=/opt/nvim-linux-x86_64/bin/nvim
 
 # Open tmux automatically if installed and not already running
 if [ "$TMUX" = "" ]; then tmux; fi
