@@ -363,9 +363,19 @@ end
 
 vim.keymap.set("n", "<leader>cop", ToggleCopilot , { noremap = true, silent = true })
 
--- Remap key to accept copilot suggestion from <Tab> to <C-y>
+-- Remap key to accept copilot suggestion from <Tab> to <C-L>
 vim.g.copilot_no_tab_map = true
-vim.api.nvim_set_keymap("i", "<C-y>", 'copilot#Accept("<CR>")', { expr = true, silent = true, noremap = true})
+vim.api.nvim_set_keymap("i", "<C-L>", 'copilot#Accept("<CR>")', { expr = true, silent = true, noremap = true})
+
+-- Should alias :CC to :CopilotChat
+vim.api.nvim_create_user_command(
+  'CC',
+  function(opts)
+    vim.cmd('CopilotChat ' .. table.concat(opts.fargs, ' '))
+  end,
+  { nargs = '*', complete = 'command' }
+)
+
 
 -- Telescope key bindings (must be called post-plug#end.
 local builtin = require('telescope.builtin')
