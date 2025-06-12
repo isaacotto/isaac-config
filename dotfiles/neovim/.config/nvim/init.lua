@@ -19,6 +19,13 @@ o.backupdir = '~/.cache/vim'  -- backup directory
 o.updatetime = 250            -- decrease update time
 o.timeoutlen = 300            -- decrease mapped sequence wait time
 o.clipboard = 'unnamedplus'
+o.spell = true              -- enable spell checking by default
+
+-- set default number of spaces for tab to 2
+
+
+-- Sets default spellfile used for spellchecking
+vim.cmd('set spellfile=~/.config/nvim/spell/en.utf-8.add')
 
 -- Display
 o.foldmethod = 'syntax'       -- Fold method.
@@ -68,10 +75,10 @@ o.incsearch = true            -- Shows pattern while searching.
 o.inccommand = 'split'        -- Preview substitutions live, as you type.
 
 -- Tabs/indenting
-o.tabstop = 8                 -- Default setting 8
-o.softtabstop = 4             -- Number of spaces that <Tab> counts for.
+o.tabstop = 8                 -- Number of visual spaces per literal tab character.
 o.expandtab = true            -- Turn tabs into spaces.
-o.shiftwidth = 4              -- Auto-indents by 4 spaces; also shift + > is 4 spaces.
+o.softtabstop = 2             -- Number of spaces that <Tab> expands to (while expandtab is true).
+o.shiftwidth = 2              -- Auto-indents by 4 spaces; also shift + > is 4 spaces.
 
 -- Behavior
 o.whichwrap = '<,>,h,l'       -- Allows movement to next line from last char.
@@ -137,6 +144,12 @@ vim.keymap.set('i', '<leader>box', '<Esc>^li [ ]<esc>$', { desc = 'make checkbox
 -- Shortcut for spellchecking. Auto-corrects last mistake and jumps back to
 -- prev. cursor position.
 vim.keymap.set('i', '<C-l>', '<c-g>u<Esc>[s1z=`]a<c-g>u', { desc = 'Auto-correct last spelling mistake' })
+
+-- Move to next/previous spelling mistake.
+vim.keymap.set('n', '<leader>n', ']s')
+vim.keymap.set('n', '<leader>p', '[s')
+
+-- Toggle spell checking.
 
 -- Shortcut for 'select all'
 vim.keymap.set('n', '<leader>a', 'ggVG', { desc = 'Select all' })
@@ -235,11 +248,6 @@ Plug('whatupmiked/vim-marc')
 
 Plug('keysmashes/vim-lilypond')
 
-Plug('marcweber/vim-addon-mw-utils')
-Plug('garbas/vim-snipmate')
-Plug('MMinkova/vim-snippets-mrk')
-
-
 Plug('nvim-lua/plenary.nvim')
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
 
@@ -336,7 +344,15 @@ Plug('instant-markdown/vim-instant-markdown', {['for'] = 'markdown', ['do'] = 'y
 -- telescope symbols
 Plug('nvim-telescope/telescope-symbols.nvim')
 
+-- Big pack of plugins recommended by copilot to get snipets working
+-- Plug('hrsh7th/nvim-cmp')
+-- Plug('hrsh7th/cmp-nvim-lsp')
+-- Plug('L3MON4D3/LuaSnip')
+-- Plug('saadparwaiz1/cmp_luasnip')
+-- Plug('rafamadriz/friendly-snippets')
+
 vim.call('plug#end')
+
 
 -- Copilot settings
 
@@ -726,3 +742,30 @@ vim.cmd('colorscheme PaperColor')
 -- vim.keymap.set("n", "<leader>$", function()
 --     print("hello isaac")
 -- end)
+
+-- -- SNIPPET ENGINE CONFIGURATION --
+-- -- nvim-cmp setup
+-- local cmp = require'cmp'
+-- local luasnip = require'luasnip'
+
+-- require("luasnip.loaders.from_vscode").lazy_load()  -- loads friendly-snippets
+
+-- cmp.setup({
+--   snippet = {
+--     expand = function(args)
+--       luasnip.lsp_expand(args.body)
+--     end,
+--   },
+--   mapping = cmp.mapping.preset.insert({
+--     ['<Tab>'] = cmp.mapping.select_next_item(),
+--     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+--     ['<CR>'] = cmp.mapping.confirm({ select = true }),
+--     -- Add LuaSnip jump mappings if you want
+--   }),
+--   sources = cmp.config.sources({
+--     { name = 'nvim_lsp' },
+--     { name = 'luasnip' },
+--   }),
+-- })
+
+-- -- END SNIPPET ENGINE CONFIGURATION --
