@@ -77,8 +77,8 @@ o.inccommand = 'split'        -- Preview substitutions live, as you type.
 -- Tabs/indenting
 o.tabstop = 8                 -- Number of visual spaces per literal tab character.
 o.expandtab = true            -- Turn tabs into spaces.
-o.softtabstop = 2             -- Number of spaces that <Tab> expands to (while expandtab is true).
-o.shiftwidth = 2              -- Auto-indents by 4 spaces; also shift + > is 4 spaces.
+o.softtabstop = 4             -- Number of spaces that <Tab> expands to (while expandtab is true).
+o.shiftwidth = 4              -- Auto-indents by 4 spaces; also shift + > is 4 spaces.
 
 -- Behavior
 o.whichwrap = '<,>,h,l'       -- Allows movement to next line from last char.
@@ -353,8 +353,9 @@ Plug('nvim-telescope/telescope-symbols.nvim')
 
 vim.call('plug#end')
 
-
--- Copilot settings
+---
+--- Copilot config
+--- 
 
 require("CopilotChat").setup {
     -- See Configuration section for options
@@ -392,6 +393,9 @@ vim.api.nvim_create_user_command(
   { nargs = '*', complete = 'command' }
 )
 
+---
+--- End Copilot config.
+---
 
 -- Telescope key bindings (must be called post-plug#end.
 local builtin = require('telescope.builtin')
