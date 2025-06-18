@@ -732,15 +732,11 @@ endif
 " Changes markdown comment string for vim.commentary to .html
 autocmd FileType markdown setlocal commentstring=<!--\ %s\ -->
 
-" COLOR SCHEME STUFF SEEMS TO ENJOY BEING AT THE END
-    "set background=dark
-    "colorscheme PaperColor
-    ""colorscheme default
-
 ]])
 
+-- COLOR SCHEME STUFF SEEMS TO ENJOY BEING AT THE END
 vim.opt.termguicolors = true
-vim.cmd('colorscheme PaperColor')
+vim.cmd('colorscheme github_dark')
 
 -- With lua you can run arbitrary functions triggered by key mappings:
 -- vim.keymap.set("n", "<leader>$", function()
